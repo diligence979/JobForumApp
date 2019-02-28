@@ -14,4 +14,6 @@ export function createReducer(initialState, handlers) {
 
 const createStoreWithMW = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMW(reducers);
+
+// const store = createStore(reducers, applyMiddleware(thunk))
 export default store

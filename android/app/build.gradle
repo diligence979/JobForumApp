@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-spinkit')
     compile project(':react-native-vector-icons')
     compile project(':lottie-react-native')
     implementation fileTree(dir: "libs", include: ["*.jar"])

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     Scene,
     Router,
-    Lightbox, Drawer
+    Lightbox, 
+    Drawer
 } from 'react-native-router-flux';
 
 import LoginPage from './components/LoginPage'
@@ -11,6 +12,7 @@ import DynamicPage from './components/DynamicPage'
 import TrendPage from './components/TrendPage'
 import MyPage from './components/MyPage'
 import TabIcon from './components/widget/TabIcon'
+import LoadingModal from './components/common/LoadingModal'
 
 import styles from './style'
 import * as Constant from "./style/constant"
@@ -39,10 +41,7 @@ const getRouter = () => {
                            wrap={false}
                            showLabel={false}
                            tabBarPosition={"bottom"}
-                           title={'应用'}
-                           renderRightButton={
-                               () => <SearchButton/>
-                           }
+                           title={'求职论坛'}
                            tabBarStyle={{
                                height: Constant.tabBarHeight,
                                alignItems: 'center',
@@ -56,7 +55,7 @@ const getRouter = () => {
                             title={'动态'}
                             tabIconName={'tabDynamic'}
                         />
-                        <Scene
+                        {/* <Scene
                             key="TrendPage"
                             component={TrendPage}
                             icon={TabIcon}
@@ -69,9 +68,10 @@ const getRouter = () => {
                             icon={TabIcon}
                             title={'我的'}
                             tabIconName={'tabMy'}
-                        />
+                        /> */}
                     </Scene>
                 </Scene>
+                <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>
         </Router>
     )
