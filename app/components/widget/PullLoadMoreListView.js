@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import styles from "../../style"
 import * as Constant from "../../style/constant"
+import * as Config from '../../config'
 
-export const PAGE_SIZE = 30;
 /**
  * 上下拉列表控件
  */
@@ -114,7 +114,7 @@ class PullLoadMoreListView extends Component {
                            resizeMode={"contain"}
                            style={{width: 80, height: 80}}/>
                     <Text style={[styles.normalText]}>
-                        {'列表为空'}
+                        {'列表加载中...'}
                     </Text>
                 </TouchableOpacity>
             </View> : <View/>;
@@ -146,7 +146,7 @@ class PullLoadMoreListView extends Component {
                 enableEmptySections
                 initialListSize={this.props.pageSize}
                 pageSize={this.props.pageSize}
-                initialNumToRender={PAGE_SIZE}
+                initialNumToRender={Config.PAGE_SIZE}
                 onEndReachedThreshold={0.1}
                 keyExtractor={(item, index) => index.toString()}
                 onEndReached={this._loadMore}
@@ -197,7 +197,7 @@ PullLoadMoreListView.propTypes = {
     enableRefresh: PropTypes.bool,
 };
 PullLoadMoreListView.defaultProps = {
-    pageSize: PAGE_SIZE,
+    pageSize: Config.PAGE_SIZE,
     dataSource: [],
     enableRefresh: true,
 };

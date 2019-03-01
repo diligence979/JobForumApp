@@ -18,10 +18,8 @@ const doLogin = (userName, password, callback) => async (dispatch, getState) => 
     AsyncStorage.setItem(Constant.USER_NAME_KEY, userName);
     AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str);
     let res = await api.userLogin(userName,password);
-    console.log(res)
     if (res && res.data.code) {
         AsyncStorage.setItem(Constant.PW_KEY, password);
-        // let current = await userAction.getUserInfo();
         dispatch({
             type: LOGIN.IN,
             res

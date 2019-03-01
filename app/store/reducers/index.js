@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 import login from "./login"
 // import user from "./user"
-// import event from "./event"
+import event from "./event"
 // import repository from "./repository"
 // import issue from "./issue"
 
 
 export default combineReducers({
-    login: login
+    login: login,
     // user: user,
-    // event: event,
+    event: event,
     // repository: repository,
     // issue: issue,
 });

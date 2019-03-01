@@ -55,20 +55,20 @@ const getRouter = () => {
                             title={'动态'}
                             tabIconName={'tabDynamic'}
                         />
-                        {/* <Scene
+                        <Scene
                             key="TrendPage"
-                            component={TrendPage}
+                            component={DynamicPage}
                             icon={TabIcon}
                             title={'推荐'}
                             tabIconName={'tabRecommended'}
                         />
                         <Scene
                             key="MyPage"
-                            component={MyPage}
+                            component={DynamicPage}
                             icon={TabIcon}
                             title={'我的'}
                             tabIconName={'tabMy'}
-                        /> */}
+                        />
                     </Scene>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>

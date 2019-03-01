@@ -7,16 +7,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Actions } from 'react-native-router-flux';
 import styles from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import eventActions from '../store/actions/event'
-import { getActionAndDes, ActionUtils } from '../utils/eventUtils'
 import EventItem from './widget/EventItem'
 import PullListView from './widget/PullLoadMoreListView'
-import * as Config from '../config'
-import { getNewsVersion } from './AboutPage'
+import { Actions } from 'react-native-router-flux';
 
 
 /**
@@ -24,95 +21,97 @@ import { getNewsVersion } from './AboutPage'
  */
 class DynamicPage extends Component {
     constructor(props) {
+        // props 来自高阶组件 connect
         super(props);
         this._renderRow = this._renderRow.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this.startRefresh = this.startRefresh.bind(this);
-        this.page = 1;
+        this.page = 0;
         this.appState = 'active';
     }
 
-    // componentDidMount() {
-    //     InteractionManager.runAfterInteractions(() => {
-    //         this.startRefresh();
-    //         getNewsVersion();
-    //     });
-    //     AppState.addEventListener('change', this._handleAppStateChange);
-    // }
+    componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+            this.startRefresh();
+        });
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
 
-    // componentWillUnmount() {
-    //     AppState.removeEventListener('change', this._handleAppStateChange);
-    // }
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
 
-    // startRefresh() {
-    //     if (this.refs.pullList)
-    //         this.refs.pullList.showRefreshState();
-    //     this._refresh();
-    // }
+    startRefresh() {
+        if (this.refs.pullList)
+            this.refs.pullList.showRefreshState();
+        this._refresh();
+    }
 
-    // _handleAppStateChange = (nextAppState) => {
-    //     if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
-    //         if (this.refs.pullList)
-    //             this.refs.pullList.scrollToTop();
-    //         this.startRefresh();
-    //     }
-    //     this.appState = nextAppState;
-    // };
+    _handleAppStateChange = (nextAppState) => {
+        if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
+            if (this.refs.pullList)
+                this.refs.pullList.scrollToTop();
+            this.startRefresh();
+        }
+        this.appState = nextAppState;
+    };
 
-    // _renderRow(rowData) {
-    //     let res = getActionAndDes(rowData);
-    //     return (
-    //         <EventItem
-    //             actionTime={rowData.created_at}
-    //             actionUser={rowData.actor.display_login}
-    //             actionUserPic={rowData.actor.avatar_url}
-    //             des={res.des}
-    //             onPressItem={() => {
-    //                 ActionUtils(rowData)
-    //             }}
-    //             actionTarget={res.actionStr}/>
-    //     )
-    // }
+    _renderRow(rowData) {
+        return (
+            <EventItem
+                actionTime={rowData.created_at}
+                onPressItem={() => {
+                    Actions.reset('root')
+                }}
+                actionUser={rowData.user.username}
+                actionTarget={rowData.title}
+                actionComment={rowData.comment.length}
+            />
+        )
+    }
 
-    // /**
-    //  * 刷新
-    //  * */
-    // _refresh() {
-    //     let {eventAction} = this.props;
-    //     eventAction.getEventReceived(0, (res) => {
-    //         this.page = 2;
-    //         setTimeout(() => {
-    //             if (this.refs.pullList) {
-    //                 this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
-    //             }
-    //         }, 500);
-    //     })
-    // }
+    /**
+     * 刷新
+     * */
+    _refresh() {
+        let { eventAction }= this.props;
+        this.page = 0;
+        eventAction.getEventReceived(0, (res) => {
+            setTimeout(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0));
+                }
+            }, 500);
+        })
+    }
 
-    // /**
-    //  * 加载更多
-    //  * */
-    // _loadMore() {
-    //     let {eventAction} = this.props;
-    //     eventAction.getEventReceived(this.page, (res) => {
-    //         this.page++;
-    //         setTimeout(() => {
-    //             if (this.refs.pullList) {
-    //                 this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
-    //             }
-    //         }, 300);
-    //     });
-    // }
+    /**
+     * 加载更多
+     * */
+    _loadMore() {
+        let { eventAction } = this.props;
+        this.page++;
+        eventAction.getEventReceived(this.page, (res) => {
+            setTimeout(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0));
+                }
+            }, 300);
+        });
+    }
 
 
     render() {
-        let {eventState, userState} = this.props;
+        let { eventState } = this.props;
         let dataSource = (eventState.received_events_data_list);
         return (
             <View style={styles.mainBox}>
-                <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
+                <StatusBar hidden={false} 
+                           backgroundColor={'transparent'} 
+                           translucent 
+                           barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"

@@ -12,9 +12,7 @@ import {
     Keyboard,
     Easing
 } from 'react-native';
-import PropTypes from 'prop-types';
 import LottieView from 'lottie-react-native';
-import Modal from 'react-native-modalbox';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconC from 'react-native-vector-icons/Entypo';
@@ -32,7 +30,6 @@ const animaTime = 600;
 class LoginPage extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.onOpen = this.onOpen.bind(this);
         this.onClose = this.onClose.bind(this);
         this.userInputChange = this.userInputChange.bind(this);
@@ -172,7 +169,6 @@ class LoginPage extends Component {
         Actions.LoadingModal({backExit: false});
         Keyboard.dismiss();
         login.doRegister(this.params.userName, this.params.password, (res) => {
-            console.log(res);
             if (!res.code) {
                 Toast(res.msg)
             } else {
@@ -308,7 +304,7 @@ class LoginPage extends Component {
 }
 
 export default connect(state => ({
-    state
+    state,
 }), dispatch => ({
     login: bindActionCreators(loginActions, dispatch)
 }))(LoginPage)
