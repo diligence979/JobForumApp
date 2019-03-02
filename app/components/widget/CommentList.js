@@ -2,26 +2,21 @@ import React, { Component } from 'react'
 import {
     View,
     AppState, 
-    StatusBar, 
+    Text,
     InteractionManager
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import styles from "../style"
-import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
-import eventActions from '../store/actions/event'
-import EventItem from './widget/EventItem'
-import PullListView from './widget/PullLoadMoreListView'
-import { ActionUtils } from '../utils/eventUtil'
+import PropTypes from 'prop-types'
+import Icon from 'react-native-vector-icons/Feather'
+import commentAction from '../../store/actions/comment'
+import PullListView from './PullLoadMoreListView'
+import CommentItem from './CommentItem'
+import * as Constant from '../../style/constant'
+import styles from '../../style'
 
-
-/**
- * 动态 -> 论坛广场，论坛动态
- */
-class DynamicPage extends Component {
+class CommentList extends Component {
     constructor(props) {
-        // props 来自高阶组件 connect
         super(props)
         this._renderRow = this._renderRow.bind(this)
         this._refresh = this._refresh.bind(this)
@@ -56,30 +51,23 @@ class DynamicPage extends Component {
             this.startRefresh() 
         }
         this.appState = nextAppState 
-    } 
+    }
 
     _renderRow(rowData) {
-        let { user, title, comment_size, created_at } = rowData
+        let { user, content, created_at } = rowData
         return (
-            <EventItem
-                actionTime={created_at}
-                onPressItem={() => {
-                    ActionUtils(rowData)
-                }}
-                actionUser={user.username}
-                actionTarget={title}
-                actionComment={comment_size}
+            <CommentItem 
+                username={user.username}
+                content={content}
+                created_at={created_at}
             />
         )
     }
 
-    /**
-     * 刷新
-     * */
     _refresh() {
-        let { eventAction }= this.props 
+        let { commentAction, type, id }= this.props 
         this.page = 0 
-        eventAction.getEventReceived(0, (res) => {
+        commentAction.getCommentReceived(0, type, id, (res) => {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
@@ -88,13 +76,10 @@ class DynamicPage extends Component {
         })
     }
 
-    /**
-     * 加载更多
-     * */
     _loadMore() {
-        let { eventAction } = this.props 
+        let { commentAction, type, id } = this.props 
         this.page++ 
-        eventAction.getEventReceived(this.page, (res) => {
+        commentAction.getCommentReceived(this.page, type, id, (res) => {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
@@ -103,16 +88,28 @@ class DynamicPage extends Component {
         }) 
     }
 
-
     render() {
-        let { eventState } = this.props 
-        let dataSource = (eventState.received_events_data_list) 
+        let { commentState } = this.props
+        let dataSource = (commentState.received_comments_data_list)
+        let count = (commentState.received_comments_current_size)
+        console.log(count)
         return (
-            <View style={styles.mainBox}>
-                <StatusBar hidden={false} 
-                           backgroundColor={'transparent'} 
-                           translucent 
-                           barStyle={'light-content'}/>
+            <View style={[{
+                flex: 1,
+                marginTop: Constant.normalMarginEdge / 2,
+                marginLeft: Constant.normalMarginEdge,
+                marginRight: Constant.normalMarginEdge,
+                padding: Constant.normalMarginEdge,
+                borderRadius: 4,
+                }, styles.shadowCard]}>
+                <View style={[styles.flexDirectionRowNotFlex]}>
+                    <Text style={[styles.subSmallText, {
+                        fontSize: 12,
+                    }]}>
+                        {count}条评论
+                        <Icon name="chevrons-down" size={16} color="#959595" />
+                    </Text>
+                </View>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
@@ -128,12 +125,13 @@ class DynamicPage extends Component {
     }
 }
 
+CommentList.propTypes = {
+    type: PropTypes.string,
+    id: PropTypes.number
+}
+
 export default connect(state => ({
-    userState: state.user,
-    loginState: state.login,
-    eventState: state.event,
+    commentState: state.comment,
 }), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch),
-    eventAction: bindActionCreators(eventActions, dispatch)
-}))(DynamicPage)
+    commentAction: bindActionCreators(commentAction, dispatch)
+}))(CommentList)

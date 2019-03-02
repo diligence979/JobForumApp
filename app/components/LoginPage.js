@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react' 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -11,34 +11,34 @@ import {
     BackHandler,
     Keyboard,
     Easing
-} from 'react-native';
-import LottieView from 'lottie-react-native';
-import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import IconC from 'react-native-vector-icons/Entypo';
-import { Fumi } from 'react-native-textinput-effects';
+} from 'react-native' 
+import LottieView from 'lottie-react-native' 
+import { Actions } from 'react-native-router-flux' 
+import Icon from 'react-native-vector-icons/FontAwesome' 
+import IconC from 'react-native-vector-icons/Entypo' 
+import { Fumi } from 'react-native-textinput-effects' 
 import loginActions from '../store/actions/login'
 import Toast from './common/ToastProxy'
 import styles, { screenHeight, screenWidth } from "../style"
 import * as Constant from "../style/constant"
 
-const animaTime = 600;
+const animaTime = 600 
 
 /**
  * 登陆Modal
  */
 class LoginPage extends Component {
     constructor(props) {
-        super(props);
-        this.onOpen = this.onOpen.bind(this);
-        this.onClose = this.onClose.bind(this);
-        this.userInputChange = this.userInputChange.bind(this);
-        this.passwordChange = this.passwordChange.bind(this);
-        this.toLogin = this.toLogin.bind(this);
+        super(props) 
+        this.onOpen = this.onOpen.bind(this) 
+        this.onClose = this.onClose.bind(this) 
+        this.userInputChange = this.userInputChange.bind(this) 
+        this.passwordChange = this.passwordChange.bind(this) 
+        this.toLogin = this.toLogin.bind(this) 
         this.params = {
             userName: '',
             password: ''
-        };
+        } 
         this.state = {
             saveUserName: '',
             savePassword: '',
@@ -47,32 +47,32 @@ class LoginPage extends Component {
             opacity: new Animated.Value(0),
             progress: new Animated.Value(0),
         }
-        this.thisUnmount = false;
+        this.thisUnmount = false 
     }
 
     componentDidMount() {
-        this.onOpen();
+        this.onOpen() 
         this.handle = BackHandler.addEventListener('hardwareBackPress-LoginPage', this.onClose)
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 1,
-        }).start();
-        this.startAnimation();
+        }).start() 
+        this.startAnimation() 
     }
 
     componentWillUnmount() {
-        this.thisUnmount = true;
+        this.thisUnmount = true 
         if (this.handle) {
-            this.handle.remove();
+            this.handle.remove() 
         }
         if (this.refs.lottieView) {
-            this.refs.lottieView.reset();
+            this.refs.lottieView.reset() 
         }
     }
 
     startAnimation() {
         if (this.thisUnmount) {
-            return;
+            return 
         }
         Animated.timing(this.state.progress, {
             toValue: 1,
@@ -80,14 +80,14 @@ class LoginPage extends Component {
             easing: Easing.linear
         }).start(({finished}) => {
             // if (!finished) {
-            //     return;
+            //     return 
             // }
             // //重复播放
             // this.setState({
             //     progress: new Animated.Value(0),
-            // });
+            // }) 
             // this.startAnimation()
-        });
+        }) 
     }
 
     onOpen() {
@@ -95,84 +95,84 @@ class LoginPage extends Component {
             this.setState({
                 saveUserName: res.userName,
                 savePassword: res.password
-            });
-            this.params.userName = res.userName;
-            this.params.password = res.password;
-        });
+            }) 
+            this.params.userName = res.userName 
+            this.params.password = res.password 
+        }) 
     }
 
     onClose() {
         if (Actions.state.index === 0) {
-            return false;
+            return false 
         }
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 0,
-        }).start(Actions.pop());
-        return true;
+        }).start(Actions.pop()) 
+        return true 
     }
 
     userInputChange(text) {
-        this.params.userName = text;
+        this.params.userName = text 
     }
 
     passwordChange(text) {
-        this.params.password = text;
+        this.params.password = text 
     }
 
     exitLoading() {
         if (Actions.currentScene === 'LoadingModal') {
-            Actions.pop();
+            Actions.pop() 
         }
     }
 
     toLogin() {
-        let { login } = this.props;
+        let { login } = this.props 
         if (!this.params.userName || this.params.userName.length === 0) {
-            Toast('请输入用户名！');
+            Toast('请输入用户名！') 
             return
         }
         if (!this.params.password || this.params.password.length === 0) {
-            Toast('请输入密码！');
+            Toast('请输入密码！') 
             return
         }
         this.setState({
             saveUserName: this.params.userName,
             savePassword: this.params.password
-        });
-        Actions.LoadingModal({backExit: false});
-        Keyboard.dismiss();
+        }) 
+        Actions.LoadingModal({backExit: false}) 
+        Keyboard.dismiss() 
         login.doLogin(this.params.userName, this.params.password, (res) => {
-            this.exitLoading();
+            this.exitLoading() 
             if (!res.code) {
-                Toast('登录失败！');
+                Toast('登录失败！') 
             } else {
-                Actions.reset("root");
+                Actions.reset("root") 
             }
         })
     }
 
     toRegister() {
-        let { login } = this.props;
+        let { login } = this.props 
         if (!this.params.userName || this.params.userName.length === 0) {
-            Toast('请输入用户名！');
+            Toast('请输入用户名！') 
             return
         }
         if (!this.params.password || this.params.password.length === 0) {
-            Toast('请输入密码！');
+            Toast('请输入密码！') 
             return
         }
         this.setState({
             saveUserName: this.params.userName,
             savePassword: this.params.password
-        });
-        Actions.LoadingModal({backExit: false});
-        Keyboard.dismiss();
+        }) 
+        Actions.LoadingModal({backExit: false}) 
+        Keyboard.dismiss() 
         login.doRegister(this.params.userName, this.params.password, (res) => {
             if (!res.code) {
                 Toast(res.msg)
             } else {
-                Actions.reset("root");
+                Actions.reset("root") 
             }
         })
     }
@@ -186,7 +186,7 @@ class LoginPage extends Component {
             iconColor: Constant.primaryColor,
             iconSize: 25,
             clearButtonMode: "always"
-        };
+        } 
         return (
             <Animated.View
                 style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
@@ -255,7 +255,7 @@ class LoginPage extends Component {
                                         savePassword: this.params.password,
                                         secureIcon: (this.state.secureTextEntry) ? "eye" : "eye-with-line",
                                         secureTextEntry: !this.state.secureTextEntry,
-                                    });
+                                    }) 
                                 }}>
                                 <IconC name={this.state.secureIcon}
                                        backgroundColor={Constant.transparentColor}
@@ -269,7 +269,7 @@ class LoginPage extends Component {
                     <TouchableOpacity 
                         style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
                         onPress={() => {
-                            this.toLogin();
+                            this.toLogin() 
                         }}>
                         <View
                             style={[styles.centered, {
@@ -284,7 +284,7 @@ class LoginPage extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
                                       onPress={() => {
-                                          this.toRegister();
+                                          this.toRegister() 
                                       }}>
                         <View
                             style={[styles.centered, {

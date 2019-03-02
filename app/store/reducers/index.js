@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import login from "./login"
+import login from './login'
 // import user from "./user"
-import event from "./event"
-// import repository from "./repository"
+import event from './event'
+import comment from './comment'
 // import issue from "./issue"
 
 
@@ -10,7 +10,7 @@ export default combineReducers({
     login: login,
     // user: user,
     event: event,
-    // repository: repository,
+    comment: comment
     // issue: issue,
 });
 

@@ -13,6 +13,8 @@ import TrendPage from './components/TrendPage'
 import MyPage from './components/MyPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/common/LoadingModal'
+import CustomBackButton from './components/widget/CustomBackButton'
+import PostDetail from './components/PostDetailPage'
 
 import styles from './style'
 import * as Constant from "./style/constant"
@@ -70,6 +72,10 @@ const getRouter = () => {
                             tabIconName={'tabMy'}
                         />
                     </Scene>
+                    <Scene key="PostDetail" component={PostDetail}
+                           iconType={2}
+                           renderLeftButton={() => <CustomBackButton />}
+                    />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>

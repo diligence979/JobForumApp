@@ -20,17 +20,31 @@ const createUser = async (username, password) => {
         password: password
     }).catch(function (error) {
         return error.response 
-    });
+    })
 }
 
-const getPost = async (page) => {
-    return axios.get(host + post + '?offset=' + `${page}`).catch(function (error) {
+const getPost = async (offset) => {
+    return axios.get(host + post + '?offset=' + `${offset}`).catch(function (error) {
         return error.response 
-    });
+    })
+}
+
+const getPostComment = async (offset, postId) => {
+    return axios.get(host + 'users/' + comment + '?offset=' + `${offset}` + '&post_id=' + postId).catch(function (error) {
+        return error.response 
+    })
+}
+
+const getAdComment = async (offset, adId) => {
+    return axios.get(host + 'users/' + comment + '?offset=' + `${offset}` + '&ad_id=' + postId).catch(function (error) {
+        return error.response 
+    })
 }
 
 export default {
     userLogin,
     createUser,
-    getPost
+    getPost,
+    getPostComment,
+    getAdComment
 }

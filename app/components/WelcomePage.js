@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react' 
 import {
     View, 
     Image, 
@@ -6,14 +6,14 @@ import {
     Platform, 
     Animated, 
     Easing
-} from 'react-native';
-import { Actions } from 'react-native-router-flux';
+} from 'react-native' 
+import { Actions } from 'react-native-router-flux' 
 import styles, { screenHeight, screenWidth } from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import LottieView from 'lottie-react-native';
+import LottieView from 'lottie-react-native' 
 import * as Constant from "../style/constant"
 
 /**
@@ -21,39 +21,39 @@ import * as Constant from "../style/constant"
  */
 class WelcomePage extends Component {
     constructor(props) {
-        super(props);
-        this.toNext = this.toNext.bind(this);
+        super(props) 
+        this.toNext = this.toNext.bind(this) 
         this.state = {
             progress: new Animated.Value(0),
-        };
+        } 
     }
 
     componentDidMount() {
         // 是否登陆，是否用户信息
         userActions.initUserInfo().then((res) => {
-            this.toNext(res);
-        });
+            this.toNext(res) 
+        }) 
         Animated.timing(this.state.progress, {
             toValue: 1,
             duration: 2000,
             easing: Easing.linear,
-        }).start();
+        }).start() 
     }
 
     componentWillUnmount() {
         if (this.refs.lottieView) {
-            this.refs.lottieView.reset();
+            this.refs.lottieView.reset() 
         }
     }
 
     toNext(res) {
         setTimeout(() => {
             if (res && res.result) {
-                Actions.reset("root");
+                Actions.reset("root") 
             } else {
-                Actions.reset("LoginPage");
+                Actions.reset("LoginPage") 
             }
-        }, 2100);
+        }, 2100) 
     }
 
     render() {
