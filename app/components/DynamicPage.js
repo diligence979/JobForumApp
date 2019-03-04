@@ -13,7 +13,7 @@ import userActions from '../store/actions/user'
 import postActions from '../store/actions/post'
 import PostItem from './widget/post/PostItem'
 import PullListView from './widget/PullLoadMoreListView'
-import { ActionUtils } from '../utils/postUtil'
+import { postUtil } from '../utils/ActionUtil'
 
 
 /**
@@ -63,12 +63,12 @@ class DynamicPage extends Component {
         return (
             <PostItem
                 actionTime={created_at}
-                onPressItem={() => {
-                    ActionUtils(rowData)
-                }}
                 actionUser={user.username}
                 actionTarget={title}
                 actionComment={comment_size}
+                onPressItem={() => {
+                    postUtil(rowData)
+                }}
             />
         )
     }

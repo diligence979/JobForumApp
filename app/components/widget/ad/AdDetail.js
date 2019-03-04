@@ -1,30 +1,25 @@
 import React, { Component } from 'react'
 import {
     View,
-    AppState, 
-    StatusBar,
+    AppState,
     Text,
     InteractionManager
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import styles from "../style"
-import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
-import adActions from '../store/actions/ad'
-import AdItem from './widget/ad/AdItem'
-import PullListView from './widget/PullLoadMoreListView'
-import { adUtil } from '../utils/ActionUtil'
+import PropTypes from 'prop-types'
+import commentAction from '../../../store/actions/comment'
+import PullListView from '../PullLoadMoreListView'
+import AdDetailItem from './AdDetailItem'
+import CommentItem from '../comment/CommentItem'
+import * as Constant from '../../../style/constant'
+import styles from '../../../style'
 
-
-/**
- * 推荐 -> 招聘广场，招聘动态
- */
-class TrendPage extends Component {
+class AdDetail extends Component {
     constructor(props) {
-        // props 来自高阶组件 connect
         super(props)
         this._renderRow = this._renderRow.bind(this)
+        this._renderHeader = this._renderHeader.bind(this);
         this._refresh = this._refresh.bind(this)
         this._loadMore = this._loadMore.bind(this)
         this._handleAppStateChange = this._handleAppStateChange.bind(this)
@@ -57,33 +52,52 @@ class TrendPage extends Component {
             this.startRefresh() 
         }
         this.appState = nextAppState 
-    } 
+    }
 
     _renderRow(rowData) {
-        let { company, created_at, job, location, salary, education, comment_size } = rowData
+        let { user, content, created_at } = rowData
         return (
-            <AdItem
-                company={company}
+            <CommentItem 
+                username={user.username}
+                content={content}
                 created_at={created_at}
-                job={job}
-                location={location}
-                salary={salary}
-                education={education}
-                comment_size={comment_size}
-                onPressItem={() => {
-                    adUtil(rowData)
-                }}
             />
         )
     }
 
-    /**
-     * 刷新
-     * */
+    _renderHeader(adInfo) {
+        let { 
+            company,
+            created_at,
+            job,
+            education,
+            location,
+            salary,
+            team,
+            jd,
+            email,
+            comment_size
+         } = adInfo
+        return (
+            <AdDetailItem 
+                company={company}
+                created_at={created_at}
+                job={job}
+                education={education} 
+                location={location}
+                salary={salary}
+                team={team}
+                jd={jd}
+                email={email}
+                comment_size={comment_size}
+            />
+        )
+    }
+
     _refresh() {
-        let { adAction }= this.props 
+        let { commentAction, type, id }= this.props 
         this.page = 0 
-        adAction.getAdReceived(0, (res) => {
+        commentAction.getCommentReceived(0, type, id, (res) => {
             this.page++
             setTimeout(() => {
                 if (this.refs.pullList) {
@@ -93,34 +107,34 @@ class TrendPage extends Component {
         })
     }
 
-    /**
-     * 加载更多
-     * */
     _loadMore() {
-        let { adAction } = this.props 
-        adAction.getAdReceived(this.page, (res) => {
+        let { commentAction, type, id } = this.props 
+        commentAction.getCommentReceived(this.page, type, id, (res) => {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
                 }
             }, 300) 
-        })
+        }) 
         this.page++
     }
 
-
     render() {
-        let { adState } = this.props 
-        let dataSource = (adState.received_ads_data_list) 
+        let { commentState, adInfo } = this.props
+        let dataSource = (commentState.received_comments_data_list)
         return (
-            <View style={styles.mainBox}>
-                <StatusBar hidden={false} 
-                           backgroundColor={'transparent'} 
-                           translucent 
-                           barStyle={'light-content'}/>
+            <View style={[{
+                flex: 1,
+                marginTop: Constant.normalMarginEdge / 2,
+                marginLeft: Constant.normalMarginEdge,
+                marginRight: Constant.normalMarginEdge,
+                padding: Constant.normalMarginEdge,
+                borderRadius: 4,
+                }, styles.shadowCard]}>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
+                    renderHeader={this._renderHeader(adInfo)}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
@@ -133,12 +147,14 @@ class TrendPage extends Component {
     }
 }
 
+AdDetail.propTypes = {
+    type: PropTypes.string,
+    id: PropTypes.number,
+    adInfo: PropTypes.object
+}
+
 export default connect(state => ({
-    userState: state.user,
-    loginState: state.login,
-    adState: state.ad,
+    commentState: state.comment,
 }), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch),
-    adAction: bindActionCreators(adActions, dispatch)
-}))(TrendPage)
+    commentAction: bindActionCreators(commentAction, dispatch)
+}))(AdDetail)

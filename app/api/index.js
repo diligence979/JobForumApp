@@ -36,7 +36,7 @@ const getPostComment = async (offset, postId) => {
 }
 
 const getAdComment = async (offset, adId) => {
-    return axios.get(host + 'users/' + comment + '?offset=' + `${offset}` + '&ad_id=' + postId).catch(function (error) {
+    return axios.get(host + 'users/' + comment + '?offset=' + `${offset}` + '&ad_id=' + adId).catch(function (error) {
         return error.response 
     })
 }

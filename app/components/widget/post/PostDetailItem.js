@@ -68,11 +68,12 @@ class PostDetailItem extends Component {
                 <View style={[styles.flexDirectionRowNotFlex, {
                     marginTop: Constant.normalMarginEdge * 5
                 }]}>
-                    <Text style={[styles.subSmallText, {
+                    <Text style={{
+                        color: "#959595",
                         fontSize: 12,
-                    }]}>
+                    }}>
                         {count}条评论
-                        <Icon name="chevrons-down" size={16} color="#959595" />
+                        <Icon name="chevrons-down" size={12} />
                     </Text>
                 </View>
             </View>

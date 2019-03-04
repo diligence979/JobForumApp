@@ -21,12 +21,6 @@ class PostItem extends Component {
 
     render() {
         let { actionTime, actionUser, actionUserPic, actionComment, actionTarget } = this.props
-        let bottomDes = (this.props.des) ?
-            <Text style={[styles.subSmallText,
-                {marginTop: Constant.normalMarginEdge,}]}
-                  numberOfLines={Constant.normalNumberOfLine}>
-                {this.props.des}
-            </Text> : <View/>
         let pic = (actionUserPic) ? <UserImage uri={actionUserPic}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
@@ -65,17 +59,17 @@ class PostItem extends Component {
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
                     <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
                 </View>
+                {/* 评论数 */}
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     <Text style={[styles.flex, styles.smallText, {
                         fontWeight: "100",
                         color: "grey",
                         textAlign: "right"
                     }]}>
-                    <Icon name="message-square" size={16} color="#959595" />
-                        {actionComment}
+                        <Icon name="message-square" size={14} />
+                        {' ' + actionComment}
                     </Text>
                 </View>
-                {bottomDes}
             </TouchableOpacity>
         )
     }

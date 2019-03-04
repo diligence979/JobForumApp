@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
     View,
     AppState, 
-    Text,
     InteractionManager
 } from 'react-native'
 import { connect } from 'react-redux'
@@ -94,7 +93,6 @@ class PostDetail extends Component {
     _loadMore() {
         let { commentAction, type, id } = this.props 
         commentAction.getCommentReceived(this.page, type, id, (res) => {
-            console.log('loadmore', res, res.count-this.page*30)
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 

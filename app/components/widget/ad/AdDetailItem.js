@@ -1,36 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react' 
 import {
-    View, 
-    Text, 
-    TouchableOpacity
+    View,
+    Text
 } from 'react-native'
 import PropTypes from 'prop-types'
-import styles from '../../../style'
-import * as Constant from '../../../style/constant'
-import TimeText from '../TimeText'
-import UserImage from '../UserImage'
 import Icon from 'react-native-vector-icons/Feather'
+import TimeText from '../TimeText'
+import * as Constant from '../../../style/constant'
+import styles from '../../../style'
 
-class AdItem extends Component {
+class AdDetailItem extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
-        let { company, created_at, job, education, location, salary, comment_size } = this.props
-        return(
-            <TouchableOpacity
+        let { 
+            company,
+            created_at,
+            job,
+            education,
+            location,
+            salary,
+            team,
+            jd,
+            email,
+            comment_size
+         } = this.props
+        return (
+            <View
                 style={[{
                     marginTop: Constant.normalMarginEdge / 2,
-                    marginLeft: Constant.normalMarginEdge,
-                    marginRight: Constant.normalMarginEdge,
                     marginBottom: Constant.normalMarginEdge / 2,
                     padding: Constant.normalMarginEdge,
                     borderRadius: 4,
-                }, styles.shadowCard]}
-                onPress={() => {
-                    this.props.onPressItem && this.props.onPressItem()
-                }}
+                }]}
             >
                 {/* 公司 */}
                 <View style={[styles.flexDirectionRowNotFlex, {
@@ -46,6 +50,17 @@ class AdItem extends Component {
                                   time={created_at}/>
                     </View>
                 </View>
+                {/* 团队 */}
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    marginBottom: Constant.normalMarginEdge
+                }]}>
+                    <Icon name="users" size={16} color="#959595" style={{
+                        marginRight: Constant.normalMarginEdge
+                    }}/>
+                    <Text style={[styles.flex, styles.smallText]}>
+                        团队：{team}
+                    </Text>
+                </View>
                 {/* 岗位 */}
                 <View style={[styles.flexDirectionRowNotFlex, {
                     marginBottom: Constant.normalMarginEdge
@@ -54,7 +69,7 @@ class AdItem extends Component {
                         marginRight: Constant.normalMarginEdge
                     }}/>
                     <Text style={[styles.flex, styles.smallText]}>
-                        {job}
+                        岗位：{job}
                     </Text>
                 </View>
                 {/* 学历 */}
@@ -65,7 +80,7 @@ class AdItem extends Component {
                         marginRight: Constant.normalMarginEdge
                     }}/>
                     <Text style={[styles.flex, styles.smallText]}>
-                        {education}
+                        学历：{education}
                     </Text>
                 </View>
                 {/* 工作地点 */}
@@ -76,7 +91,7 @@ class AdItem extends Component {
                         marginRight: Constant.normalMarginEdge
                     }}/>
                     <Text style={[styles.flex, styles.smallText]}>
-                        {location}
+                        地点：{location}
                     </Text>
                 </View>
                 {/* 薪水 */}
@@ -87,33 +102,59 @@ class AdItem extends Component {
                         marginRight: Constant.normalMarginEdge
                     }}/>
                     <Text style={[styles.flex, styles.smallText]}>
-                        {salary}
+                        待遇：{salary}
                     </Text>
+                </View>
+                {/* 邮箱 */}
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    marginBottom: Constant.normalMarginEdge
+                }]}>
+                    <Icon name="mail" size={16} color="#959595" style={{
+                        marginRight: Constant.normalMarginEdge
+                    }}/>
+                    <Text style={[styles.flex, styles.smallText]}>
+                        邮箱：{email}
+                    </Text>
+                </View>
+                {/* 岗位职责 */}
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    marginBottom: Constant.normalMarginEdge
+                }]}>
+                    <Icon name="user-plus" size={16} color="#959595" style={{
+                        marginRight: Constant.normalMarginEdge
+                    }}/>
+                    <Text style={[styles.flex, styles.smallText]}>
+                        岗位职责：
+                    </Text>
+                    <View style={[styles.flexDirectionRowNotFlex]}>
+                        <Text style={[styles.flex, styles.smallText]}>
+                            {jd}
+                        </Text>
+                    </View>
                 </View>
                 {/* 评论数 */}
-                <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Text style={[styles.flex, styles.smallText, {
-                        fontWeight: "100",
-                        color: "grey",
-                        textAlign: "right"
-                    }]}>
-                        <Icon name="message-square" size={14} />
-                        {' ' + comment_size}
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    marginTop: Constant.normalMarginEdge * 5
+                }]}>
+                    <Text style={{
+                        color: "#959595",
+                        fontSize: 12,
+                    }}>
+                        {comment_size}条评论
+                        <Icon name="chevrons-down" size={12} />
                     </Text>
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
 
-AdItem.propTypes = {
-    company: PropTypes.string,
-    created_at: PropTypes.string,
-    job: PropTypes.string,
-    location: PropTypes.string,
-    salary: PropTypes.string,
-    education: PropTypes.string,
-    comment_size: PropTypes.number
+AdDetailItem.propTypes = {
+    user: PropTypes.object,
+    count: PropTypes.number,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    created_at: PropTypes.string
 }
 
-export default AdItem
+export default AdDetailItem
