@@ -114,7 +114,7 @@ class PullLoadMoreListView extends Component {
                            resizeMode={"contain"}
                            style={{width: 80, height: 80}}/>
                     <Text style={[styles.normalText]}>
-                        {'列表加载中...'}
+                        {'列表为空...'}
                     </Text>
                 </TouchableOpacity>
             </View> : <View/>;

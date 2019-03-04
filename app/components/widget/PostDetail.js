@@ -8,17 +8,18 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import Icon from 'react-native-vector-icons/Feather'
 import commentAction from '../../store/actions/comment'
 import PullListView from './PullLoadMoreListView'
+import PostItem from './PostItem'
 import CommentItem from './CommentItem'
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 
-class CommentList extends Component {
+class PostDetail extends Component {
     constructor(props) {
         super(props)
         this._renderRow = this._renderRow.bind(this)
+        this._renderHeader = this._renderHeader.bind(this);
         this._refresh = this._refresh.bind(this)
         this._loadMore = this._loadMore.bind(this)
         this._handleAppStateChange = this._handleAppStateChange.bind(this)
@@ -64,35 +65,48 @@ class CommentList extends Component {
         )
     }
 
+    _renderHeader(postInfo) {
+        let { user, title, content, created_at, comment_size } = postInfo
+        return (
+            <PostItem 
+                user={user}
+                count={comment_size}
+                title={title}
+                content={content} 
+                created_at={created_at}
+            />
+        )
+    }
+
     _refresh() {
         let { commentAction, type, id }= this.props 
         this.page = 0 
         commentAction.getCommentReceived(0, type, id, (res) => {
+            this.page++
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
                 }
-            }, 500) 
+            }, 0) 
         })
     }
 
     _loadMore() {
         let { commentAction, type, id } = this.props 
-        this.page++ 
         commentAction.getCommentReceived(this.page, type, id, (res) => {
+            console.log('loadmore', res, res.count-this.page*30)
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
                 }
-            }, 300) 
+            }, 0) 
         }) 
+        this.page++
     }
 
     render() {
-        let { commentState } = this.props
+        let { commentState, postInfo } = this.props
         let dataSource = (commentState.received_comments_data_list)
-        let count = (commentState.received_comments_current_size)
-        console.log(count)
         return (
             <View style={[{
                 flex: 1,
@@ -102,17 +116,10 @@ class CommentList extends Component {
                 padding: Constant.normalMarginEdge,
                 borderRadius: 4,
                 }, styles.shadowCard]}>
-                <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Text style={[styles.subSmallText, {
-                        fontSize: 12,
-                    }]}>
-                        {count}条评论
-                        <Icon name="chevrons-down" size={16} color="#959595" />
-                    </Text>
-                </View>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
+                    renderHeader={this._renderHeader(postInfo)}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
@@ -125,7 +132,7 @@ class CommentList extends Component {
     }
 }
 
-CommentList.propTypes = {
+PostDetail.propTypes = {
     type: PropTypes.string,
     id: PropTypes.number
 }
@@ -134,4 +141,4 @@ export default connect(state => ({
     commentState: state.comment,
 }), dispatch => ({
     commentAction: bindActionCreators(commentAction, dispatch)
-}))(CommentList)
+}))(PostDetail)

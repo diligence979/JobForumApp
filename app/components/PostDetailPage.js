@@ -4,9 +4,7 @@ import {
     StatusBar
 } from 'react-native'
 import PropTypes from 'prop-types'
-import PostItem from './widget/PostItem'
-import CommentList from './widget/CommentList'
-import * as Constant from '../style/constant'
+import PostDetail from './widget/PostDetail'
 import styles from '../style'
 
 class PostDetailPage extends Component {
@@ -16,22 +14,17 @@ class PostDetailPage extends Component {
 
     render () {
         let { rowData } = this.props
-        let { id, user, title, content, created_at } = rowData
+        let { id } = rowData
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
                            backgroundColor={'transparent'} 
                            translucent 
                            barStyle={'light-content'}/>
-                <PostItem 
-                    user={user}
-                    title={title}
-                    content={content} 
-                    created_at={created_at}
-                />
-                <CommentList 
+                <PostDetail 
                     type={'post'}
                     id={id}
+                    postInfo={rowData}
                 />
             </View>
         )

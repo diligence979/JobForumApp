@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import {
     View, 
-    Text, 
-    TouchableOpacity
+    Text
 } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from '../../style'
 import * as Constant from '../../style/constant'
 import TimeText from './TimeText'
 import UserImage from './UserImage'
-import Icon from 'react-native-vector-icons/Feather'
-import user from '../../store/actions/user'
+
 
 class CommentItem extends Component {
     constructor(props) {

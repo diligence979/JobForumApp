@@ -80,6 +80,7 @@ class DynamicPage extends Component {
         let { eventAction }= this.props 
         this.page = 0 
         eventAction.getEventReceived(0, (res) => {
+            this.page++
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
@@ -93,14 +94,14 @@ class DynamicPage extends Component {
      * */
     _loadMore() {
         let { eventAction } = this.props 
-        this.page++ 
         eventAction.getEventReceived(this.page, (res) => {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
                 }
             }, 300) 
-        }) 
+        })
+        this.page++
     }
 
 
