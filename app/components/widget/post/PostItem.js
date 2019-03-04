@@ -1,29 +1,33 @@
 import React, { Component } from 'react'
 import {
     View, 
-    Text
+    Text, 
+    TouchableOpacity
 } from 'react-native'
 import PropTypes from 'prop-types'
-import styles from '../../style'
-import * as Constant from '../../style/constant'
-import TimeText from './TimeText'
-import UserImage from './UserImage'
+import styles from '../../../style'
+import * as Constant from '../../../style/constant'
+import TimeText from '../TimeText'
+import UserImage from '../UserImage'
+import Icon from 'react-native-vector-icons/Feather'
 
-
-class CommentItem extends Component {
+/**
+ * 帖子列表
+ */
+class PostItem extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
-        let { username, content, created_at, userpic } = this.props
+        let { actionTime, actionUser, actionUserPic, actionComment, actionTarget } = this.props
         let bottomDes = (this.props.des) ?
             <Text style={[styles.subSmallText,
                 {marginTop: Constant.normalMarginEdge,}]}
                   numberOfLines={Constant.normalNumberOfLine}>
                 {this.props.des}
             </Text> : <View/>
-        let pic = (userpic) ? <UserImage uri={userpic}
+        let pic = (actionUserPic) ? <UserImage uri={actionUserPic}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
                                                style={[{
@@ -33,15 +37,18 @@ class CommentItem extends Component {
                                                    borderRadius: Constant.smallIconSize / 2
                                                }]}/> : <View/>
         return (
-            <View
+            <TouchableOpacity
                 style={[{
                     marginTop: Constant.normalMarginEdge / 2,
+                    marginLeft: Constant.normalMarginEdge,
+                    marginRight: Constant.normalMarginEdge,
                     marginBottom: Constant.normalMarginEdge / 2,
                     padding: Constant.normalMarginEdge,
-                    borderBottomColor: "#F4F4F4",
-                    borderBottomWidth: 1,
-                    borderStyle: "solid"
-                }]}
+                    borderRadius: 4,
+                }, styles.shadowCard]}
+                onPress={() => {
+                    this.props.onPressItem && this.props.onPressItem()
+                }}
             >
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     {pic}
@@ -49,25 +56,39 @@ class CommentItem extends Component {
                         <Text style={[styles.flex, styles.smallText, {
                             fontWeight: "bold",
                         }]}>
-                            {username}
+                            {actionUser}
                         </Text>
                         <TimeText style={[styles.subSmallText,{marginTop: 0}]}
-                                  time={created_at}/>
+                                  time={actionTime}/>
                     </View>
                 </View>
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
-                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{content}</Text>
+                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
+                </View>
+                <View style={[styles.flexDirectionRowNotFlex]}>
+                    <Text style={[styles.flex, styles.smallText, {
+                        fontWeight: "100",
+                        color: "grey",
+                        textAlign: "right"
+                    }]}>
+                    <Icon name="message-square" size={16} color="#959595" />
+                        {actionComment}
+                    </Text>
                 </View>
                 {bottomDes}
-            </View>
+            </TouchableOpacity>
         )
     }
 }
 
-CommentItem.propTypes = {
-    username: PropTypes.string,
-    content: PropTypes.string,
-    created_at: PropTypes.string
+PostItem.propTypes = {
+    actionTime: PropTypes.string,
+    actionUser: PropTypes.string,
+    actionUserPic: PropTypes.string,
+    actionMode: PropTypes.string,
+    actionTarget: PropTypes.string,
+    des: PropTypes.string,
+    onPressItem: PropTypes.func,
 }
 
-export default CommentItem
+export default PostItem

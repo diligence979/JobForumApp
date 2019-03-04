@@ -41,10 +41,18 @@ const getAdComment = async (offset, adId) => {
     })
 }
 
+const getAd = async (offset) => {
+    console.log(host + ad + '?offset=' + `${offset}`)
+    return axios.get(host + ad + '?offset=' + `${offset}`).catch(function (error) {
+        return error.response 
+    })
+}
+
 export default {
     userLogin,
     createUser,
     getPost,
     getPostComment,
-    getAdComment
+    getAdComment,
+    getAd
 }

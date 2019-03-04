@@ -1,33 +1,29 @@
 import React, { Component } from 'react'
 import {
     View, 
-    Text, 
-    TouchableOpacity
+    Text
 } from 'react-native'
 import PropTypes from 'prop-types'
-import styles from '../../style'
-import * as Constant from '../../style/constant'
-import TimeText from './TimeText'
-import UserImage from './UserImage'
-import Icon from 'react-native-vector-icons/Feather'
+import styles from '../../../style'
+import * as Constant from '../../../style/constant'
+import TimeText from '../TimeText'
+import UserImage from '../UserImage'
 
-/**
- * 帖子列表
- */
-class EventItem extends Component {
+
+class CommentItem extends Component {
     constructor(props) {
         super(props)
     }
 
     render() {
-        let { actionTime, actionUser, actionUserPic, actionComment, actionTarget } = this.props
+        let { username, content, created_at, userpic } = this.props
         let bottomDes = (this.props.des) ?
             <Text style={[styles.subSmallText,
                 {marginTop: Constant.normalMarginEdge,}]}
                   numberOfLines={Constant.normalNumberOfLine}>
                 {this.props.des}
             </Text> : <View/>
-        let pic = (actionUserPic) ? <UserImage uri={actionUserPic}
+        let pic = (userpic) ? <UserImage uri={userpic}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
                                                style={[{
@@ -37,18 +33,15 @@ class EventItem extends Component {
                                                    borderRadius: Constant.smallIconSize / 2
                                                }]}/> : <View/>
         return (
-            <TouchableOpacity
+            <View
                 style={[{
                     marginTop: Constant.normalMarginEdge / 2,
-                    marginLeft: Constant.normalMarginEdge,
-                    marginRight: Constant.normalMarginEdge,
                     marginBottom: Constant.normalMarginEdge / 2,
                     padding: Constant.normalMarginEdge,
-                    borderRadius: 4,
-                }, styles.shadowCard]}
-                onPress={() => {
-                    this.props.onPressItem && this.props.onPressItem()
-                }}
+                    borderBottomColor: "#F4F4F4",
+                    borderBottomWidth: 1,
+                    borderStyle: "solid"
+                }]}
             >
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     {pic}
@@ -56,39 +49,25 @@ class EventItem extends Component {
                         <Text style={[styles.flex, styles.smallText, {
                             fontWeight: "bold",
                         }]}>
-                            {actionUser}
+                            {username}
                         </Text>
                         <TimeText style={[styles.subSmallText,{marginTop: 0}]}
-                                  time={actionTime}/>
+                                  time={created_at}/>
                     </View>
                 </View>
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
-                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
-                </View>
-                <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Text style={[styles.flex, styles.smallText, {
-                        fontWeight: "100",
-                        color: "grey",
-                        textAlign: "right"
-                    }]}>
-                    <Icon name="message-square" size={16} color="#959595" />
-                        {actionComment}
-                    </Text>
+                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{content}</Text>
                 </View>
                 {bottomDes}
-            </TouchableOpacity>
+            </View>
         )
     }
 }
 
-EventItem.propTypes = {
-    actionTime: PropTypes.string,
-    actionUser: PropTypes.string,
-    actionUserPic: PropTypes.string,
-    actionMode: PropTypes.string,
-    actionTarget: PropTypes.string,
-    des: PropTypes.string,
-    onPressItem: PropTypes.func,
+CommentItem.propTypes = {
+    username: PropTypes.string,
+    content: PropTypes.string,
+    created_at: PropTypes.string
 }
 
-export default EventItem
+export default CommentItem

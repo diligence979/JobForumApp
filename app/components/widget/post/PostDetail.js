@@ -8,12 +8,12 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import commentAction from '../../store/actions/comment'
-import PullListView from './PullLoadMoreListView'
-import PostItem from './PostItem'
-import CommentItem from './CommentItem'
-import * as Constant from '../../style/constant'
-import styles from '../../style'
+import commentAction from '../../../store/actions/comment'
+import PullListView from '../PullLoadMoreListView'
+import PostDetailItem from './PostDetailItem'
+import CommentItem from '../comment/CommentItem'
+import * as Constant from '../../../style/constant'
+import styles from '../../../style'
 
 class PostDetail extends Component {
     constructor(props) {
@@ -68,7 +68,7 @@ class PostDetail extends Component {
     _renderHeader(postInfo) {
         let { user, title, content, created_at, comment_size } = postInfo
         return (
-            <PostItem 
+            <PostDetailItem 
                 user={user}
                 count={comment_size}
                 title={title}
@@ -87,7 +87,7 @@ class PostDetail extends Component {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
                 }
-            }, 0) 
+            }, 500) 
         })
     }
 
@@ -99,7 +99,7 @@ class PostDetail extends Component {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
                 }
-            }, 0) 
+            }, 300) 
         }) 
         this.page++
     }

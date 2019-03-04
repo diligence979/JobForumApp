@@ -8,11 +8,15 @@ export const USER = {
 }
 
 
-export const EVENT = {
-    RECEIVED_EVENTS: 'received_events',
+export const POST = {
+    RECEIVED_POSTS: 'received_posts',
 }
 
 
 export const COMMENT = {
     RECEIVED_COMMENTS: 'received_comments'
+}
+
+export const AD = {
+    RECEIVED_ADS: 'received_ads'
 }

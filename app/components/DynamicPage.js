@@ -10,10 +10,10 @@ import { bindActionCreators } from 'redux'
 import styles from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
-import eventActions from '../store/actions/event'
-import EventItem from './widget/EventItem'
+import postActions from '../store/actions/post'
+import PostItem from './widget/post/PostItem'
 import PullListView from './widget/PullLoadMoreListView'
-import { ActionUtils } from '../utils/eventUtil'
+import { ActionUtils } from '../utils/postUtil'
 
 
 /**
@@ -61,7 +61,7 @@ class DynamicPage extends Component {
     _renderRow(rowData) {
         let { user, title, comment_size, created_at } = rowData
         return (
-            <EventItem
+            <PostItem
                 actionTime={created_at}
                 onPressItem={() => {
                     ActionUtils(rowData)
@@ -77,9 +77,9 @@ class DynamicPage extends Component {
      * 刷新
      * */
     _refresh() {
-        let { eventAction }= this.props 
+        let { postAction }= this.props 
         this.page = 0 
-        eventAction.getEventReceived(0, (res) => {
+        postAction.getPostReceived(0, (res) => {
             this.page++
             setTimeout(() => {
                 if (this.refs.pullList) {
@@ -93,8 +93,8 @@ class DynamicPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        let { eventAction } = this.props 
-        eventAction.getEventReceived(this.page, (res) => {
+        let { postAction } = this.props 
+        postAction.getPostReceived(this.page, (res) => {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
@@ -106,8 +106,8 @@ class DynamicPage extends Component {
 
 
     render() {
-        let { eventState } = this.props 
-        let dataSource = (eventState.received_events_data_list) 
+        let { postState } = this.props 
+        let dataSource = (postState.received_posts_data_list) 
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -132,9 +132,9 @@ class DynamicPage extends Component {
 export default connect(state => ({
     userState: state.user,
     loginState: state.login,
-    eventState: state.event,
+    postState: state.post,
 }), dispatch => ({
     loginAction: bindActionCreators(loginActions, dispatch),
     userAction: bindActionCreators(userActions, dispatch),
-    eventAction: bindActionCreators(eventActions, dispatch)
+    postAction: bindActionCreators(postActions, dispatch)
 }))(DynamicPage)

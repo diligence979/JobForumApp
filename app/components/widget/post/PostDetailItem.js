@@ -5,12 +5,12 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Feather'
-import TimeText from './TimeText'
-import UserImage from './UserImage'
-import * as Constant from '../../style/constant'
-import styles from '../../style'
+import TimeText from '../TimeText'
+import UserImage from '../UserImage'
+import * as Constant from '../../../style/constant'
+import styles from '../../../style'
 
-class PostItem extends Component {
+class PostDetailItem extends Component {
     constructor(props) {
         super(props)
     }
@@ -80,7 +80,7 @@ class PostItem extends Component {
     }
 }
 
-PostItem.propTypes = {
+PostDetailItem.propTypes = {
     user: PropTypes.object,
     count: PropTypes.number,
     title: PropTypes.string,
@@ -88,4 +88,4 @@ PostItem.propTypes = {
     created_at: PropTypes.string
 }
 
-export default PostItem
+export default PostDetailItem

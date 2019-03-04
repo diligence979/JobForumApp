@@ -4,7 +4,7 @@ import {
     StatusBar
 } from 'react-native'
 import PropTypes from 'prop-types'
-import PostDetail from './widget/PostDetail'
+import PostDetail from './widget/post/PostDetail'
 import styles from '../style'
 
 class PostDetailPage extends Component {

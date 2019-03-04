@@ -59,7 +59,7 @@ const getRouter = () => {
                         />
                         <Scene
                             key="TrendPage"
-                            component={DynamicPage}
+                            component={TrendPage}
                             icon={TabIcon}
                             title={'推荐'}
                             tabIconName={'tabRecommended'}

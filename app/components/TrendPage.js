@@ -1,74 +1,75 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
     View,
     AppState, 
-    StatusBar, 
+    StatusBar,
     Text,
     InteractionManager
-} from 'react-native';
+} from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Actions } from 'react-native-router-flux';
 import styles from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
-import eventActions from '../store/actions/event'
-import EventItem from './widget/EventItem'
+import adActions from '../store/actions/ad'
+import AdItem from './widget/ad/AdItem'
 import PullListView from './widget/PullLoadMoreListView'
-import * as Config from '../config'
+import { ActionUtils } from '../utils/postUtil'
 
 
 /**
- * 动态 -> 论坛广场，论坛动态
+ * 推荐 -> 招聘广场，招聘动态
  */
-class DynamicPage extends Component {
+class TrendPage extends Component {
     constructor(props) {
         // props 来自高阶组件 connect
-        super(props);
-        console.log(props)
-        this._renderRow = this._renderRow.bind(this);
-        this._refresh = this._refresh.bind(this);
-        this._loadMore = this._loadMore.bind(this);
-        this._handleAppStateChange = this._handleAppStateChange.bind(this);
-        this.startRefresh = this.startRefresh.bind(this);
-        this.page = 1;
-        this.appState = 'active';
+        super(props)
+        this._renderRow = this._renderRow.bind(this)
+        this._refresh = this._refresh.bind(this)
+        this._loadMore = this._loadMore.bind(this)
+        this._handleAppStateChange = this._handleAppStateChange.bind(this)
+        this.startRefresh = this.startRefresh.bind(this)
+        this.page = 0
+        this.appState = 'active'
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.startRefresh();
-        });
-        AppState.addEventListener('change', this._handleAppStateChange);
+            this.startRefresh()
+        })
+        AppState.addEventListener('change', this._handleAppStateChange) 
     }
 
     componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange);
+        AppState.removeEventListener('change', this._handleAppStateChange) 
     }
 
     startRefresh() {
         if (this.refs.pullList)
-            this.refs.pullList.showRefreshState();
-        this._refresh();
+            this.refs.pullList.showRefreshState() 
+        this._refresh() 
     }
 
     _handleAppStateChange = (nextAppState) => {
         if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
             if (this.refs.pullList)
-                this.refs.pullList.scrollToTop();
-            this.startRefresh();
+                this.refs.pullList.scrollToTop() 
+            this.startRefresh() 
         }
-        this.appState = nextAppState;
-    };
+        this.appState = nextAppState 
+    } 
 
     _renderRow(rowData) {
+        console.log(rowData)
+        let { company, created_at, job, location, salary, education } = rowData
         return (
-            <EventItem
-                actionTime={rowData.created_at}
-                des={res.des}
-                actionUser={rowData.user.username}
-                actionTarget={rowData.title}
-                actionComment={'34'}
+            <AdItem 
+                company={company}
+                created_at={created_at}
+                job={job}
+                location={location}
+                salary={salary}
+                education={education}
             />
         )
     }
@@ -77,14 +78,16 @@ class DynamicPage extends Component {
      * 刷新
      * */
     _refresh() {
-        let { eventAction }= this.props;
-        eventAction.getEventReceived(0, (res) => {
-            this.page = 2;
+        let { adAction }= this.props 
+        this.page = 0 
+        adAction.getAdReceived(0, (res) => {
+            console.log(res)
+            this.page++
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((res && res.count >= Config.PAGE_SIZE));
+                    this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
                 }
-            }, 500);
+            }, 500) 
         })
     }
 
@@ -92,21 +95,21 @@ class DynamicPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        let { eventAction } = this.props;
-        eventAction.getEventReceived(this.page, (res) => {
-            this.page++;
+        let { adAction } = this.props 
+        adAction.getAdReceived(this.page, (res) => {
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((res && res.count >= Config.PAGE_SIZE));
+                    this.refs.pullList.loadMoreComplete((res && (res.count-this.page*30) >= 0)) 
                 }
-            }, 300);
-        });
+            }, 300) 
+        })
+        this.page++
     }
 
 
     render() {
-        let {eventState, userState} = this.props;
-        let dataSource = (eventState.received_events_data_list);
+        let { adState } = this.props 
+        let dataSource = (adState.received_ads_data_list) 
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -131,9 +134,9 @@ class DynamicPage extends Component {
 export default connect(state => ({
     userState: state.user,
     loginState: state.login,
-    eventState: state.event,
+    adState: state.ad,
 }), dispatch => ({
     loginAction: bindActionCreators(loginActions, dispatch),
     userAction: bindActionCreators(userActions, dispatch),
-    eventAction: bindActionCreators(eventActions, dispatch)
-}))(DynamicPage)
+    adAction: bindActionCreators(adActions, dispatch)
+}))(TrendPage)

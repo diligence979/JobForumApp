@@ -12,8 +12,6 @@ import { Actions } from 'react-native-router-flux';
 import styles from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
-import eventActions from '../store/actions/event'
-import EventItem from './widget/EventItem'
 import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config'
 

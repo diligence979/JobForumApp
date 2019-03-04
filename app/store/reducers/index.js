@@ -1,18 +1,17 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 import login from './login'
 // import user from "./user"
-import event from './event'
+import post from './post'
 import comment from './comment'
-// import issue from "./issue"
-
+import ad from './ad'
 
 export default combineReducers({
     login: login,
     // user: user,
-    event: event,
-    comment: comment
-    // issue: issue,
-});
+    post: post,
+    comment: comment,
+    ad: ad,
+})
 
 export function clear(state) {
     state().event.received_events_data_list = [];
