@@ -16,6 +16,7 @@ import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import postActions from '../store/actions/post'
 import PostItem from './widget/post/PostItem'
+import Toast from './common/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
 import { postUtil } from '../utils/ActionUtil'
 
@@ -26,6 +27,7 @@ import { postUtil } from '../utils/ActionUtil'
 class DynamicPage extends Component {
     constructor(props) {
         // props 来自高阶组件 connect
+        console.log(props)
         super(props)
         this._renderRow = this._renderRow.bind(this)
         this._refresh = this._refresh.bind(this)
@@ -108,7 +110,7 @@ class DynamicPage extends Component {
         this.page++
     }
 
-    _createPost(ownerId, text, title) {
+    _createPost(ownerId, role, text, title) {
         Actions.LoadingModal({backExit: false})
         postActions.createPost(title, text, ownerId).then((res) => {
             setTimeout(() => {
@@ -122,7 +124,9 @@ class DynamicPage extends Component {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { postState } = this.props 
         let dataSource = (postState.received_posts_data_list)
-        let ownerId = this.props.userState.userInfo.userId
+        let ownerInfo = this.props.userState.ownerInfo
+        let ownerId = ownerInfo.ownerId
+        let role = ownerInfo.role
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -149,17 +153,22 @@ class DynamicPage extends Component {
                         zIndex: 222,
                     }]}
                     onPress={() => {
-                        Actions.TextInputModal({
-                            textConfirm: this._createPost,
-                            titleText: "创建帖子",
-                            needEditTitle: true,
-                            text: "",
-                            titleValue: "",
-                            bottomBar: true,
-                            placeHolderTitle: "请输入帖子标题",
-                            placeHolder: "请输入帖子内容",
-                            ownerId: ownerId
-                        })
+                        if (!role) {
+                            Actions.TextInputModal({
+                                textConfirm: this._createPost,
+                                titleText: "创建帖子",
+                                needEditTitle: true,
+                                text: "",
+                                titleValue: "",
+                                bottomBar: true,
+                                placeHolderTitle: "请输入帖子标题",
+                                placeHolder: "请输入帖子内容",
+                                ownerId: ownerId,
+                                role: role
+                            })
+                        } else {
+                            Toast('Hr不能发帖子哦～') 
+                        }
                     }}>
                     <View
                         style={[styles.centered, ...btnStyle]}>

@@ -16,6 +16,7 @@ import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import adActions from '../store/actions/ad'
 import AdItem from './widget/ad/AdItem'
+import Toast from './common/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
 import { adUtil } from '../utils/ActionUtil'
 
@@ -27,6 +28,7 @@ class TrendPage extends Component {
     constructor(props) {
         // props 来自高阶组件 connect
         super(props)
+        console.log(props)
         this._renderRow = this._renderRow.bind(this)
         this._refresh = this._refresh.bind(this)
         this._loadMore = this._loadMore.bind(this)
@@ -111,7 +113,7 @@ class TrendPage extends Component {
         this.page++
     }
 
-    _createAd(ownerId, text, title, essayId, company, job, education, team, location, salay, email) {
+    _createAd(ownerId, role, text, title, essayId, company, job, education, team, location, salay, email) {
         Actions.LoadingModal({backExit: false})
         adActions.createAd(ownerId, company, job, education,  team, location, salay, email, text).then((res) => {
             setTimeout(() => {
@@ -125,8 +127,9 @@ class TrendPage extends Component {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { adState } = this.props 
         let dataSource = (adState.received_ads_data_list)
-        // let ownerId = this.props.userState.userInfo.userId
-        let ownerId = 2
+        let ownerInfo = this.props.userState.ownerInfo
+        let ownerId = ownerInfo.ownerId
+        let role = ownerInfo.role
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -153,17 +156,22 @@ class TrendPage extends Component {
                         zIndex: 222,
                     }]}
                     onPress={() => {
-                        Actions.TextInputModal({
-                            textConfirm: this._createAd,
-                            titleText: "创建招聘信息",
-                            needEditTitle: false,
-                            needEditAd: true,
-                            text: "",
-                            titleValue: "",
-                            bottomBar: true,
-                            placeHolder: "岗位描述",
-                            ownerId: ownerId
-                        })
+                        if (role) {
+                            Actions.TextInputModal({
+                                textConfirm: this._createAd,
+                                titleText: "创建招聘信息",
+                                needEditTitle: false,
+                                needEditAd: true,
+                                text: "",
+                                titleValue: "",
+                                bottomBar: true,
+                                placeHolder: "岗位描述",
+                                ownerId: ownerId,
+                                role: role
+                            })
+                        } else {
+                            Toast('求职者不能发招聘信息哦～') 
+                        }
                     }}>
                     <View
                         style={[styles.centered, ...btnStyle]}>

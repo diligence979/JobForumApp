@@ -74,20 +74,40 @@ const createPost = async (title, content, ownerId) => {
     })
 }
 
-const createPostComment = async (content, ownerId, post_id) => {
+const createPostCommentByUser = async (content, userId, post_id) => {
     return axios.post(host + 'users/' + comment, {
         content: content,
-        user_id: ownerId,
+        user_id: userId,
         post_id: post_id
     }).catch(function (error) {
         return error.response 
     })
 }
 
-const createAdComment = async (content, ownerId, ad_id) => {
+const createPostCommentByHr = async (content, hrId, post_id) => {
+    return axios.post(host + 'users/' + comment, {
+        content: content,
+        hr_id: hrId,
+        post_id: post_id
+    }).catch(function (error) {
+        return error.response 
+    })
+}
+
+const createAdCommentByUser = async (content, ownerId, ad_id) => {
     return axios.post(host + 'users/' + comment, {
         content: content,
         user_id: ownerId,
+        ad_id: ad_id
+    }).catch(function (error) {
+        return error.response 
+    })
+}
+
+const createAdCommentByHr = async (content, ownerId, ad_id) => {
+    return axios.post(host + 'users/' + comment, {
+        content: content,
+        hr_id: ownerId,
         ad_id: ad_id
     }).catch(function (error) {
         return error.response 
@@ -120,7 +140,9 @@ export default {
     getAdComment,
     getAd,
     createPost,
-    createPostComment,
-    createAdComment,
+    createPostCommentByUser,
+    createPostCommentByHr,
+    createAdCommentByUser,
+    createAdCommentByHr,
     createAd
 }

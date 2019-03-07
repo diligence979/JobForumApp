@@ -57,10 +57,16 @@ class AdDetail extends Component {
     }
 
     _renderRow(rowData) {
-        let { user, content, created_at } = rowData
+        let { user, hr, content, created_at } = rowData
+        let username = ''
+        if (user) {
+            username = user.username
+        } else if (hr) {
+            username = hr.username
+        }
         return (
             <CommentItem 
-                username={user.username}
+                username={username}
                 content={content}
                 created_at={created_at}
             />
@@ -121,9 +127,9 @@ class AdDetail extends Component {
         this.page++
     }
 
-    _createComment(ownerId, text, title = null, adId) {
+    _createComment(ownerId, role, text, title = null, adId) {
         Actions.LoadingModal({backExit: false})
-        commentAction.createAdComment(text, ownerId, adId).then((res) => {
+        commentAction.createAdComment(text, ownerId, role, adId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
             }, 500)
@@ -132,7 +138,9 @@ class AdDetail extends Component {
 
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
-        let { commentState, adInfo, ownerId } = this.props
+        let { commentState, adInfo, ownerInfo } = this.props
+        let role = ownerInfo.role
+        let ownerId = ownerInfo.ownerId
         let adId = adInfo.id
         let dataSource = (commentState.received_comments_data_list)
         return (
@@ -174,7 +182,8 @@ class AdDetail extends Component {
                             bottomBar: true,
                             placeHolder: '请输入评论内容',
                             ownerId: ownerId,
-                            essayId: adId
+                            essayId: adId,
+                            role: role
                         })
                     }}>
                     <View

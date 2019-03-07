@@ -20,6 +20,7 @@ import { Actions } from 'react-native-router-flux'
 class PostDetail extends Component {
     constructor(props) {
         super(props)
+        console.log(props)
         this._renderRow = this._renderRow.bind(this)
         this._renderHeader = this._renderHeader.bind(this);
         this._refresh = this._refresh.bind(this)
@@ -57,10 +58,16 @@ class PostDetail extends Component {
     }
 
     _renderRow(rowData) {
-        let { user, content, created_at } = rowData
+        let { user, hr, content, created_at } = rowData
+        let username = ''
+        if (user) {
+            username = user.username
+        } else if (hr) {
+            username = hr.username
+        }
         return (
             <CommentItem 
-                username={user.username}
+                username={username}
                 content={content}
                 created_at={created_at}
             />
@@ -105,9 +112,9 @@ class PostDetail extends Component {
         this.page++
     }
 
-    _createComment(ownerId, text, title = null, postId) {
+    _createComment(ownerId, role, text, title = null, postId) {
         Actions.LoadingModal({backExit: false})
-        commentAction.createPostComment(text, ownerId, postId).then((res) => {
+        commentAction.createPostComment(text, ownerId, role, postId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
             }, 500)
@@ -116,7 +123,9 @@ class PostDetail extends Component {
 
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
-        let { commentState, postInfo, ownerId } = this.props
+        let { commentState, postInfo, ownerInfo } = this.props
+        let role = ownerInfo.role
+        let ownerId = ownerInfo.ownerId
         let postId = postInfo.id
         let dataSource = (commentState.received_comments_data_list)
         return (
@@ -158,7 +167,8 @@ class PostDetail extends Component {
                             bottomBar: true,
                             placeHolder: '请输入评论内容',
                             ownerId: ownerId,
-                            essayId: postId
+                            essayId: postId,
+                            role: role
                         })
                     }}>
                     <View
@@ -177,7 +187,7 @@ class PostDetail extends Component {
 PostDetail.propTypes = {
     type: PropTypes.string,
     id: PropTypes.number,
-    ownerId: PropTypes.number
+    ownerInfo: PropTypes.object
 }
 
 export default connect(state => ({

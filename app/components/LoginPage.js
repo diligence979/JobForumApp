@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Entypo' 
 import { Fumi } from 'react-native-textinput-effects' 
 import loginActions from '../store/actions/login'
+import userActions from '../store/actions/user'
 import Toast from './common/ToastProxy'
 import styles, { screenHeight, screenWidth } from "../style"
 import * as Constant from "../style/constant"
@@ -143,7 +144,7 @@ class LoginPage extends Component {
     }
 
     toLogin() {
-        let { login } = this.props
+        let { loginAction } = this.props
         let role = this.state.saveRole.value
         if (!this.params.userName || this.params.userName.length === 0) {
             Toast('请输入用户名！') 
@@ -159,7 +160,7 @@ class LoginPage extends Component {
         }) 
         Actions.LoadingModal({backExit: false}) 
         Keyboard.dismiss() 
-        login.doLogin(this.params.userName, this.params.password, role, (res) => {
+        loginAction.doLogin(this.params.userName, this.params.password, role, (res) => {
             this.exitLoading() 
             if (!res.code) {
                 Toast('登录失败！') 
@@ -170,7 +171,7 @@ class LoginPage extends Component {
     }
 
     toRegister() {
-        let { login } = this.props
+        let { loginAction } = this.props
         let role = this.state.saveRole.value
         if (!this.params.userName || this.params.userName.length === 0) {
             Toast('请输入用户名！') 
@@ -186,7 +187,7 @@ class LoginPage extends Component {
         }) 
         Actions.LoadingModal({backExit: false}) 
         Keyboard.dismiss() 
-        login.doRegister(this.params.userName, this.params.password, role, (res) => {
+        loginAction.doRegister(this.params.userName, this.params.password, role, (res) => {
             if (!res.code) {
                 Toast(res.msg)
             } else {
@@ -379,7 +380,9 @@ class LoginPage extends Component {
 }
 
 export default connect(state => ({
-    state,
+    userState: state.user,
+    loginState: state.login,
 }), dispatch => ({
-    login: bindActionCreators(loginActions, dispatch)
+    userAction: bindActionCreators(userActions, dispatch),
+    loginAction: bindActionCreators(loginActions, dispatch),
 }))(LoginPage)

@@ -8,14 +8,14 @@ const { dispatch, getState } = store
 /**
  * 初始化用户信息
  */
-const initUserInfo = async (userId, username) => {
-    let userInfo = { userId, username }
+const initOwnerInfo = async (ownerId, username, role) => {
+    let ownerInfo = { ownerId, username, role }
     dispatch({
         type: USER.USER_INFO,
-        res: userInfo
+        res: ownerInfo
     })
 }
 
 export default {
-    initUserInfo
+    initOwnerInfo
 }

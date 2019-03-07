@@ -31,9 +31,13 @@ const getCommentReceived = (page = 0, type, id, callback) => async (dispatch, ge
     }
 }
 
-const createPostComment = async (content, ownerId, postId) => {
-    let res = await api.createPostComment(content, ownerId, postId)
-    console.log(res)
+const createPostComment = async (content, ownerId, role, postId) => {
+    let res = null
+    if (role) {
+        res = await api.createPostCommentByHr(content, ownerId, postId)
+    } else {
+        res = await api.createPostCommentByUser(content, ownerId, postId)
+    } 
     if (res && res.data.code) {
         return {
             data: res.data,
@@ -46,9 +50,13 @@ const createPostComment = async (content, ownerId, postId) => {
     }
 }
 
-const createAdComment = async (content, ownerId, adId) => {
-    let res = await api.createAdComment(content, ownerId, adId)
-    console.log(res)
+const createAdComment = async (content, ownerId,  role, adId) => {
+    let res = null
+    if (role) {
+        res = await api.createAdCommentByHr(content, ownerId, adId)
+    } else {
+        res = await api.createAdCommentByUser(content, ownerId, adId)
+    } 
     if (res && res.data.code) {
         return {
             data: res.data,

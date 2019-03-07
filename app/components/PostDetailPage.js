@@ -13,7 +13,7 @@ class PostDetailPage extends Component {
     }
 
     render() {
-        let { rowData, ownerId } = this.props
+        let { rowData, ownerInfo } = this.props
         let { id } = rowData
         return (
             <View style={styles.mainBox}>
@@ -25,7 +25,7 @@ class PostDetailPage extends Component {
                     type={'post'}
                     id={id}
                     postInfo={rowData}
-                    ownerId={ownerId}
+                    ownerInfo={ownerInfo}
                 />
             </View>
         )
@@ -34,7 +34,7 @@ class PostDetailPage extends Component {
 
 PostDetailPage.propTypes = {
     rowData: PropTypes.object,
-    ownerId: PropTypes.number
+    ownerInfo: PropTypes.object
 }
 
 export default PostDetailPage

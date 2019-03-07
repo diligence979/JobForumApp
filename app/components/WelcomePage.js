@@ -30,7 +30,7 @@ class WelcomePage extends Component {
 
     componentDidMount() {
         // 是否登陆，是否用户信息
-        userActions.initUserInfo().then((res) => {
+        userActions.initOwnerInfo().then((res) => {
             this.toNext(res) 
         }) 
         Animated.timing(this.state.progress, {

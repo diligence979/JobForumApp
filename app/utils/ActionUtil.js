@@ -3,17 +3,17 @@ import store from '../store';
 
 
 export const postUtil = (rowData) => {
-    let ownerId = store.getState().user.userInfo.userId
+    let ownerInfo = store.getState().user.ownerInfo
     Actions.PostDetailPage({
         rowData: rowData,
-        ownerId: ownerId
+        ownerInfo: ownerInfo
     })
 }
 
 export const adUtil = (rowData) => {
-    let ownerId = store.getState().user.userInfo.userId
+    let ownerInfo = store.getState().user.ownerInfo
     Actions.AdDetailPage({
         rowData: rowData,
-        ownerId: ownerId
+        ownerInfo: ownerInfo
     })
 }
