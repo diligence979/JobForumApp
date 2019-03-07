@@ -31,6 +31,38 @@ const getCommentReceived = (page = 0, type, id, callback) => async (dispatch, ge
     }
 }
 
+const createPostComment = async (content, ownerId, postId) => {
+    let res = await api.createPostComment(content, ownerId, postId)
+    console.log(res)
+    if (res && res.data.code) {
+        return {
+            data: res.data,
+            result: true
+        }
+    } else {
+        return {
+            result: false
+        }
+    }
+}
+
+const createAdComment = async (content, ownerId, adId) => {
+    let res = await api.createAdComment(content, ownerId, adId)
+    console.log(res)
+    if (res && res.data.code) {
+        return {
+            data: res.data,
+            result: true
+        }
+    } else {
+        return {
+            result: false
+        }
+    }
+}
+
 export default {
     getCommentReceived,
+    createPostComment,
+    createAdComment
 }

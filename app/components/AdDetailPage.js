@@ -13,7 +13,7 @@ class AdDetailPage extends Component {
     }
 
     render () {
-        let { rowData } = this.props
+        let { rowData, ownerId } = this.props
         let { id } = rowData
         return (
             <View style={styles.mainBox}>
@@ -25,6 +25,7 @@ class AdDetailPage extends Component {
                     type={'ad'}
                     id={id}
                     adInfo={rowData}
+                    ownerId={ownerId}
                 />
             </View>
         )

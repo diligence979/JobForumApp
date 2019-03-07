@@ -111,11 +111,22 @@ class TrendPage extends Component {
         this.page++
     }
 
+    _createAd(ownerId, text, title, essayId, company, job, education, team, location, salay, email) {
+        Actions.LoadingModal({backExit: false})
+        adActions.createAd(ownerId, company, job, education,  team, location, salay, email, text).then((res) => {
+            setTimeout(() => {
+                Actions.pop()
+            }, 500)
+        })
+    }
+
 
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { adState } = this.props 
         let dataSource = (adState.received_ads_data_list)
+        // let ownerId = this.props.userState.userInfo.userId
+        let ownerId = 2
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -143,12 +154,15 @@ class TrendPage extends Component {
                     }]}
                     onPress={() => {
                         Actions.TextInputModal({
-                            textConfirm: this._createIssue,
-                            titleText: "",
-                            needEditTitle: true,
+                            textConfirm: this._createAd,
+                            titleText: "创建招聘信息",
+                            needEditTitle: false,
+                            needEditAd: true,
                             text: "",
                             titleValue: "",
                             bottomBar: true,
+                            placeHolder: "岗位描述",
+                            ownerId: ownerId
                         })
                     }}>
                     <View

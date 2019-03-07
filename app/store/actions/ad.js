@@ -24,6 +24,21 @@ const getAdReceived = (page = 0, callback) => async (dispatch, getState) => {
     }
 }
 
+const createAd = async (ownerId, company, job, education,  team, location, salay, email, jd) => {
+    let res = await api.createAd(ownerId, company, job, education,  team, location, salay, email, jd)
+    if (res && res.data.code) {
+        return {
+            data: res.data,
+            result: true
+        }
+    } else {
+        return {
+            result: false
+        }
+    }
+}
+
 export default {
     getAdReceived,
+    createAd
 }

@@ -121,9 +121,19 @@ class AdDetail extends Component {
         this.page++
     }
 
+    _createComment(ownerId, text, title = null, adId) {
+        Actions.LoadingModal({backExit: false})
+        commentAction.createAdComment(text, ownerId, adId).then((res) => {
+            setTimeout(() => {
+                Actions.pop()
+            }, 500)
+        })
+    }
+
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
-        let { commentState, adInfo } = this.props
+        let { commentState, adInfo, ownerId } = this.props
+        let adId = adInfo.id
         let dataSource = (commentState.received_comments_data_list)
         return (
             <View style={[{
@@ -156,12 +166,15 @@ class AdDetail extends Component {
                     }]}
                     onPress={() => {
                         Actions.TextInputModal({
-                            textConfirm: this._createIssue,
-                            titleText: "",
-                            needEditTitle: true,
+                            textConfirm: this._createComment,
+                            titleText: "发表评论",
+                            needEditTitle: false,
                             text: "",
                             titleValue: "",
                             bottomBar: true,
+                            placeHolder: '请输入评论内容',
+                            ownerId: ownerId,
+                            essayId: adId
                         })
                     }}>
                     <View

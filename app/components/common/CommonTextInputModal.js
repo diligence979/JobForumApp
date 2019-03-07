@@ -33,6 +33,13 @@ class CommonTextInputModal extends Component {
         this.getLoading = this.getLoading.bind(this)
         this.text = this.props.text
         this.title = this.props.titleValue
+        this.company = this.props.company
+        this.job = this.props.job
+        this.education = this.props.education
+        this.team = this.team
+        this.location = this.location
+        this.salay = this.salay
+        this.email = this.email
         this.state = {
             showList: false,
             showLoading: false,
@@ -56,6 +63,27 @@ class CommonTextInputModal extends Component {
         if (this.refs.contentInput) {
             this.refs.contentInput.setNativeProps({text: this.text})
         }
+        if (this.refs.companyInput) {
+            this.refs.companyInput.setNativeProps({text: this.company})
+        }
+        if (this.refs.jobInput) {
+            this.refs.jobInput.setNativeProps({text: this.job})
+        }
+        if (this.refs.educationInput) {
+            this.refs.educationInput.setNativeProps({text: this.education})
+        }
+        if (this.refs.teamInput) {
+            this.refs.teamInput.setNativeProps({text: this.team})
+        }
+        if (this.refs.locationInput) {
+            this.refs.locationInput.setNativeProps({text: this.location})
+        }
+        if (this.refs.salayInput) {
+            this.refs.salayInput.setNativeProps({text: this.salay})
+        }
+        if (this.refs.emailInput) {
+            this.refs.emailInput.setNativeProps({text: this.email})
+        }
     }
 
     _searchTextTitleChange(text) {
@@ -66,6 +94,33 @@ class CommonTextInputModal extends Component {
         this.text = text
     }
 
+    _searchTextCompanyChange(text) {
+        this.company = text
+    }
+
+    _searchTextJobChange(text) {
+        this.job = text
+    }
+
+    _searchTextEducationChange(text) {
+        this.education = text
+    }
+
+    _searchTextTeamChange(text) {
+        this.team = text
+    }
+
+    _searchTextLocationChange(text) {
+        this.location = text
+    }
+
+    _searchTextSalayChange(text) {
+        this.salay = text
+    }
+
+    _searchTextEmailChange(text) {
+        this.email = text
+    }
 
     getDataList() {
         return [{
@@ -278,6 +333,8 @@ class CommonTextInputModal extends Component {
     render() {
         let width = screenWidth - 100
         let { bottomBar } = this.props
+
+        // 标题
         let editTitle = this.props.needEditTitle ? 
         <View style={[{
             borderBottomWidth: 1,
@@ -302,6 +359,196 @@ class CommonTextInputModal extends Component {
                     textAlignVertical: 'top'
                 }]}/>
         </View> : <View/>
+
+        // 公司
+        let editCompany = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"companyInput"}
+                onChangeText={(text) => {
+                    this._searchTextCompanyChange(text)
+                }}
+                placeholder={this.props.placeHolderCompany ? this.props.placeHolderCompany : '公司'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
+        // 岗位
+        let editJob = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"jobInput"}
+                onChangeText={(text) => {
+                    this._searchTextJobChange(text)
+                }}
+                placeholder={this.props.placeHolderJob ? this.props.placeHolderJob : '岗位'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
+        // 学历
+        let editEducation = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"companyInput"}
+                onChangeText={(text) => {
+                    this._searchTextEducationChange(text)
+                }}
+                placeholder={this.props.placeHolderEducation ? this.props.placeHolderEducation : '学历'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
+        // 团队
+        let editTeam = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"companyTeam"}
+                onChangeText={(text) => {
+                    this._searchTextTeamChange(text)
+                }}
+                placeholder={this.props.placeHolderTeam ? this.props.placeHolderTeam : '团队'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
+        // 地点
+        let editLocation = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"companyInput"}
+                onChangeText={(text) => {
+                    this._searchTextLocationChange(text)
+                }}
+                placeholder={this.props.placeHolderLocation ? this.props.placeHolderLocation : '地点'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
+        // 薪水
+        let editSalay = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"companyInput"}
+                onChangeText={(text) => {
+                    this._searchTextSalayChange(text)
+                }}
+                placeholder={this.props.placeHolderSalay ? this.props.placeHolderSalay : '薪资'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
+        // 邮箱
+        let editEmail = this.props.needEditAd ? 
+        <View style={[{
+            borderBottomWidth: 1,
+            borderColor: Constant.subLightTextColor,
+            marginHorizontal: Constant.normalMarginEdge,
+            marginBottom: Constant.normalMarginEdge,
+        }]}>
+            <TextInput
+                ref={"companyInput"}
+                onChangeText={(text) => {
+                    this._searchTextEmailChange(text)
+                }}
+                placeholder={this.props.placeHolderEmail ? this.props.placeHolderEmail : '邮箱'}
+                underlineColorAndroid="transparent"
+                clearButtonMode="always"
+                multiline={true}
+                style={[styles.smallText, {
+                    padding: 0,
+                    backgroundColor: Constant.white,
+                    height: 30,
+                    width: width,
+                    textAlignVertical: 'top'
+                }]}/>
+        </View> :
+        <View />
+
         return (
             <Modal ref={"loginModal"}
                    onOpened={this._onOpened}
@@ -320,6 +567,13 @@ class CommonTextInputModal extends Component {
                                 style={[styles.normalText, {fontWeight: 'bold'}]}>{this.props.titleText}</Text>
                         </View>
                         {editTitle}
+                        {editCompany}
+                        {editJob}
+                        {editEducation}
+                        {editTeam}
+                        {editLocation}
+                        {editSalay}
+                        {editEmail}
                         <View style={[{
                             borderRadius: 3,
                             borderWidth: 1,
@@ -373,7 +627,20 @@ class CommonTextInputModal extends Component {
                                 onPress={() => {
                                     if (this.text && this.text.trim().length > 0) {
                                         Actions.pop()
-                                        this.props.textConfirm && this.props.textConfirm(this.props.ownerId, this.text, this.title)
+                                        if (this.props.textConfirm) {
+                                            this.props.textConfirm(
+                                                this.props.ownerId,
+                                                this.text,
+                                                this.title,
+                                                this.props.essayId,
+                                                this.company,
+                                                this.job,
+                                                this.education,
+                                                this.team,
+                                                this.location,
+                                                this.salay,
+                                                this.email
+                                        )}
                                     }
                                 }}>
                                 <Text style={[styles.normalText, {fontWeight: 'bold'}]}>{'确定'}</Text>
@@ -398,7 +665,9 @@ CommonTextInputModal.propTypes = {
     needEditTitle: PropTypes.bool,
     bottomBar: PropTypes.bool,
     userList: PropTypes.array,
-    ownerId: PropTypes.number
+    ownerId: PropTypes.number,
+    essayId: PropTypes.number,
+    needEditAd: PropTypes.bool
 }
 CommonTextInputModal.defaultProps = {
     text: '',
@@ -406,6 +675,14 @@ CommonTextInputModal.defaultProps = {
     needEditTitle: false,
     bottomBar: true,
     userList: [],
+    company: '',
+    job: '',
+    education: '',
+    team: '',
+    location: '',
+    salay: '',
+    email: '',
+    essayId: 0
 }
 
 

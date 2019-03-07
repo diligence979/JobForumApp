@@ -24,9 +24,8 @@ const getPostReceived = (page = 0, callback) => async (dispatch, getState) => {
     }
 }
 
-const createPost = async (title, content, userId) => {
-    let res = await api.createPost(title, content, userId)
-    console.log(res)
+const createPost = async (title, content, ownerId) => {
+    let res = await api.createPost(title, content, ownerId)
     if (res && res.data.code) {
         return {
             data: res.data,

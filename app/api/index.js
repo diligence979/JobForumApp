@@ -47,22 +47,50 @@ const getAd = async (offset) => {
     })
 }
 
-const createPost = async (title, content, userId) => {
+const createPost = async (title, content, ownerId) => {
     return axios.post(host + post, {
         title: title,
         content: content,
-        user_id: userId
+        user_id: ownerId
     }).catch(function (error) {
         return error.response 
     })
 }
 
-const createPostComment = async (content, userId) => {
-
+const createPostComment = async (content, ownerId, post_id) => {
+    return axios.post(host + 'users/' + comment, {
+        content: content,
+        user_id: ownerId,
+        post_id: post_id
+    }).catch(function (error) {
+        return error.response 
+    })
 }
 
-const createAdComment = async (content, hrId) => {
+const createAdComment = async (content, ownerId, ad_id) => {
+    return axios.post(host + 'users/' + comment, {
+        content: content,
+        user_id: ownerId,
+        ad_id: ad_id
+    }).catch(function (error) {
+        return error.response 
+    })
+}
 
+const createAd = async (ownerId, company, job, education,  team, location, salay, email, jd) => {
+    return axios.post(host + ad, {
+        hr_id: ownerId,
+        company: company,
+        job: job,
+        education: education,
+        team: team,
+        location: location,
+        salay: salay,
+        email: email,
+        jd: jd
+    }).catch(function (error) {
+        return error.response 
+    })
 }
 
 export default {
@@ -74,5 +102,6 @@ export default {
     getAd,
     createPost,
     createPostComment,
-    createAdComment
+    createAdComment,
+    createAd
 }

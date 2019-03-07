@@ -105,9 +105,19 @@ class PostDetail extends Component {
         this.page++
     }
 
+    _createComment(ownerId, text, title = null, postId) {
+        Actions.LoadingModal({backExit: false})
+        commentAction.createPostComment(text, ownerId, postId).then((res) => {
+            setTimeout(() => {
+                Actions.pop()
+            }, 500)
+        })
+    }
+
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { commentState, postInfo, ownerId } = this.props
+        let postId = postInfo.id
         let dataSource = (commentState.received_comments_data_list)
         return (
             <View style={[{
@@ -140,13 +150,15 @@ class PostDetail extends Component {
                     }]}
                     onPress={() => {
                         Actions.TextInputModal({
-                            textConfirm: this._createIssue,
+                            textConfirm: this._createComment,
                             titleText: "发表评论",
                             needEditTitle: false,
                             text: "",
                             titleValue: "",
                             bottomBar: true,
-                            placeHolder: '请输入评论内容'
+                            placeHolder: '请输入评论内容',
+                            ownerId: ownerId,
+                            essayId: postId
                         })
                     }}>
                     <View
