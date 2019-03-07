@@ -17,6 +17,7 @@
     "react-native-modalbox": "^1.4.2",
     "react-native-root-toast": "^2.2.0",
     "react-native-router-flux": "^4.0.6",
+    "react-native-simple-radio-button": "^2.7.3",
     "react-native-spinkit": "^1.1.1",
     "react-native-spinkit-fix-new": "^1.1.4",
     "react-native-textinput-effects": "^0.4.1",

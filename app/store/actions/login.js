@@ -9,11 +9,19 @@ import api from '../../api'
 /**
  * 登陆请求
  */
-const doLogin = (userName, password, callback) => async (dispatch, getState) => {
+const doLogin = (userName, password, role, callback) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64')
+    let res = null
     AsyncStorage.setItem(Constant.USER_NAME_KEY, userName)
     AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str)
-    let res = await api.userLogin(userName,password)
+    AsyncStorage.setItem(Constant.USER_ROLE, role.toString())
+    if (role) {
+        // HR 登陆
+        res = await api.hrLogin(userName, password)
+    } else {
+        // 求职者 登陆
+        res = await api.userLogin(userName, password)
+    }
     let info = res.data.data
     if (res && res.data.code) {
         AsyncStorage.setItem(Constant.PW_KEY, password)
@@ -29,16 +37,26 @@ const doLogin = (userName, password, callback) => async (dispatch, getState) => 
 /**
  * 注册请求
  */
-const doRegister = (userName, password, callback) => async (dispatch, getState) => {
+const doRegister = (userName, password, role, callback) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64')
-    let res = await api.createUser(userName,password)
+    let res = null
+    if (role) {
+        // HR 注册
+        res = await api.createHr(userName,password)
+    } else {
+        // 求职者 注册
+        res = await api.createUser(userName,password)
+    }
+    let info = res.data.data
     if (res && res.data.code) {
         AsyncStorage.setItem(Constant.USER_NAME_KEY, userName)
         AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str)
+        AsyncStorage.setItem(Constant.USER_ROLE, role.toString())
         dispatch({
             type: LOGIN.IN,
             res
         })
+        userAction.initUserInfo(info.id, info.username)
     }
     callback(res.data)
 }

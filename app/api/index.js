@@ -14,6 +14,13 @@ const userLogin = async (username, password) => {
     })
 }
 
+const hrLogin = async (username, password) => {
+    return axios.post(host + hr + '/login', {
+        username: username,
+        password: password
+    })
+}
+
 const createUser = async (username, password) => {
     return axios.post(host + user, {
         username: username,
@@ -22,6 +29,16 @@ const createUser = async (username, password) => {
         return error.response 
     })
 }
+
+const createHr = async (username, password) => {
+    return axios.post(host + hr, {
+        username: username,
+        password: password
+    }).catch(function (error) {
+        return error.response 
+    })
+}
+
 
 const getPost = async (offset) => {
     return axios.get(host + post + '?offset=' + `${offset}`).catch(function (error) {
@@ -95,7 +112,9 @@ const createAd = async (ownerId, company, job, education,  team, location, salay
 
 export default {
     userLogin,
+    hrLogin,
     createUser,
+    createHr,
     getPost,
     getPostComment,
     getAdComment,

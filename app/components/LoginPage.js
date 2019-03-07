@@ -12,7 +12,8 @@ import {
     Keyboard,
     Easing
 } from 'react-native' 
-import LottieView from 'lottie-react-native' 
+import LottieView from 'lottie-react-native'
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
 import { Actions } from 'react-native-router-flux' 
 import Icon from 'react-native-vector-icons/FontAwesome' 
 import IconC from 'react-native-vector-icons/Entypo' 
@@ -22,7 +23,7 @@ import Toast from './common/ToastProxy'
 import styles, { screenHeight, screenWidth } from "../style"
 import * as Constant from "../style/constant"
 
-const animaTime = 600 
+const animaTime = 600
 
 /**
  * 登陆Modal
@@ -38,14 +39,29 @@ class LoginPage extends Component {
         this.params = {
             userName: '',
             password: ''
-        } 
+        }
         this.state = {
             saveUserName: '',
             savePassword: '',
+            saveRole: {
+                value: 0,
+                index: 0
+            }, // 默认是求职者角色
             secureTextEntry: true,
             secureIcon: "eye-with-line",
             opacity: new Animated.Value(0),
             progress: new Animated.Value(0),
+            radio_props: [
+                {
+                    label: '求职者',
+                    value: 0,
+                    index: 0
+                },{
+                    label: 'HR',
+                    value: 1,
+                    index: 1
+                }
+            ]
         }
         this.thisUnmount = false 
     }
@@ -127,7 +143,8 @@ class LoginPage extends Component {
     }
 
     toLogin() {
-        let { login } = this.props 
+        let { login } = this.props
+        let role = this.state.saveRole.value
         if (!this.params.userName || this.params.userName.length === 0) {
             Toast('请输入用户名！') 
             return
@@ -142,7 +159,7 @@ class LoginPage extends Component {
         }) 
         Actions.LoadingModal({backExit: false}) 
         Keyboard.dismiss() 
-        login.doLogin(this.params.userName, this.params.password, (res) => {
+        login.doLogin(this.params.userName, this.params.password, role, (res) => {
             this.exitLoading() 
             if (!res.code) {
                 Toast('登录失败！') 
@@ -153,7 +170,8 @@ class LoginPage extends Component {
     }
 
     toRegister() {
-        let { login } = this.props 
+        let { login } = this.props
+        let role = this.state.saveRole.value
         if (!this.params.userName || this.params.userName.length === 0) {
             Toast('请输入用户名！') 
             return
@@ -168,7 +186,7 @@ class LoginPage extends Component {
         }) 
         Actions.LoadingModal({backExit: false}) 
         Keyboard.dismiss() 
-        login.doRegister(this.params.userName, this.params.password, (res) => {
+        login.doRegister(this.params.userName, this.params.password, role, (res) => {
             if (!res.code) {
                 Toast(res.msg)
             } else {
@@ -189,11 +207,17 @@ class LoginPage extends Component {
         } 
         return (
             <Animated.View
-                style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
+                style={[styles.centered, styles.absoluteFull, {
+                    backgroundColor: Constant.primaryColor,
+                    opacity: this.state.opacity
+                }]}>
                 <StatusBar hidden={false} backgroundColor={Constant.primaryColor} translucent
                            barStyle={'light-content'}/>
                 <View style={[styles.absoluteFull, {zIndex: -999, justifyContent: 'flex-end'}]}>
-                    <View style={{width: screenWidth, height: screenHeight / 2}}>
+                    <View style={{
+                        width: screenWidth, 
+                        height: screenHeight / 2
+                    }}>
                         <LottieView
                             ref="lottieView"
                             style={{width: screenWidth, height: screenHeight / 2}}
@@ -203,20 +227,26 @@ class LoginPage extends Component {
                     </View>
                 </View>
                 <View
-                    style={[{backgroundColor: Constant.miWhite}, {
-                        height: 360,
+                    style={[{
+                        backgroundColor: Constant.miWhite,
+                        height: 400,
                         width: screenWidth - 80,
                         margin: 50,
                         borderRadius: 10
                     }]}
                     onClosed={this.onClose}
                     onOpened={this.onOpen}>
-                    <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
+                    <View style={[styles.centered, {
+                        marginTop: Constant.normalMarginEdge
+                    }]}>
                         <Image source={require("../img/logo.png")}
                                resizeMode={"contain"}
                                style={{width: 80, height: 80}}/>
                     </View>
-                    <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
+                    {/* 用户名 */}
+                    <View style={[styles.centered, {
+                        marginTop: Constant.normalMarginEdge
+                    }]}>
                         <Fumi
                             ref={"userNameInput"}
                             {...textInputProps}
@@ -226,7 +256,10 @@ class LoginPage extends Component {
                             onChangeText={this.userInputChange}
                         />
                     </View>
-                    <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
+                    {/* 密码 */}
+                    <View style={[styles.centered, {
+                        marginTop: Constant.normalMarginEdge
+                    }]}>
                         <Fumi
                             ref={"passwordInput"}
                             {...textInputProps}
@@ -264,10 +297,50 @@ class LoginPage extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View>
+                    {/* 角色: 0 是求职者；1 是HR */}
+                    <View style={[styles.centered, {
+                        marginTop: Constant.normalMarginEdge
+                    }]}>
+                        <RadioForm formHorizontal={true} animation={true} >
+                          {this.state.radio_props.map((obj, i) => {
+                            let onPress = (value, index) => {
+                                this.setState({
+                                    saveRole: {
+                                        value: value,
+                                        index: index
+                                    }
+                                })
+                              }
+                            return (
+                              <RadioButton labelHorizontal={true} key={i} >
+                                <RadioButtonInput
+                                  obj={obj}
+                                  index={i}
+                                  isSelected={this.state.saveRole.index === i}
+                                  onPress={onPress}
+                                  buttonInnerColor={'#222'}
+                                  buttonOuterColor={'#222'}
+                                  buttonSize={10}
+                                  buttonStyle={{}}
+                                  buttonWrapStyle={{marginLeft: 10}}
+                                />
+                                <RadioButtonLabel
+                                  obj={obj}
+                                  index={i}
+                                  labelHorizontal={true}
+                                  onPress={onPress}
+                                  labelStyle={{fontSize: 14, color: '#222'}}
+                                  labelWrapStyle={{}}
+                                />
+                              </RadioButton>
+                            )
+                          })}
+                        </RadioForm>
                     </View>
                     <TouchableOpacity 
-                        style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
+                        style={[styles.centered, {
+                            marginTop: Constant.normalMarginEdge
+                        }]}
                         onPress={() => {
                             this.toLogin() 
                         }}>
@@ -282,10 +355,12 @@ class LoginPage extends Component {
                             <Text style={[styles.normalTextWhite]}>{'登陆'}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
-                                      onPress={() => {
-                                          this.toRegister() 
-                                      }}>
+                    <TouchableOpacity style={[styles.centered, {
+                        marginTop: Constant.normalMarginEdge
+                    }]}
+                        onPress={() => {
+                            this.toRegister() 
+                        }}>
                         <View
                             style={[styles.centered, {
                                 backgroundColor: Constant.primaryColor,
