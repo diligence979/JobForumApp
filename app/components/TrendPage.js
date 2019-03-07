@@ -3,12 +3,15 @@ import {
     View,
     AppState, 
     StatusBar,
-    Text,
-    InteractionManager
+    TouchableOpacity,
+    InteractionManager,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import styles from "../style"
+import Icon from 'react-native-vector-icons/Ionicons'
+import styles, { screenWidth, screenHeight } from '../style'
+import { Actions } from 'react-native-router-flux'
+import * as Constant from '../style/constant'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import adActions from '../store/actions/ad'
@@ -110,8 +113,9 @@ class TrendPage extends Component {
 
 
     render() {
+        let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { adState } = this.props 
-        let dataSource = (adState.received_ads_data_list) 
+        let dataSource = (adState.received_ads_data_list)
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -128,6 +132,33 @@ class TrendPage extends Component {
                     loadMore={this._loadMore}
                     dataSource={dataSource}
                 />
+                <TouchableOpacity
+                    style={[{
+                        position: "absolute",
+                        left: screenWidth - 60,
+                        top: screenHeight - 250,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 222,
+                    }]}
+                    onPress={() => {
+                        Actions.TextInputModal({
+                            textConfirm: this._createIssue,
+                            titleText: "",
+                            needEditTitle: true,
+                            text: "",
+                            titleValue: "",
+                            bottomBar: true,
+                        })
+                    }}>
+                    <View
+                        style={[styles.centered, ...btnStyle]}>
+                        <Icon name={'md-add-circle'}
+                              style={{backgroundColor: Constant.transparentColor}}
+                              backgroundColor={Constant.transparentColor}
+                              size={50} color={Constant.primaryColor}/>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }

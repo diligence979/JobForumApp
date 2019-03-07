@@ -24,6 +24,22 @@ const getPostReceived = (page = 0, callback) => async (dispatch, getState) => {
     }
 }
 
+const createPost = async (title, content, userId) => {
+    let res = await api.createPost(title, content, userId)
+    console.log(res)
+    if (res && res.data.code) {
+        return {
+            data: res.data,
+            result: true
+        }
+    } else {
+        return {
+            result: false
+        }
+    }
+}
+
 export default {
     getPostReceived,
+    createPost,
 }

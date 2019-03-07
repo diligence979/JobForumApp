@@ -16,6 +16,8 @@ import LoadingModal from './components/common/LoadingModal'
 import CustomBackButton from './components/widget/CustomBackButton'
 import PostDetailPage from './components/PostDetailPage'
 import AdDetailPage from './components/AdDetailPage'
+import CommonOptionModal from './components/common/CommonOptionModal'
+import TextInputModal from './components/common/CommonTextInputModal'
 
 import styles from './style'
 import * as Constant from "./style/constant"
@@ -67,7 +69,7 @@ const getRouter = () => {
                         />
                         <Scene
                             key="MyPage"
-                            component={DynamicPage}
+                            component={MyPage}
                             icon={TabIcon}
                             title={'我的'}
                             tabIconName={'tabMy'}
@@ -87,6 +89,8 @@ const getRouter = () => {
                     />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
+                <Scene key="OptionModal" component={CommonOptionModal}/>
+                <Scene key="TextInputModal" component={TextInputModal}/>
             </Lightbox>
         </Router>
     )

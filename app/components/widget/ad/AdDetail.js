@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
     View,
     AppState,
-    Text,
+    TouchableOpacity,
     InteractionManager
 } from 'react-native'
 import { connect } from 'react-redux'
@@ -13,7 +13,9 @@ import PullListView from '../PullLoadMoreListView'
 import AdDetailItem from './AdDetailItem'
 import CommentItem from '../comment/CommentItem'
 import * as Constant from '../../../style/constant'
-import styles from '../../../style'
+import styles, { screenWidth, screenHeight } from '../../../style'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { Actions } from 'react-native-router-flux'
 
 class AdDetail extends Component {
     constructor(props) {
@@ -120,6 +122,7 @@ class AdDetail extends Component {
     }
 
     render() {
+        let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { commentState, adInfo } = this.props
         let dataSource = (commentState.received_comments_data_list)
         return (
@@ -142,6 +145,33 @@ class AdDetail extends Component {
                     loadMore={this._loadMore}
                     dataSource={dataSource}
                 />
+                <TouchableOpacity
+                    style={[{
+                        position: "absolute",
+                        left: screenWidth - 80,
+                        top: screenHeight - 200,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 222,
+                    }]}
+                    onPress={() => {
+                        Actions.TextInputModal({
+                            textConfirm: this._createIssue,
+                            titleText: "",
+                            needEditTitle: true,
+                            text: "",
+                            titleValue: "",
+                            bottomBar: true,
+                        })
+                    }}>
+                    <View
+                        style={[styles.centered, ...btnStyle]}>
+                        <Icon name={'md-add-circle'}
+                              style={{backgroundColor: Constant.transparentColor}}
+                              backgroundColor={Constant.transparentColor}
+                              size={50} color={Constant.primaryColor}/>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }

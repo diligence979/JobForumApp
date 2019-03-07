@@ -1,5 +1,6 @@
 import { COMMENT } from '../type'
 import api from '../../api'
+import { clearComment } from '../reducers'
 
 const getCommentReceived = (page = 0, type, id, callback) => async (dispatch, getState) => {
     const offset = page * 30

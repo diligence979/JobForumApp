@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {
     View,
     AppState, 
-    InteractionManager
+    InteractionManager,
+    TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,7 +13,9 @@ import PullListView from '../PullLoadMoreListView'
 import PostDetailItem from './PostDetailItem'
 import CommentItem from '../comment/CommentItem'
 import * as Constant from '../../../style/constant'
-import styles from '../../../style'
+import styles, { screenWidth, screenHeight } from '../../../style'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { Actions } from 'react-native-router-flux'
 
 class PostDetail extends Component {
     constructor(props) {
@@ -103,7 +106,8 @@ class PostDetail extends Component {
     }
 
     render() {
-        let { commentState, postInfo } = this.props
+        let btnStyle = [{backgroundColor: Constant.transparentColor}]
+        let { commentState, postInfo, ownerId } = this.props
         let dataSource = (commentState.received_comments_data_list)
         return (
             <View style={[{
@@ -125,6 +129,34 @@ class PostDetail extends Component {
                     loadMore={this._loadMore}
                     dataSource={dataSource}
                 />
+                <TouchableOpacity
+                    style={[{
+                        position: "absolute",
+                        left: screenWidth - 80,
+                        top: screenHeight - 200,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 222,
+                    }]}
+                    onPress={() => {
+                        Actions.TextInputModal({
+                            textConfirm: this._createIssue,
+                            titleText: "发表评论",
+                            needEditTitle: false,
+                            text: "",
+                            titleValue: "",
+                            bottomBar: true,
+                            placeHolder: '请输入评论内容'
+                        })
+                    }}>
+                    <View
+                        style={[styles.centered, ...btnStyle]}>
+                        <Icon name={'md-add-circle'}
+                              style={{backgroundColor: Constant.transparentColor}}
+                              backgroundColor={Constant.transparentColor}
+                              size={50} color={Constant.primaryColor}/>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -132,7 +164,8 @@ class PostDetail extends Component {
 
 PostDetail.propTypes = {
     type: PropTypes.string,
-    id: PropTypes.number
+    id: PropTypes.number,
+    ownerId: PropTypes.number
 }
 
 export default connect(state => ({

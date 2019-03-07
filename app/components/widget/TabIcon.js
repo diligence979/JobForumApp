@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Feather'
 const config = {
     ["tabRecommended"]: 'activity',
     ["tabDynamic"]: 'aperture',
-    ["tabMy"]: 'users',
+    ["tabMy"]: 'user',
 };
 
 const propTypes = {

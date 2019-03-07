@@ -39,6 +39,7 @@ class AdItem extends Component {
                     <View style={[styles.flex, styles.centerH, styles.flexDirectionRowNotFlex]}>
                         <Text style={[styles.flex, styles.smallText, {
                             fontWeight: "bold",
+                            fontSize: 16
                         }]}>
                             {company}
                         </Text>

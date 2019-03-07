@@ -17,12 +17,6 @@ class CommentItem extends Component {
 
     render() {
         let { username, content, created_at, userpic } = this.props
-        let bottomDes = (this.props.des) ?
-            <Text style={[styles.subSmallText,
-                {marginTop: Constant.normalMarginEdge,}]}
-                  numberOfLines={Constant.normalNumberOfLine}>
-                {this.props.des}
-            </Text> : <View/>
         let pic = (userpic) ? <UserImage uri={userpic}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
@@ -56,9 +50,8 @@ class CommentItem extends Component {
                     </View>
                 </View>
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
-                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{content}</Text>
+                    <Text style={[styles.smallText]}>{content}</Text>
                 </View>
-                {bottomDes}
             </View>
         )
     }

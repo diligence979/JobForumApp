@@ -43,6 +43,7 @@ class AdDetailItem extends Component {
                     <View style={[styles.flex, styles.centerH, styles.flexDirectionRowNotFlex]}>
                         <Text style={[styles.flex, styles.smallText, {
                             fontWeight: "bold",
+                            fontSize: 20
                         }]}>
                             {company}
                         </Text>
@@ -118,7 +119,7 @@ class AdDetailItem extends Component {
                 </View>
                 {/* 岗位职责 */}
                 <View style={[styles.flexDirectionRowNotFlex, {
-                    marginBottom: Constant.normalMarginEdge
+                    marginBottom: Constant.normalMarginEdge * 2
                 }]}>
                     <Icon name="user-plus" size={16} color="#959595" style={{
                         marginRight: Constant.normalMarginEdge
@@ -126,12 +127,18 @@ class AdDetailItem extends Component {
                     <Text style={[styles.flex, styles.smallText]}>
                         岗位职责：
                     </Text>
-                    <View style={[styles.flexDirectionRowNotFlex]}>
+                </View>
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    padding: Constant.normalMarginEdge,
+                    borderRadius: 10,
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderColor: "#EEE9E9"
+                }]}>
                         <Text style={[styles.flex, styles.smallText]}>
                             {jd}
                         </Text>
                     </View>
-                </View>
                 {/* 评论数 */}
                 <View style={[styles.flexDirectionRowNotFlex, {
                     marginTop: Constant.normalMarginEdge * 5

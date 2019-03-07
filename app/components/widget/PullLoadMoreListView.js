@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
     View, 
     Text, 
@@ -7,7 +7,7 @@ import {
     ActivityIndicator, 
     TouchableOpacity, 
     Image
-} from 'react-native';
+} from 'react-native'
 import styles from "../../style"
 import * as Constant from "../../style/constant"
 import * as Config from '../../config'
@@ -17,11 +17,11 @@ import * as Config from '../../config'
  */
 class PullLoadMoreListView extends Component {
     constructor(props) {
-        super(props);
-        this._renderFooter = this._renderFooter.bind(this);
-        this._refresh = this._refresh.bind(this);
-        this._loadMore = this._loadMore.bind(this);
-        this._renderEmpty = this._renderEmpty.bind(this);
+        super(props)
+        this._renderFooter = this._renderFooter.bind(this)
+        this._refresh = this._refresh.bind(this)
+        this._loadMore = this._loadMore.bind(this)
+        this._renderEmpty = this._renderEmpty.bind(this)
         //设置state
         this.state = {
             isRefresh: false,
@@ -29,7 +29,7 @@ class PullLoadMoreListView extends Component {
             showLoadMore: false,
             showRefresh: true,
             listHeight: 0,
-        };
+        }
     }
 
 
@@ -60,8 +60,8 @@ class PullLoadMoreListView extends Component {
                 <Text style={{fontSize: 15, color: 'black', margin: Constant.normalMarginEdge}}>
                     {this.props.dataSource.length > 0 ? ('加载完成') : " "}
                 </Text>
-            </View>;
-        return (footer);
+            </View>
+        return (footer)
     }
 
     /**
@@ -75,8 +75,8 @@ class PullLoadMoreListView extends Component {
             isRefreshing: true,
             showLoadMore: false,
             isRefresh: true,
-        });
-        this.props.refresh && this.props.refresh();
+        })
+        this.props.refresh && this.props.refresh()
     }
 
     /**
@@ -95,8 +95,8 @@ class PullLoadMoreListView extends Component {
         this.setState({
             isRefreshing: true,
             showRefresh: false,
-        });
-        this.props.loadMore && this.props.loadMore();
+        })
+        this.props.loadMore && this.props.loadMore()
     }
 
     _renderEmpty() {
@@ -107,8 +107,8 @@ class PullLoadMoreListView extends Component {
             }]}>
                 <TouchableOpacity style={[styles.centered, {flex: 1}]}
                                   onPress={() => {
-                                      this._refresh();
-                                      this.showRefreshState();
+                                      this._refresh()
+                                      this.showRefreshState()
                                   }}>
                     <Image source={require("../../img/logo.png")}
                            resizeMode={"contain"}
@@ -117,7 +117,7 @@ class PullLoadMoreListView extends Component {
                         {'列表为空...'}
                     </Text>
                 </TouchableOpacity>
-            </View> : <View/>;
+            </View> : <View/>
     }
 
     render() {
@@ -127,8 +127,7 @@ class PullLoadMoreListView extends Component {
             tintColor: Constant.primaryColor,
             title: '刷新',
             colors: [Constant.primaryColor, Constant.primaryLightColor],
-        };
-
+        }
         return (
             <FlatList
                 style={{flex: 1}}
@@ -159,15 +158,15 @@ class PullLoadMoreListView extends Component {
     showRefreshState() {
         this.setState({
             isRefresh: true,
-        });
+        })
     }
 
     scrollToTop() {
         if (this.props.dataSource <= 0) {
-            return;
+            return
         }
         if (this.refs.list)
-            this.refs.list.scrollToIndex({index: 0, animate: false});
+            this.refs.list.scrollToIndex({index: 0, animate: false})
     }
 
     refreshComplete(showLoadMore = false, scrollToTop = false) {
@@ -175,9 +174,9 @@ class PullLoadMoreListView extends Component {
             isRefreshing: false,
             isRefresh: false,
             showLoadMore: showLoadMore,
-        });
+        })
         if (scrollToTop)
-            this.scrollToTop();
+            this.scrollToTop()
     }
 
     loadMoreComplete(showLoadMore = false) {
@@ -185,7 +184,7 @@ class PullLoadMoreListView extends Component {
             isRefreshing: false,
             showRefresh: true,
             showLoadMore: showLoadMore,
-        });
+        })
     }
 }
 
@@ -195,11 +194,12 @@ PullLoadMoreListView.propTypes = {
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
     enableRefresh: PropTypes.bool,
-};
+    userId: PropTypes.number
+}
 PullLoadMoreListView.defaultProps = {
     pageSize: Config.PAGE_SIZE,
     dataSource: [],
     enableRefresh: true,
-};
+}
 
-export default PullLoadMoreListView;
+export default PullLoadMoreListView

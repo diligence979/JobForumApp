@@ -3,11 +3,15 @@ import {
     View,
     AppState, 
     StatusBar, 
-    InteractionManager
+    InteractionManager,
+    TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import styles from "../style"
+import Icon from 'react-native-vector-icons/Ionicons'
+import styles, { screenWidth, screenHeight } from '../style'
+import { Actions } from 'react-native-router-flux'
+import * as Constant from '../style/constant'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import postActions from '../store/actions/post'
@@ -104,10 +108,21 @@ class DynamicPage extends Component {
         this.page++
     }
 
+    _createPost(ownerId, text, title) {
+        Actions.LoadingModal({backExit: false})
+        postActions.createPost(title, text, ownerId).then((res) => {
+            setTimeout(() => {
+                Actions.pop()
+            }, 500)
+        })
+    }
+
 
     render() {
+        let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { postState } = this.props 
-        let dataSource = (postState.received_posts_data_list) 
+        let dataSource = (postState.received_posts_data_list)
+        let ownerId = this.props.userState.userInfo.userId
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} 
@@ -124,6 +139,36 @@ class DynamicPage extends Component {
                     loadMore={this._loadMore}
                     dataSource={dataSource}
                 />
+                <TouchableOpacity
+                    style={[{
+                        position: "absolute",
+                        left: screenWidth - 60,
+                        top: screenHeight - 250,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 222,
+                    }]}
+                    onPress={() => {
+                        Actions.TextInputModal({
+                            textConfirm: this._createPost,
+                            titleText: "创建帖子",
+                            needEditTitle: true,
+                            text: "",
+                            titleValue: "",
+                            bottomBar: true,
+                            placeHolderTitle: "请输入帖子标题",
+                            placeHolder: "请输入帖子内容",
+                            ownerId: ownerId
+                        })
+                    }}>
+                    <View
+                        style={[styles.centered, ...btnStyle]}>
+                        <Icon name={'md-add-circle'}
+                              style={{backgroundColor: Constant.transparentColor}}
+                              backgroundColor={Constant.transparentColor}
+                              size={50} color={Constant.primaryColor}/>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }

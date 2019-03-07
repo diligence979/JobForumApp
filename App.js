@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import getRouter from './app/router';
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import getRouter from './app/router'
 import store from './app/store/'
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
         store: store
-    };
+    }
   }
 
 
@@ -17,6 +17,6 @@ export default class App extends Component<{}> {
         <Provider store={this.state.store}>
             {getRouter()}
         </Provider>
-    );
+    )
   }
 }
