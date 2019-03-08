@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { bindActionCreators } from 'redux';
 
 const host = 'http://127.0.0.1:7001/api/'
 const user = 'user'
@@ -46,6 +47,18 @@ const getPost = async (offset) => {
     })
 }
 
+const getPostByUser = async (userId, offset) => {
+    return axios.get(host + post + '/' + user + '/' + userId + '?offset=' + `${offset}`).catch(function (error) {
+        return error.response 
+    })
+}
+
+const deletePost = async (userId, postId) => {
+    return axios.delete(host + 'users/' + `${userId}` + '/post/' + `${postId}`).catch(function (error) {
+        return error.response 
+    })
+}
+
 const getPostComment = async (offset, postId) => {
     return axios.get(host + 'users/' + comment + '?offset=' + `${offset}` + '&post_id=' + postId).catch(function (error) {
         return error.response 
@@ -60,6 +73,18 @@ const getAdComment = async (offset, adId) => {
 
 const getAd = async (offset) => {
     return axios.get(host + ad + '?offset=' + `${offset}`).catch(function (error) {
+        return error.response 
+    })
+}
+
+const getAdByHr = async (hrId, offset) => {
+    return axios.get(host + ad + '/' + hr + '/' + hrId + '?offset=' + `${offset}`).catch(function (error) {
+        return error.response 
+    })
+}
+
+const deleteAd = async (hrId, adId) => {
+    return axios.delete(host + 'hrs/' + `${hrId}` + '/ad/' + `${adId}`).catch(function (error) {
         return error.response 
     })
 }
@@ -136,13 +161,17 @@ export default {
     createUser,
     createHr,
     getPost,
+    getPostByUser,
     getPostComment,
     getAdComment,
     getAd,
+    getAdByHr,
+    deleteAd,
     createPost,
     createPostCommentByUser,
     createPostCommentByHr,
     createAdCommentByUser,
     createAdCommentByHr,
-    createAd
+    createAd,
+    deletePost
 }

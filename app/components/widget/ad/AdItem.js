@@ -5,6 +5,7 @@ import {
     TouchableOpacity
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { Button } from 'react-native-elements'
 import styles from '../../../style'
 import * as Constant from '../../../style/constant'
 import TimeText from '../TimeText'
@@ -17,7 +18,31 @@ class AdItem extends Component {
     }
 
     render() {
-        let { company, created_at, job, education, location, salary, comment_size } = this.props
+        let { company, created_at, job, education, location, salary, comment_size, showDelete } = this.props
+        let commentSize = (!showDelete) ? 
+            <View style={[styles.flexDirectionRowNotFlex]}>
+                <Text style={[styles.flex, styles.smallText, {
+                    fontWeight: "100",
+                    color: "grey",
+                    textAlign: "right"
+                }]}>
+                    <Icon name="message-square" size={14} />
+                    {' ' + comment_size}
+                </Text>
+            </View> : 
+            <View style={[styles.flexDirectionRowNotFlex, styles.justifyEnd]}>
+                <Button
+                    icon={
+                      <Icon name="trash-2" size={14}/>
+                    }
+                    buttonStyle={{
+                        backgroundColor: "transparent",
+                    }}
+                    onPress={() => {
+                        this.props.deleteItem && this.props.deleteItem()
+                    }}
+                />
+            </View>
         return(
             <TouchableOpacity
                 style={[{
@@ -92,16 +117,7 @@ class AdItem extends Component {
                     </Text>
                 </View>
                 {/* 评论数 */}
-                <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Text style={[styles.flex, styles.smallText, {
-                        fontWeight: "100",
-                        color: "grey",
-                        textAlign: "right"
-                    }]}>
-                        <Icon name="message-square" size={14} />
-                        {' ' + comment_size}
-                    </Text>
-                </View>
+                {commentSize}
             </TouchableOpacity>
         )
     }
@@ -114,7 +130,10 @@ AdItem.propTypes = {
     location: PropTypes.string,
     salary: PropTypes.string,
     education: PropTypes.string,
-    comment_size: PropTypes.number
+    comment_size: PropTypes.number,
+    showDelete: PropTypes.bool,
+    onPressItem: PropTypes.func,
+    deleteItem: PropTypes.func
 }
 
 export default AdItem

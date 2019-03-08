@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
-import { USER } from '../type'
-import store from '../'
+import { OWNER } from '../type'
+import store from '..'
 import * as Constant from '../../style/constant'
 
 const { dispatch, getState } = store
@@ -11,7 +11,7 @@ const { dispatch, getState } = store
 const initOwnerInfo = async (ownerId, username, role) => {
     let ownerInfo = { ownerId, username, role }
     dispatch({
-        type: USER.USER_INFO,
+        type: OWNER.OWNER_INFO,
         res: ownerInfo
     })
 }

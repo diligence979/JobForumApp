@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native'
 import { Buffer } from 'buffer'
 import { LOGIN } from '../type'
-import userAction from './user'
+import ownerAction from './owner'
 import * as Constant from '../../style/constant'
 import { clear } from '../reducers'
 import api from '../../api'
@@ -29,7 +29,7 @@ const doLogin = (userName, password, role, callback) => async (dispatch, getStat
             type: LOGIN.IN,
             res
         })
-        userAction.initOwnerInfo(info.id, info.username, role)
+        ownerAction.initOwnerInfo(info.id, info.username, role)
     }
     callback(res.data)
 }
@@ -56,7 +56,7 @@ const doRegister = (userName, password, role, callback) => async (dispatch, getS
             type: LOGIN.IN,
             res
         })
-        userAction.initOwnerInfo(info.id, info.username, role)
+        ownerAction.initOwnerInfo(info.id, info.username, role)
     }
     callback(res.data)
 }

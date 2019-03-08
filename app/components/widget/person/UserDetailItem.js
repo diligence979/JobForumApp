@@ -2,20 +2,12 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    ScrollView,
-    WebView,
-    ActivityIndicator
+    Image
 } from 'react-native'
 import PropTypes from 'prop-types'
-import Icon from 'react-native-vector-icons/Ionicons'
-import IconF from 'react-native-vector-icons/FontAwesome'
-import UserImage from '../UserImage'
 import styles from '../../../style'
+import { Avatar, Badge } from 'react-native-elements'
 import * as Constant from '../../../style/constant'
-import IconTextItem from '../IconTextItem'
 
 
 /**
@@ -27,6 +19,8 @@ class UserDetailItem extends Component {
     }
 
     render() {
+        let { ownerId, role, username } = this.props.ownerInfo
+        let roleText = role ? 'HR' : "求职者"
         return (
             <View>
                 <View style={[{
@@ -51,13 +45,16 @@ class UserDetailItem extends Component {
                             height: Constant.largeIconSize,
                             width: Constant.largeIconSize,
                         }]}>
-                            <Image source={require('../../../img/my.png')}
-                                   resizeMethod="scale"
-                                   style={[styles.centerH, {
-                                        height: Constant.largeIconSize, width: Constant.largeIconSize,
-                                        borderRadius: Constant.largeIconSize / 2,
-                                        marginTop: 5
-                            }]}/>
+                            <Avatar
+                                source={require('../../../img/mypic.jpg')}
+                                showEditButton
+                                size="large"
+                                rounded
+                                title="HR"
+                                onPress={() => console.log("Works!")}
+                                activeOpacity={0.7}
+                            />
+                            
                         </View>         
                     </View>
                     <View style={[styles.flexDirectionRowNotFlex, styles.justifyCenter, styles.centerH, {
@@ -65,7 +62,13 @@ class UserDetailItem extends Component {
                     }]}>
                         <Text selectable={true} style={[styles.largeTextWhite, {
                             fontWeight: "bold"
-                        }]}>李志鹏</Text>
+                        }]}>{username}</Text>
+                        <Badge
+                            status="primary"
+                            value={roleText}
+                            containerStyle={{ position: 'relative', right: -4, top: 2 }}
+                            badgeStyle={{backgroundColor: '#aaaaaa'}}
+                        />
                     </View>
                 </View>
             </View>
@@ -74,13 +77,7 @@ class UserDetailItem extends Component {
 }
 
 UserDetailItem.propTypes = {
-    
+    ownerInfo: PropTypes.object
 }
-
-
-UserDetailItem.defaultProps = {
-    
-}
-
 
 export default UserDetailItem

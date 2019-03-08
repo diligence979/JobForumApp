@@ -20,7 +20,6 @@ import { Actions } from 'react-native-router-flux'
 class PostDetail extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
         this._renderRow = this._renderRow.bind(this)
         this._renderHeader = this._renderHeader.bind(this);
         this._refresh = this._refresh.bind(this)

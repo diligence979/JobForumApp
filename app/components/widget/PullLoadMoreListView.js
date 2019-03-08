@@ -194,7 +194,6 @@ PullLoadMoreListView.propTypes = {
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
     enableRefresh: PropTypes.bool,
-    // userId: PropTypes.number
 }
 PullLoadMoreListView.defaultProps = {
     pageSize: Config.PAGE_SIZE,

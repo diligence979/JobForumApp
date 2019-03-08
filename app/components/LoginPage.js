@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Entypo' 
 import { Fumi } from 'react-native-textinput-effects' 
 import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
+import ownerActions from '../store/actions/owner'
 import Toast from './common/ToastProxy'
 import styles, { screenHeight, screenWidth } from "../style"
 import * as Constant from "../style/constant"
@@ -380,9 +380,9 @@ class LoginPage extends Component {
 }
 
 export default connect(state => ({
-    userState: state.user,
+    ownerState: state.owner,
     loginState: state.login,
 }), dispatch => ({
-    userAction: bindActionCreators(userActions, dispatch),
+    ownerAction: bindActionCreators(ownerActions, dispatch),
     loginAction: bindActionCreators(loginActions, dispatch),
 }))(LoginPage)

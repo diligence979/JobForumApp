@@ -13,7 +13,7 @@ import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
 import * as Constant from '../style/constant'
 import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
+import ownerActions from '../store/actions/owner'
 import adActions from '../store/actions/ad'
 import AdItem from './widget/ad/AdItem'
 import Toast from './common/ToastProxy'
@@ -28,7 +28,6 @@ class TrendPage extends Component {
     constructor(props) {
         // props 来自高阶组件 connect
         super(props)
-        console.log(props)
         this._renderRow = this._renderRow.bind(this)
         this._refresh = this._refresh.bind(this)
         this._loadMore = this._loadMore.bind(this)
@@ -127,7 +126,7 @@ class TrendPage extends Component {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { adState } = this.props 
         let dataSource = (adState.received_ads_data_list)
-        let ownerInfo = this.props.userState.ownerInfo
+        let ownerInfo = this.props.ownerState.ownerInfo
         let ownerId = ownerInfo.ownerId
         let role = ownerInfo.role
         return (
@@ -187,11 +186,11 @@ class TrendPage extends Component {
 }
 
 export default connect(state => ({
-    userState: state.user,
+    ownerState: state.owner,
     loginState: state.login,
     adState: state.ad,
 }), dispatch => ({
     loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch),
+    ownerAction: bindActionCreators(ownerActions, dispatch),
     adAction: bindActionCreators(adActions, dispatch)
 }))(TrendPage)

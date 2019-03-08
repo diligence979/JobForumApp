@@ -13,7 +13,7 @@ import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
 import * as Constant from '../style/constant'
 import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
+import ownerActions from '../store/actions/owner'
 import postActions from '../store/actions/post'
 import PostItem from './widget/post/PostItem'
 import Toast from './common/ToastProxy'
@@ -27,7 +27,6 @@ import { postUtil } from '../utils/ActionUtil'
 class DynamicPage extends Component {
     constructor(props) {
         // props 来自高阶组件 connect
-        console.log(props)
         super(props)
         this._renderRow = this._renderRow.bind(this)
         this._refresh = this._refresh.bind(this)
@@ -123,8 +122,8 @@ class DynamicPage extends Component {
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { postState } = this.props 
-        let dataSource = (postState.received_posts_data_list)
-        let ownerInfo = this.props.userState.ownerInfo
+        let dataSource = postState.received_posts_data_list
+        let ownerInfo = this.props.ownerState.ownerInfo
         let ownerId = ownerInfo.ownerId
         let role = ownerInfo.role
         return (
@@ -184,11 +183,11 @@ class DynamicPage extends Component {
 }
 
 export default connect(state => ({
-    userState: state.user,
+    ownerState: state.owner,
     loginState: state.login,
     postState: state.post,
 }), dispatch => ({
     loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch),
+    ownerAction: bindActionCreators(ownerActions, dispatch),
     postAction: bindActionCreators(postActions, dispatch)
 }))(DynamicPage)

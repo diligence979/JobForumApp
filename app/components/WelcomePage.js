@@ -10,7 +10,7 @@ import {
 import { Actions } from 'react-native-router-flux' 
 import styles, { screenHeight, screenWidth } from "../style"
 import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
+import ownerActions from '../store/actions/owner'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LottieView from 'lottie-react-native' 
@@ -30,7 +30,7 @@ class WelcomePage extends Component {
 
     componentDidMount() {
         // 是否登陆，是否用户信息
-        userActions.initOwnerInfo().then((res) => {
+        ownerActions.initOwnerInfo().then((res) => {
             this.toNext(res) 
         }) 
         Animated.timing(this.state.progress, {

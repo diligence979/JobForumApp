@@ -4,6 +4,7 @@ import {
     Text, 
     TouchableOpacity
 } from 'react-native'
+import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import styles from '../../../style'
 import * as Constant from '../../../style/constant'
@@ -20,7 +21,7 @@ class PostItem extends Component {
     }
 
     render() {
-        let { actionTime, actionUser, actionUserPic, actionComment, actionTarget } = this.props
+        let { actionTime, actionUser, actionUserPic, actionComment, actionTarget, showDelete } = this.props
         let pic = (actionUserPic) ? <UserImage uri={actionUserPic}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
@@ -30,6 +31,32 @@ class PostItem extends Component {
                                                    marginRight: Constant.normalMarginEdge / 2,
                                                    borderRadius: Constant.smallIconSize / 2
                                                }]}/> : <View/>
+
+        let commentSize = (!showDelete) ? 
+            <View style={[styles.flexDirectionRowNotFlex]}>
+                <Text style={[styles.flex, styles.smallText, {
+                    fontWeight: "100",
+                    color: "grey",
+                    textAlign: "right"
+                }]}>
+                    <Icon name="message-square" size={14} />
+                    {' ' + actionComment}
+                </Text>
+            </View> : 
+            <View style={[styles.flexDirectionRowNotFlex, styles.justifyEnd]}>
+                <Button
+                    icon={
+                      <Icon name="trash-2" size={14}/>
+                    }
+                    buttonStyle={{
+                        backgroundColor: "transparent",
+                    }}
+                    onPress={() => {
+                        this.props.deleteItem && this.props.deleteItem()
+                    }}
+                />
+            </View>
+
         return (
             <TouchableOpacity
                 style={[{
@@ -60,16 +87,7 @@ class PostItem extends Component {
                     <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
                 </View>
                 {/* 评论数 */}
-                <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Text style={[styles.flex, styles.smallText, {
-                        fontWeight: "100",
-                        color: "grey",
-                        textAlign: "right"
-                    }]}>
-                        <Icon name="message-square" size={14} />
-                        {' ' + actionComment}
-                    </Text>
-                </View>
+                {commentSize}
             </TouchableOpacity>
         )
     }
@@ -81,8 +99,9 @@ PostItem.propTypes = {
     actionUserPic: PropTypes.string,
     actionMode: PropTypes.string,
     actionTarget: PropTypes.string,
-    des: PropTypes.string,
+    showDelete: PropTypes.bool,
     onPressItem: PropTypes.func,
+    deleteItem: PropTypes.func
 }
 
 export default PostItem

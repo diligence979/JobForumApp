@@ -13,6 +13,7 @@
     "moment": "^2.19.3",
     "react": "16.6.3",
     "react-native": "0.57.8",
+    "react-native-elements": "^1.1.0",
     "react-native-image-crop-picker": "^0.19.1",
     "react-native-modalbox": "^1.4.2",
     "react-native-root-toast": "^2.2.0",
@@ -21,7 +22,7 @@
     "react-native-spinkit": "^1.1.1",
     "react-native-spinkit-fix-new": "^1.1.4",
     "react-native-textinput-effects": "^0.4.1",
-    "react-native-vector-icons": "^4.4.2",
+    "react-native-vector-icons": "^6.3.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"

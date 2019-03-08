@@ -1,5 +1,5 @@
-import { USER } from '../type';
-import { createReducer } from '../'
+import { OWNER } from '../type';
+import { createReducer } from '..'
 
 const initialState = {
     //当前登录用户信息
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const actionHandler = {
-    [USER.USER_INFO]: (state, action) => {
+    [OWNER.OWNER_INFO]: (state, action) => {
         return {
             ...state,
             ownerInfo: action.res
