@@ -138,7 +138,7 @@ class PullLoadMoreListView extends Component {
                 {...refreshProps}
                 onLayout={e => this.setState({listHeight: e.nativeEvent.layout.height})}
                 renderItem={
-                    ({item, index}) => this.props.renderRow(item, index)
+                    ({item, index}) => this.props.renderRow(item, index, this.props.ownerId)
                 }
                 ListHeaderComponent={this.props.renderHeader}
                 ItemSeparatorComponent={({highlighted}) => <View/>}
@@ -194,6 +194,7 @@ PullLoadMoreListView.propTypes = {
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
     enableRefresh: PropTypes.bool,
+    ownerId: PropTypes.number
 }
 PullLoadMoreListView.defaultProps = {
     pageSize: Config.PAGE_SIZE,

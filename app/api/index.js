@@ -155,6 +155,18 @@ const createAd = async (ownerId, company, job, education,  team, location, salay
     })
 }
 
+const deleteCommentByHr = async (hrId, commentId) => {
+    return axios.delete(host + 'hrs/' + `${hrId}` + '/' + comment + '/' + `${commentId}`).catch(function (error) {
+        return error.response 
+    })
+}
+
+const deleteCommentByUser = async (userId, commentId) => {
+    return axios.delete(host + 'users/' + `${userId}` + '/' + comment + '/' + `${commentId}`).catch(function (error) {
+        return error.response 
+    })
+}
+
 export default {
     userLogin,
     hrLogin,
@@ -173,5 +185,7 @@ export default {
     createAdCommentByUser,
     createAdCommentByHr,
     createAd,
-    deletePost
+    deletePost,
+    deleteCommentByHr,
+    deleteCommentByUser
 }

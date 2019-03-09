@@ -69,8 +69,48 @@ const createAdComment = async (content, ownerId,  role, adId) => {
     }
 }
 
+const deleteCommentByHr = (hrId, commentId, callback) => async (dispatch, getState) => {
+    let res = await api.deleteCommentByHr(hrId, commentId)
+    let code = res.data.code
+    if (res && res.data) {
+        let comment = getState()['comment'].received_comments_data_list
+        let index = comment.findIndex((ele) => {
+            return (ele.id === commentId)
+        })
+        
+        dispatch({
+            type: COMMENT.RECEIVED_COMMENTS,
+            res: comment.splice(index, 1)
+        })
+        callback && callback(code)
+    } else {
+        callback && callback(null)
+    }
+}
+
+const deleteCommentByUser = (userId, commentId, callback) => async (dispatch, getState) => {
+    let res = await api.deleteCommentByUser(userId, commentId)
+    let code = res.data.code
+    if (res && res.data) {
+        let comment = getState()['comment'].received_comments_data_list
+        let index = comment.findIndex((ele) => {
+            return (ele.id === commentId)
+        })
+        
+        dispatch({
+            type: COMMENT.RECEIVED_COMMENTS,
+            res: comment.splice(index, 1)
+        })
+        callback && callback(code)
+    } else {
+        callback && callback(null)
+    }
+}
+
 export default {
     getCommentReceived,
     createPostComment,
-    createAdComment
+    createAdComment,
+    deleteCommentByHr,
+    deleteCommentByUser
 }

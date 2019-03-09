@@ -4,10 +4,12 @@ import {
     Text
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { Button } from 'react-native-elements'
 import styles from '../../../style'
 import * as Constant from '../../../style/constant'
 import TimeText from '../TimeText'
 import UserImage from '../UserImage'
+import Icon from 'react-native-vector-icons/Feather'
 
 
 class CommentItem extends Component {
@@ -16,7 +18,7 @@ class CommentItem extends Component {
     }
 
     render() {
-        let { username, content, created_at, userpic } = this.props
+        let { ownerId, userId, username, content, created_at, userpic } = this.props
         let pic = (userpic) ? <UserImage uri={userpic}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
@@ -52,15 +54,37 @@ class CommentItem extends Component {
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
                     <Text style={[styles.smallText]}>{content}</Text>
                 </View>
+                <View style={[styles.flexDirectionRowNotFlex, styles.justifyEnd]}>
+                    <Button
+                        icon={
+                          (ownerId === userId) ? 
+                          <Icon name="trash-2" size={14}/> :
+                          <Icon name="trash-2" size={14} color="#959595"/>
+                        }
+                        disabled={ownerId !== userId}
+                        disabledStyle={{
+                            backgroundColor: "transparent",
+                        }}
+                        buttonStyle={{
+                            backgroundColor: "transparent",
+                        }}
+                        onPress={() => {
+                            this.props.deleteComment && this.props.deleteComment()
+                        }}
+                    />
+                </View>
             </View>
         )
     }
 }
 
 CommentItem.propTypes = {
+    ownerId: PropTypes.number,
+    userId: PropTypes.number,
     username: PropTypes.string,
     content: PropTypes.string,
-    created_at: PropTypes.string
+    created_at: PropTypes.string,
+    deleteComment: PropTypes.func
 }
 
 export default CommentItem

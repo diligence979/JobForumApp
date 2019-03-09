@@ -56,21 +56,53 @@ class AdDetail extends Component {
         this.appState = nextAppState 
     }
 
-    _renderRow(rowData) {
-        let { user, hr, content, created_at } = rowData
+    _renderRow(rowData, index, ownerId) {
+        let { id, user, hr, content, created_at } = rowData
         let username = ''
+        let userId = null
         if (user) {
             username = user.username
+            userId = user.id
         } else if (hr) {
             username = hr.username
+            userId = hr.id
         }
         return (
-            <CommentItem 
+            <CommentItem
+                ownerId={ownerId}
+                userId={userId}
                 username={username}
                 content={content}
                 created_at={created_at}
+                deleteComment={() => {
+                    this._deleteComment(ownerId, id)
+                }}
             />
         )
+    }
+
+    _deleteComment(ownerId, id) {
+        let role = this.props.ownerInfo.role
+        let { commentAction } = this.props
+        if (role) {
+            // HR
+            commentAction.deleteCommentByHr(ownerId, id, (res) => {
+                if (res) {
+                    Toast('删除成功')
+                } else {
+                    Toast('删除失败')
+                }
+            })
+        } else {
+            // 求职者
+            commentAction.deleteCommentByUser(ownerId, id, (res) => {
+                if (res) {
+                    Toast('删除成功')
+                } else {
+                    Toast('删除失败')
+                }
+            })
+        }
     }
 
     _renderHeader(adInfo) {
@@ -156,12 +188,13 @@ class AdDetail extends Component {
                     style={{flex: 1}}
                     ref="pullList"
                     renderHeader={this._renderHeader(adInfo)}
-                    renderRow={(rowData, index) =>
-                        this._renderRow(rowData)
+                    renderRow={(rowData, index, ownerId) =>
+                        this._renderRow(rowData, index, ownerId)
                     }
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={dataSource}
+                    ownerId={ownerId}
                 />
                 <TouchableOpacity
                     style={[{

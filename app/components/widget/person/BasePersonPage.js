@@ -82,7 +82,6 @@ class BasePersonPage extends Component {
 
         if (role) {
             adAction.getAdByHr(ownerId, 0, (res) => {
-                console.log(res)
                 this.page++
                 setTimeout(() => {
                     if (this.refs.pullList) {
