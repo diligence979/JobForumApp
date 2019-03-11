@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 import { OWNER } from '../type'
 import store from '..'
 import * as Constant from '../../style/constant'
+import api from '../../api';
 
 const { dispatch, getState } = store
 
@@ -16,6 +17,38 @@ const initOwnerInfo = async (ownerId, username, role) => {
     })
 }
 
+const uploadUserAvatar = async (userId, avatar) => {
+    let res = await api.uploadUserAvatar(userId, avatar)
+    console.log(res)
+    if (res && res.data.code) {
+        return {
+            data: res.data,
+            result: true
+        }
+    } else {
+        return {
+            result: false
+        }
+    }
+}
+
+const uploadHrAvatar = async (hrId, avatar) => {
+    let res = await api.uploadHrAvatar(hrId, avatar)
+    console.log(res)
+    if (res && res.data.code) {
+        return {
+            data: res.data,
+            result: true
+        }
+    } else {
+        return {
+            result: false
+        }
+    }
+}
+
 export default {
-    initOwnerInfo
+    initOwnerInfo,
+    uploadUserAvatar,
+    uploadHrAvatar
 }

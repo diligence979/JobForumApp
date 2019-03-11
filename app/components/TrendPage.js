@@ -98,37 +98,44 @@ class TrendPage extends Component {
                     display: "none"
                 }}
             >
-              {
+            {
                 hotAds.map((u, i) => {
-                  return (
-                    <ListItem
-                        key={i}
-                        roundAvatar
-                        bottomDivider
-                        title={u.job}
-                        chevron
-                        chevronColor="white"
-                        titleStyle={{
-                            fontSize: 14,
-                            maxHeight: 16
-                        }}
-                        subtitleStyle={{
-                            fontSize:12,
-                            color: "#959595"
-                        }}
-                        subtitle={u.company}
-                        containerStyle={[{
-                            flexWrap: "nowrap",
-                            padding: 5
-                        }]}
-                        badge={{value: `${u.comment_size}`, badgeStyle:{
-                            backgroundColor: "#fe180d"
-                        }}}
-                        //avatar={{uri:u.avatar}}
-                    />
-                  )
+                    return (
+                        <ListItem
+                            key={i}
+                            roundAvatar
+                            bottomDivider
+                            title={u.job}
+                            chevron
+                            chevronColor="white"
+                            titleStyle={{
+                                fontSize: 14,
+                                maxHeight: 16
+                            }}
+                            subtitleStyle={{
+                                fontSize:12,
+                                color: "#959595"
+                            }}
+                            subtitle={u.company}
+                            containerStyle={[{
+                                flexWrap: "nowrap",
+                                padding: 5
+                            }]}
+                            badge={{value: `${u.comment_size}`, badgeStyle:{
+                                backgroundColor: "#fe180d"
+                            }}}
+                            onPress={() => {
+                                adUtil(u)
+                            }}
+                            leftAvatar={{
+                                source: (u.hr.avatar) ? 
+                                'data:image/png;base64,' + u.hr.avatar :
+                                require('../img/mypic.jpg')
+                            }}
+                        />
+                    )
                 })
-              }
+            }
             </Card>
         )
     }

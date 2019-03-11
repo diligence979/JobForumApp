@@ -179,6 +179,24 @@ const getPopularAd = async () => {
     })
 }
 
+const uploadUserAvatar = async (userId, avatar) => {
+    return axios.post(host + user + '/avatar', {
+        id: userId,
+        avatar: avatar
+    }).catch(function (error) {
+        return error.response 
+    })
+}
+
+const uploadHrAvatar = async (hrId, avatar) => {
+    return axios.post(host + hr + '/avatar', {
+        id: hrId,
+        avatar: avatar
+    }).catch(function (error) {
+        return error.response 
+    })
+}
+
 export default {
     userLogin,
     hrLogin,
@@ -201,5 +219,7 @@ export default {
     deleteCommentByHr,
     deleteCommentByUser,
     getPopularPost,
-    getPopularAd
+    getPopularAd,
+    uploadUserAvatar,
+    uploadHrAvatar
 }

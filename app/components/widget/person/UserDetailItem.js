@@ -5,10 +5,23 @@ import {
     Image
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import ImagePicker from 'react-native-image-picker'
 import styles from '../../../style'
 import { Avatar, Badge } from 'react-native-elements'
 import * as Constant from '../../../style/constant'
+import ownerActions from '../../../store/actions/owner'
 
+const options = {
+    title: '上传头像',
+    maxWidth: 60,
+    maxHeight: 60, 
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+}
 
 /**
  * 用户页面头部
@@ -16,6 +29,31 @@ import * as Constant from '../../../style/constant'
 class UserDetailItem extends Component {
     constructor(props) {
         super(props)
+        this.openImagePicker = this.openImagePicker.bind(this)
+    }
+
+    openImagePicker(ownerId, role) {
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response)
+            if (response.didCancel) {
+              console.log('User cancelled image picker')
+            } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error)
+            } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton)
+            } else {
+                if (response && response.data) {
+                    let avatar = response.data
+                    if (role) {
+                        // HR upload avatar
+                        ownerActions.uploadHrAvatar(ownerId, avatar)
+                    } else {
+                        // USER upload avatar
+                        ownerActions.uploadUserAvatar(ownerId, avatar)
+                    }
+                }
+            }
+        })
     }
 
     render() {
@@ -51,7 +89,9 @@ class UserDetailItem extends Component {
                                 size="large"
                                 rounded
                                 title="HR"
-                                onPress={() => console.log("Works!")}
+                                onPress={() => {
+                                    this.openImagePicker(ownerId, role)
+                                }}
                                 activeOpacity={0.7}
                             />
                             

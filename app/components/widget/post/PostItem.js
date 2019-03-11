@@ -4,7 +4,7 @@ import {
     Text, 
     TouchableOpacity
 } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button, Avatar } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import styles from '../../../style'
 import * as Constant from '../../../style/constant'
@@ -21,8 +21,8 @@ class PostItem extends Component {
     }
 
     render() {
-        let { actionTime, actionUser, actionUserPic, actionComment, actionTarget, showDelete } = this.props
-        let pic = (actionUserPic) ? <UserImage uri={actionUserPic}
+        let { actionTime, actionUser, actionComment, actionTarget, actionAvatar, showDelete } = this.props
+        let pic = (actionAvatar) ? <UserImage uri={'data:image/png;base64,' + actionAvatar}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
                                                style={[{
@@ -30,8 +30,15 @@ class PostItem extends Component {
                                                    marginTop: 5,
                                                    marginRight: Constant.normalMarginEdge / 2,
                                                    borderRadius: Constant.smallIconSize / 2
-                                               }]}/> : <View/>
-
+                                               }]}/> : 
+                                    <Avatar rounded
+                                            icon={{name: 'user', type: 'font-awesome'}}
+                                            containerStyle={[{
+                                            height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                            marginTop: 5,
+                                            marginRight: Constant.normalMarginEdge / 2,
+                                            borderRadius: Constant.smallIconSize / 2
+                                        }]}/>
         let commentSize = (!showDelete) ? 
             <View style={[styles.flexDirectionRowNotFlex]}>
                 <Text style={[styles.flex, styles.smallText, {
@@ -99,6 +106,7 @@ PostItem.propTypes = {
     actionUserPic: PropTypes.string,
     actionMode: PropTypes.string,
     actionTarget: PropTypes.string,
+    actionAvatar: PropTypes.string,
     showDelete: PropTypes.bool,
     onPressItem: PropTypes.func,
     deleteItem: PropTypes.func

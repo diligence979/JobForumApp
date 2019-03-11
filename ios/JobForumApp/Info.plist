@@ -71,5 +71,9 @@
 		<string>FontAwesome5_Regular.ttf</string>
 		<string>FontAwesome5_Solid.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Images from Library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Images from Camera</string>
 </dict>
 </plist>

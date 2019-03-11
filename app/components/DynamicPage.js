@@ -74,6 +74,7 @@ class DynamicPage extends Component {
                 actionUser={user.username}
                 actionTarget={title}
                 actionComment={comment_size}
+                actionAvatar={user.avatar}
                 onPressItem={() => {
                     postUtil(rowData)
                 }}
@@ -96,40 +97,44 @@ class DynamicPage extends Component {
                     display: "none"
                 }}
             >
-              {
+            {
                 hotPosts.map((u, i) => {
-                  return (
-                    <ListItem
-                        key={i}
-                        roundAvatar
-                        bottomDivider
-                        title={u.content}
-                        chevron
-                        chevronColor="white"
-                        titleStyle={{
-                            fontSize: 14,
-                            maxHeight: 16
-                        }}
-                        subtitleStyle={{
-                            fontSize:12,
-                            color: "#959595"
-                        }}
-                        subtitle={u.user.username}
-                        containerStyle={[{
-                            flexWrap: "nowrap",
-                            padding: 5
-                        }]}
-                        badge={{value: `${u.comment_size}`, badgeStyle:{
-                            backgroundColor: "#fe180d"
-                        }}}
-                        onPress={() => {
-                            postUtil(u)
-                        }}
-                        //avatar={{uri:u.avatar}}
-                    />
-                  )
+                    return (
+                        <ListItem
+                            key={i}
+                            roundAvatar
+                            bottomDivider
+                            title={u.title}
+                            chevron
+                            chevronColor="white"
+                            titleStyle={{
+                                fontSize: 14,
+                                maxHeight: 16
+                            }}
+                            subtitleStyle={{
+                                fontSize:12,
+                                color: "#959595"
+                            }}
+                            subtitle={u.user.username}
+                            containerStyle={[{
+                                flexWrap: "nowrap",
+                                padding: 5
+                            }]}
+                            badge={{value: `${u.comment_size}`, badgeStyle:{
+                                backgroundColor: "#fe180d"
+                            }}}
+                            onPress={() => {
+                                postUtil(u)
+                            }}
+                            leftAvatar={{
+                                source: (u.user.avatar) ? 
+                                'data:image/png;base64,' + u.user.avatar :
+                                require('../img/mypic.jpg')
+                            }}
+                        />
+                    )
                 })
-              }
+            }
             </Card>
         )
     }

@@ -109,6 +109,7 @@ class BasePersonPage extends Component {
                 actionTime={created_at}
                 actionUser={user.username}
                 actionTarget={title}
+                actionAvatar={user.avatar}
                 showDelete
                 onPressItem={() => {
                     postUtil(rowData)
