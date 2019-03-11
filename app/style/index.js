@@ -7,7 +7,7 @@ export const navBarHeight = (Platform.OS === 'ios') ? constant.iosnavHeaderHeigh
 export const statusHeight = (Platform.OS === 'android') ? StatusBar.currentHeight : 25;
 export const drawerWidth = screenWidth / 3 * 2;
 
-export const shadowRadius = (Platform.OS === 'android') ? 5 : 2;
+export const shadowRadius = (Platform.OS === 'android') ? 5 : 1;
 export const elevation = (Platform.OS === 'android') ? 2 : 1;
 
 const styles = StyleSheet.create({
@@ -151,10 +151,10 @@ const styles = StyleSheet.create({
     shadowCard: {
         shadowColor: constant.cardShadowColor,
         shadowOffset: {
-            width: 1,
-            height: 2
+            width: 0,
+            height: 0
         },
-        shadowOpacity: 0.7,
+        shadowOpacity: 1,
         shadowRadius: shadowRadius,
         elevation: 2,
         backgroundColor: constant.cardBackgroundColor

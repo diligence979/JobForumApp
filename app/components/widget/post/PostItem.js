@@ -59,14 +59,14 @@ class PostItem extends Component {
 
         return (
             <TouchableOpacity
-                style={[{
+                style={[styles.shadowCard, {
+                    backgroundColor: Constant.cardBackgroundColor,
                     marginTop: Constant.normalMarginEdge / 2,
                     marginLeft: Constant.normalMarginEdge,
                     marginRight: Constant.normalMarginEdge,
                     marginBottom: Constant.normalMarginEdge / 2,
                     padding: Constant.normalMarginEdge,
-                    borderRadius: 4,
-                }, styles.shadowCard]}
+                }]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem()
                 }}

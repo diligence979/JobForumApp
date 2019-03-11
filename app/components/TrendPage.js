@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Card, ListItem, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
@@ -29,6 +30,7 @@ class TrendPage extends Component {
         // props 来自高阶组件 connect
         super(props)
         this._renderRow = this._renderRow.bind(this)
+        this._renderHeader = this._renderHeader.bind(this)
         this._refresh = this._refresh.bind(this)
         this._loadMore = this._loadMore.bind(this)
         this._handleAppStateChange = this._handleAppStateChange.bind(this)
@@ -81,6 +83,56 @@ class TrendPage extends Component {
         )
     }
 
+    _renderHeader(hotAds) {
+        return (
+            <Card title="热门招聘"
+                containerStyle={{
+                    borderWidth: 0,
+                    marginTop: Constant.normalMarginEdge / 2,
+                    marginLeft: Constant.normalMarginEdge,
+                    marginRight: Constant.normalMarginEdge,
+                    marginBottom: Constant.normalMarginEdge / 2,
+                    padding: Constant.normalMarginEdge,
+                }}
+                dividerStyle={{
+                    display: "none"
+                }}
+            >
+              {
+                hotAds.map((u, i) => {
+                  return (
+                    <ListItem
+                        key={i}
+                        roundAvatar
+                        bottomDivider
+                        title={u.job}
+                        chevron
+                        chevronColor="white"
+                        titleStyle={{
+                            fontSize: 14,
+                            maxHeight: 16
+                        }}
+                        subtitleStyle={{
+                            fontSize:12,
+                            color: "#959595"
+                        }}
+                        subtitle={u.company}
+                        containerStyle={[{
+                            flexWrap: "nowrap",
+                            padding: 5
+                        }]}
+                        badge={{value: `${u.comment_size}`, badgeStyle:{
+                            backgroundColor: "#fe180d"
+                        }}}
+                        //avatar={{uri:u.avatar}}
+                    />
+                  )
+                })
+              }
+            </Card>
+        )
+    }
+
     /**
      * 刷新
      * */
@@ -94,6 +146,8 @@ class TrendPage extends Component {
                     this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
                 }
             }, 500) 
+        })
+        adAction.getPopularAd((res) => {
         })
     }
 
@@ -110,6 +164,8 @@ class TrendPage extends Component {
             }, 300) 
         })
         this.page++
+        adAction.getPopularAd((res) => {
+        })
     }
 
     _createAd(ownerId, role, text, title, essayId, company, job, education, team, location, salay, email) {
@@ -126,6 +182,7 @@ class TrendPage extends Component {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { adState } = this.props 
         let dataSource = (adState.received_ads_data_list)
+        let hotAds = adState.received_popular_ads_data_list
         let ownerInfo = this.props.ownerState.ownerInfo
         let ownerId = ownerInfo.ownerId
         let role = ownerInfo.role
@@ -141,6 +198,7 @@ class TrendPage extends Component {
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
+                    renderHeader={this._renderHeader(hotAds)}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={dataSource}

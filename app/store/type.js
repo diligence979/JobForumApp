@@ -10,7 +10,8 @@ export const OWNER = {
 
 export const POST = {
     RECEIVED_POSTS: 'received_posts',
-    RECEIVED_USER_POSTS: 'received_user_posts'
+    RECEIVED_USER_POSTS: 'received_user_posts',
+    RECEIVED_POPULAR_POSTS: 'received_popular_posts'
 }
 
 
@@ -20,5 +21,6 @@ export const COMMENT = {
 
 export const AD = {
     RECEIVED_ADS: 'received_ads',
-    RECEIVED_USER_ADS: 'received_user_ads'
+    RECEIVED_USER_ADS: 'received_user_ads',
+    RECEIVED_POPULAR_ADS: 'received_popular_ads'
 }

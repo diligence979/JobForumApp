@@ -22,7 +22,6 @@ import Toast from '../../common/ToastProxy'
 class BasePersonPage extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
         this._renderHeader = this._renderHeader.bind(this)
         this._refresh = this._refresh.bind(this)
         this._renderPostRow = this._renderPostRow.bind(this)
@@ -158,7 +157,6 @@ class BasePersonPage extends Component {
     _deleteAd(hrId, adId) {
         let { adAction }= this.props
         adAction.deleteAd(hrId, adId, (res) => {
-            console.log(res)
             if (res) {
                 Toast('删除成功')
             } else {

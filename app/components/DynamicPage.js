@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
     View,
+    Text,
     AppState, 
     StatusBar, 
     InteractionManager,
@@ -8,6 +9,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Card, ListItem, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
@@ -29,6 +31,7 @@ class DynamicPage extends Component {
         // props 来自高阶组件 connect
         super(props)
         this._renderRow = this._renderRow.bind(this)
+        this._renderHeader = this._renderHeader.bind(this)
         this._refresh = this._refresh.bind(this)
         this._loadMore = this._loadMore.bind(this)
         this._handleAppStateChange = this._handleAppStateChange.bind(this)
@@ -78,6 +81,59 @@ class DynamicPage extends Component {
         )
     }
 
+    _renderHeader(hotPosts) {
+        return (
+            <Card title="热门帖子"
+                containerStyle={{
+                    borderWidth: 0,
+                    marginTop: Constant.normalMarginEdge / 2,
+                    marginLeft: Constant.normalMarginEdge,
+                    marginRight: Constant.normalMarginEdge,
+                    marginBottom: Constant.normalMarginEdge / 2,
+                    padding: Constant.normalMarginEdge,
+                }}
+                dividerStyle={{
+                    display: "none"
+                }}
+            >
+              {
+                hotPosts.map((u, i) => {
+                  return (
+                    <ListItem
+                        key={i}
+                        roundAvatar
+                        bottomDivider
+                        title={u.content}
+                        chevron
+                        chevronColor="white"
+                        titleStyle={{
+                            fontSize: 14,
+                            maxHeight: 16
+                        }}
+                        subtitleStyle={{
+                            fontSize:12,
+                            color: "#959595"
+                        }}
+                        subtitle={u.user.username}
+                        containerStyle={[{
+                            flexWrap: "nowrap",
+                            padding: 5
+                        }]}
+                        badge={{value: `${u.comment_size}`, badgeStyle:{
+                            backgroundColor: "#fe180d"
+                        }}}
+                        onPress={() => {
+                            postUtil(u)
+                        }}
+                        //avatar={{uri:u.avatar}}
+                    />
+                  )
+                })
+              }
+            </Card>
+        )
+    }
+
     /**
      * 刷新
      * */
@@ -91,6 +147,8 @@ class DynamicPage extends Component {
                     this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
                 }
             }, 500) 
+        })
+        postAction.getPopularPost((res) => {
         })
     }
 
@@ -107,6 +165,8 @@ class DynamicPage extends Component {
             }, 300) 
         })
         this.page++
+        postAction.getPopularPost((res) => {
+        })
     }
 
     _createPost(ownerId, role, text, title) {
@@ -123,6 +183,7 @@ class DynamicPage extends Component {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { postState } = this.props 
         let dataSource = postState.received_posts_data_list
+        let hotPosts = postState.received_popular_posts_data_list
         let ownerInfo = this.props.ownerState.ownerInfo
         let ownerId = ownerInfo.ownerId
         let role = ownerInfo.role
@@ -138,6 +199,7 @@ class DynamicPage extends Component {
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
+                    renderHeader={this._renderHeader(hotPosts)}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={dataSource}

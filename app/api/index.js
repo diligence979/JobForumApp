@@ -167,6 +167,18 @@ const deleteCommentByUser = async (userId, commentId) => {
     })
 }
 
+const getPopularPost = async () => {
+    return axios.get(host + comment + '/' + post).catch(function (error) {
+        return error.response 
+    })
+}
+
+const getPopularAd = async () => {
+    return axios.get(host + comment + '/' + ad).catch(function (error) {
+        return error.response 
+    })
+}
+
 export default {
     userLogin,
     hrLogin,
@@ -187,5 +199,7 @@ export default {
     createAd,
     deletePost,
     deleteCommentByHr,
-    deleteCommentByUser
+    deleteCommentByUser,
+    getPopularPost,
+    getPopularAd
 }

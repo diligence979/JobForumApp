@@ -176,14 +176,13 @@ class AdDetail extends Component {
         let adId = adInfo.id
         let dataSource = (commentState.received_comments_data_list)
         return (
-            <View style={[{
+            <View style={[styles.shadowCard, {
                 flex: 1,
                 marginTop: Constant.normalMarginEdge / 2,
                 marginLeft: Constant.normalMarginEdge,
                 marginRight: Constant.normalMarginEdge,
                 padding: Constant.normalMarginEdge,
-                borderRadius: 4,
-                }, styles.shadowCard]}>
+                }]}>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"

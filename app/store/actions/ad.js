@@ -80,9 +80,25 @@ const deleteAd = (hrId, adId, callback) => async (dispatch, getState) => {
     }
 }
 
+const getPopularAd = (callback) => async (dispatch, getState) => {
+    let res = await api.getPopularAd()
+    let data = res.data.data
+    let rows = res.data.data.rows
+    if (res && res.data) {
+        dispatch({
+            type: AD.RECEIVED_POPULAR_ADS,
+            res: rows
+        })
+        callback && callback(data)
+    } else {
+        callback && callback(null)
+    }
+}
+
 export default {
     getAdReceived,
     createAd,
     getAdByHr,
-    deleteAd
+    deleteAd,
+    getPopularAd
 }

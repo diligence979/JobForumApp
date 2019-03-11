@@ -80,9 +80,25 @@ const deletePost = (userId, postId, callback) => async (dispatch, getState) => {
     }
 }
 
+const getPopularPost = (callback) => async (dispatch, getState) => {
+    let res = await api.getPopularPost()
+    let data = res.data.data
+    let rows = res.data.data.rows
+    if (res && res.data) {
+        dispatch({
+            type: POST.RECEIVED_POPULAR_POSTS,
+            res: rows
+        })
+        callback && callback(data)
+    } else {
+        callback && callback(null)
+    }
+}
+
 export default {
     getPostReceived,
     createPost,
     getPostByUser,
-    deletePost
+    deletePost,
+    getPopularPost
 }
