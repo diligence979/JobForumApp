@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
-    Image
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import ImagePicker from 'react-native-image-picker'
 import styles from '../../../style'
 import { Avatar, Badge } from 'react-native-elements'
@@ -57,7 +54,8 @@ class UserDetailItem extends Component {
     }
 
     render() {
-        let { ownerId, role, username } = this.props.ownerInfo
+        let { ownerId, role, username, avatar } = this.props.ownerInfo
+        avatar = (avatar) ? ('data:image/png;base64,' + avatar) : require('../../../img/mypic.jpg')
         let roleText = role ? 'HR' : "求职者"
         return (
             <View>
@@ -84,7 +82,9 @@ class UserDetailItem extends Component {
                             width: Constant.largeIconSize,
                         }]}>
                             <Avatar
-                                source={require('../../../img/mypic.jpg')}
+                                source={{
+                                    uri: avatar
+                                }}
                                 showEditButton
                                 size="large"
                                 rounded
@@ -94,7 +94,6 @@ class UserDetailItem extends Component {
                                 }}
                                 activeOpacity={0.7}
                             />
-                            
                         </View>         
                     </View>
                     <View style={[styles.flexDirectionRowNotFlex, styles.justifyCenter, styles.centerH, {

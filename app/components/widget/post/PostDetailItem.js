@@ -4,6 +4,7 @@ import {
     Text
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather'
 import TimeText from '../TimeText'
 import UserImage from '../UserImage'
@@ -16,17 +17,25 @@ class PostDetailItem extends Component {
     }
 
     render() {
-        let { user, title, content, created_at, count } = this.props
-        let { username, userpic } = user
-        let pic = (userpic) ? <UserImage uri={userpic}
-                                        loginUser={username}
-                                        resizeMethod="scale"
-                                        style={[{
-                                            height: Constant.smallIconSize, width: Constant.smallIconSize,
-                                            marginTop: 5,
-                                            marginRight: Constant.normalMarginEdge / 2,
-                                            borderRadius: Constant.smallIconSize / 2
-                                        }]}/> : <View/> 
+        let { user, title, content, created_at, count, avatar } = this.props
+        let { username } = user
+        let pic = (avatar) ? <UserImage uri={'data:image/png;base64,' + avatar}
+                                    loginUser={username}
+                                    resizeMethod="scale"
+                                    style={[{
+                                        height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                        marginTop: 5,
+                                        marginRight: Constant.normalMarginEdge / 2,
+                                        borderRadius: Constant.smallIconSize / 2
+                                    }]}/> : 
+                            <Avatar rounded
+                                    source={require('../../../img/mypic.jpg')}
+                                    containerStyle={[{
+                                    height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                    marginTop: 5,
+                                    marginRight: Constant.normalMarginEdge / 2,
+                                    borderRadius: Constant.smallIconSize / 2
+                            }]}/> 
         return (
             <View
                 style={[{
@@ -86,7 +95,8 @@ PostDetailItem.propTypes = {
     count: PropTypes.number,
     title: PropTypes.string,
     content: PropTypes.string,
-    created_at: PropTypes.string
+    created_at: PropTypes.string,
+    avatar: PropTypes.string
 }
 
 export default PostDetailItem

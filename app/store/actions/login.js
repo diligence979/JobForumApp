@@ -29,7 +29,7 @@ const doLogin = (userName, password, role, callback) => async (dispatch, getStat
             type: LOGIN.IN,
             res
         })
-        ownerAction.initOwnerInfo(info.id, info.username, role)
+        ownerAction.initOwnerInfo(info.id, info.username, info.avatar, role)
     }
     callback(res.data)
 }
@@ -56,7 +56,7 @@ const doRegister = (userName, password, role, callback) => async (dispatch, getS
             type: LOGIN.IN,
             res
         })
-        ownerAction.initOwnerInfo(info.id, info.username, role)
+        ownerAction.initOwnerInfo(info.id, info.username, info.avatar, role)
     }
     callback(res.data)
 }

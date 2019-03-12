@@ -61,12 +61,15 @@ class PostDetail extends Component {
         let { id, user, hr, content, created_at } = rowData
         let username = ''
         let userId = null
+        let avatar = null
         if (user) {
             username = user.username
             userId = user.id
+            avatar = user.avatar
         } else if (hr) {
             username = hr.username
             userId = hr.id
+            avatar = hr.avatar
         }
         return (
             <CommentItem
@@ -75,6 +78,7 @@ class PostDetail extends Component {
                 username={username}
                 content={content}
                 created_at={created_at}
+                avatar={avatar}
                 deleteComment={() => {
                     this._deleteComment(ownerId, id)
                 }}
@@ -107,7 +111,7 @@ class PostDetail extends Component {
     }
 
     _renderHeader(postInfo) {
-        let { user, title, content, created_at, comment_size } = postInfo
+        let { user, title, content, created_at, comment_size, avatar } = postInfo
         return (
             <PostDetailItem 
                 user={user}
@@ -115,6 +119,7 @@ class PostDetail extends Component {
                 title={title}
                 content={content} 
                 created_at={created_at}
+                avatar={avatar}
             />
         )
     }

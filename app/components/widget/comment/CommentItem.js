@@ -4,7 +4,7 @@ import {
     Text
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { Button } from 'react-native-elements'
+import { Button, Avatar } from 'react-native-elements'
 import styles from '../../../style'
 import * as Constant from '../../../style/constant'
 import TimeText from '../TimeText'
@@ -18,16 +18,24 @@ class CommentItem extends Component {
     }
 
     render() {
-        let { ownerId, userId, username, content, created_at, userpic } = this.props
-        let pic = (userpic) ? <UserImage uri={userpic}
-                                               loginUser={actionUser}
-                                               resizeMethod="scale"
-                                               style={[{
-                                                   height: Constant.smallIconSize, width: Constant.smallIconSize,
-                                                   marginTop: 5,
-                                                   marginRight: Constant.normalMarginEdge / 2,
-                                                   borderRadius: Constant.smallIconSize / 2
-                                               }]}/> : <View/>
+        let { ownerId, userId, username, content, created_at, avatar } = this.props
+        let pic = (avatar) ? <UserImage uri={'data:image/png;base64,' + avatar}
+                                loginUser={username}
+                                resizeMethod="scale"
+                                style={[{
+                                    height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                    marginTop: 5,
+                                    marginRight: Constant.normalMarginEdge / 2,
+                                    borderRadius: Constant.smallIconSize / 2
+                            }]}/> :
+                            <Avatar rounded
+                                source={require('../../../img/mypic.jpg')}
+                                containerStyle={[{
+                                height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                marginTop: 5,
+                                marginRight: Constant.normalMarginEdge / 2,
+                                borderRadius: Constant.smallIconSize / 2
+                            }]}/> 
         return (
             <View
                 style={[{
@@ -84,7 +92,8 @@ CommentItem.propTypes = {
     username: PropTypes.string,
     content: PropTypes.string,
     created_at: PropTypes.string,
-    deleteComment: PropTypes.func
+    deleteComment: PropTypes.func,
+    avatar: PropTypes.string
 }
 
 export default CommentItem

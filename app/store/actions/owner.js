@@ -9,8 +9,8 @@ const { dispatch, getState } = store
 /**
  * 初始化用户信息
  */
-const initOwnerInfo = async (ownerId, username, role) => {
-    let ownerInfo = { ownerId, username, role }
+const initOwnerInfo = async (ownerId, username, avatar, role) => {
+    let ownerInfo = { ownerId, username, avatar, role }
     dispatch({
         type: OWNER.OWNER_INFO,
         res: ownerInfo
@@ -19,7 +19,6 @@ const initOwnerInfo = async (ownerId, username, role) => {
 
 const uploadUserAvatar = async (userId, avatar) => {
     let res = await api.uploadUserAvatar(userId, avatar)
-    console.log(res)
     if (res && res.data.code) {
         return {
             data: res.data,
@@ -34,7 +33,6 @@ const uploadUserAvatar = async (userId, avatar) => {
 
 const uploadHrAvatar = async (hrId, avatar) => {
     let res = await api.uploadHrAvatar(hrId, avatar)
-    console.log(res)
     if (res && res.data.code) {
         return {
             data: res.data,

@@ -32,7 +32,7 @@ class PostItem extends Component {
                                                    borderRadius: Constant.smallIconSize / 2
                                                }]}/> : 
                                     <Avatar rounded
-                                            icon={{name: 'user', type: 'font-awesome'}}
+                                            source={require('../../../img/mypic.jpg')}
                                             containerStyle={[{
                                             height: Constant.smallIconSize, width: Constant.smallIconSize,
                                             marginTop: 5,
