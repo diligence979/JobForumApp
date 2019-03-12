@@ -14,11 +14,12 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
 import * as Constant from '../style/constant'
+import * as Config from '../config/config'
 import loginActions from '../store/actions/login'
 import ownerActions from '../store/actions/owner'
 import postActions from '../store/actions/post'
 import PostItem from './post/PostItem'
-import Toast from './common/ToastProxy'
+import Toast from './widget/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
 import { postUtil } from '../utils/actionUtil'
 
@@ -128,7 +129,7 @@ class DynamicPage extends Component {
                             }}
                             leftAvatar={{
                                 source: (u.user.avatar) ? 
-                                'data:image/png;base64,' + u.user.avatar :
+                                Config.BASE_64 + u.user.avatar :
                                 require('../img/mypic.jpg')
                             }}
                         />

@@ -16,7 +16,7 @@ import * as Constant from '../../style/constant'
 import styles, { screenWidth, screenHeight } from '../../style'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
-import Toast from '../common/ToastProxy'
+import Toast from '../widget/ToastProxy'
 
 class PostDetail extends Component {
     constructor(props) {

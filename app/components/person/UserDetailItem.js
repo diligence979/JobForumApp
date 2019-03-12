@@ -8,6 +8,7 @@ import ImagePicker from 'react-native-image-picker'
 import styles from '../../style'
 import { Avatar, Badge } from 'react-native-elements'
 import * as Constant from '../../style/constant'
+import * as Config from '../../config/config'
 import ownerActions from '../../store/actions/owner'
 
 const options = {
@@ -55,7 +56,7 @@ class UserDetailItem extends Component {
 
     render() {
         let { ownerId, role, username, avatar } = this.props.ownerInfo
-        avatar = (avatar) ? ('data:image/png;base64,' + avatar) : require('../../../img/mypic.jpg')
+        avatar = (avatar) ? (Config.BASE_64 + avatar) : require('../../img/mypic.jpg')
         let roleText = role ? 'HR' : "求职者"
         return (
             <View>

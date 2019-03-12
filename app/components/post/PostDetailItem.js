@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Feather'
 import TimeText from '../widget/TimeText'
 import UserImage from '../widget/UserImage'
 import * as Constant from '../../style/constant'
+import * as Config from '../../config/config'
 import styles from '../../style'
 
 class PostDetailItem extends Component {
@@ -19,7 +20,7 @@ class PostDetailItem extends Component {
     render() {
         let { user, title, content, created_at, count, avatar } = this.props
         let { username } = user
-        let pic = (avatar) ? <UserImage uri={'data:image/png;base64,' + avatar}
+        let pic = (avatar) ? <UserImage uri={Config.BASE_64 + avatar}
                                     loginUser={username}
                                     resizeMethod="scale"
                                     style={[{
@@ -29,7 +30,7 @@ class PostDetailItem extends Component {
                                         borderRadius: Constant.smallIconSize / 2
                                     }]}/> : 
                             <Avatar rounded
-                                    source={require('../../../img/mypic.jpg')}
+                                    source={require('../../img/mypic.jpg')}
                                     containerStyle={[{
                                     height: Constant.smallIconSize, width: Constant.smallIconSize,
                                     marginTop: 5,

@@ -8,6 +8,7 @@ import { Button, Avatar } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import styles from '../../style'
 import * as Constant from '../../style/constant'
+import * as Config from '../../config/config'
 import TimeText from '../widget/TimeText'
 import UserImage from '../widget/UserImage'
 import Icon from 'react-native-vector-icons/Feather'
@@ -22,7 +23,7 @@ class PostItem extends Component {
 
     render() {
         let { actionTime, actionUser, actionComment, actionTarget, actionAvatar, showDelete } = this.props
-        let pic = (actionAvatar) ? <UserImage uri={'data:image/png;base64,' + actionAvatar}
+        let pic = (actionAvatar) ? <UserImage uri={Config.BASE_64 + actionAvatar}
                                                loginUser={actionUser}
                                                resizeMethod="scale"
                                                style={[{
@@ -32,7 +33,7 @@ class PostItem extends Component {
                                                    borderRadius: Constant.smallIconSize / 2
                                                }]}/> : 
                                     <Avatar rounded
-                                            source={require('../../../img/mypic.jpg')}
+                                            source={require('../../img/mypic.jpg')}
                                             containerStyle={[{
                                             height: Constant.smallIconSize, width: Constant.smallIconSize,
                                             marginTop: 5,

@@ -20,7 +20,7 @@ import IconC from 'react-native-vector-icons/Entypo'
 import { Fumi } from 'react-native-textinput-effects' 
 import loginActions from '../store/actions/login'
 import ownerActions from '../store/actions/owner'
-import Toast from './common/ToastProxy'
+import Toast from './widget/ToastProxy'
 import styles, { screenHeight, screenWidth } from "../style"
 import * as Constant from "../style/constant"
 

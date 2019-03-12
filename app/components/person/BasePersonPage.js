@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
     View,
-    Text,
     StatusBar,
     AppState,
     InteractionManager
@@ -12,7 +11,7 @@ import AdItem from '../ad/AdItem'
 import PullListView from '../widget/PullLoadMoreListView'
 import styles from '../../style'
 import { postUtil, adUtil } from '../../utils/actionUtil'
-import Toast from '../common/ToastProxy'
+import Toast from '../widget/ToastProxy'
 
 
 
@@ -26,7 +25,7 @@ class BasePersonPage extends Component {
         this._refresh = this._refresh.bind(this)
         this._renderPostRow = this._renderPostRow.bind(this)
         this._renderAdRow = this._renderAdRow.bind(this)
-        // this._loadMore = this._loadMore.bind(this)
+        this._loadMore = this._loadMore.bind(this)
         this._handleAppStateChange = this._handleAppStateChange.bind(this)
         this.startRefresh = this.startRefresh.bind(this)
         this.page = 0
@@ -97,6 +96,35 @@ class BasePersonPage extends Component {
                     }
                 }, 500) 
             })
+        }
+    }
+
+    /**
+     * 加载更多
+     * */
+    _loadMore() {
+        let ownerInfo = this.props.ownerState.ownerInfo
+        let { role, ownerId }  = ownerInfo
+        let { postAction, adAction }= this.props 
+
+        if (role) {
+            adAction.getAdByHr(ownerId, this.page, (res) => {
+                setTimeout(() => {
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
+                    }
+                }, 500) 
+            })
+            this.page++
+        } else {
+            postAction.getPostByUser(ownerId, this.page, (res) => {
+                setTimeout(() => {
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete((res && (res.count-this.page*30) >= 0)) 
+                    }
+                }, 500) 
+            })
+            this.page++
         }
     }
 

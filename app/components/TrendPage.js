@@ -13,11 +13,12 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
 import * as Constant from '../style/constant'
+import * as Config from '../config/config'
 import loginActions from '../store/actions/login'
 import ownerActions from '../store/actions/owner'
 import adActions from '../store/actions/ad'
-import AdItem from './widget/ad/AdItem'
-import Toast from './common/ToastProxy'
+import AdItem from './ad/AdItem'
+import Toast from './widget/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
 import { adUtil } from '../utils/actionUtil'
 
@@ -129,7 +130,7 @@ class TrendPage extends Component {
                             }}
                             leftAvatar={{
                                 source: (u.hr.avatar) ? 
-                                'data:image/png;base64,' + u.hr.avatar :
+                                Config.BASE_64 + u.hr.avatar :
                                 require('../img/mypic.jpg')
                             }}
                         />

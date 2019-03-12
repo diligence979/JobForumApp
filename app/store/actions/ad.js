@@ -1,4 +1,4 @@
-import { AD } from '../type'
+import { AD } from '../../config/type'
 import api from '../../api'
 
 const getAdReceived = (page = 0, callback) => async (dispatch, getState) => {

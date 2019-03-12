@@ -1,4 +1,4 @@
-import { COMMENT } from '../type'
+import { COMMENT } from '../../config/type'
 import api from '../../api'
 import { clearComment } from '../reducers'
 

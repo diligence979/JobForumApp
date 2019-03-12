@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { Button, Avatar } from 'react-native-elements'
 import styles from '../../style'
 import * as Constant from '../../style/constant'
+import * as Config from '../../config/config'
 import TimeText from '../widget/TimeText'
 import UserImage from '../widget/UserImage'
 import Icon from 'react-native-vector-icons/Feather'
@@ -19,7 +20,7 @@ class CommentItem extends Component {
 
     render() {
         let { ownerId, userId, username, content, created_at, avatar } = this.props
-        let pic = (avatar) ? <UserImage uri={'data:image/png;base64,' + avatar}
+        let pic = (avatar) ? <UserImage uri={Config.BASE_64 + avatar}
                                 loginUser={username}
                                 resizeMethod="scale"
                                 style={[{
@@ -29,7 +30,7 @@ class CommentItem extends Component {
                                     borderRadius: Constant.smallIconSize / 2
                             }]}/> :
                             <Avatar rounded
-                                source={require('../../../img/mypic.jpg')}
+                                source={require('../../img/mypic.jpg')}
                                 containerStyle={[{
                                 height: Constant.smallIconSize, width: Constant.smallIconSize,
                                 marginTop: 5,
