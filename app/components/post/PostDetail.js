@@ -111,7 +111,7 @@ class PostDetail extends Component {
     }
 
     _renderHeader(postInfo) {
-        let { user, title, content, created_at, comment_size, avatar } = postInfo
+        let { user, title, content, created_at, comment_size } = postInfo
         return (
             <PostDetailItem 
                 user={user}
@@ -119,7 +119,6 @@ class PostDetail extends Component {
                 title={title}
                 content={content} 
                 created_at={created_at}
-                avatar={avatar}
             />
         )
     }

@@ -22,7 +22,7 @@ const options = {
 }
 
 /**
- * 用户页面头部
+ * “我的”页面头部
  */
 class UserDetailItem extends Component {
     constructor(props) {

@@ -14,7 +14,7 @@ import UserImage from '../widget/UserImage'
 import Icon from 'react-native-vector-icons/Feather'
 
 /**
- * 帖子列表
+ * 讨论贴列表块
  */
 class PostItem extends Component {
     constructor(props) {
@@ -41,6 +41,7 @@ class PostItem extends Component {
                                             borderRadius: Constant.smallIconSize / 2
                                         }]}/>
         let commentSize = (!showDelete) ? 
+            // 动态页：评论数
             <View style={[styles.flexDirectionRowNotFlex]}>
                 <Text style={[styles.flex, styles.smallText, {
                     fontWeight: "100",
@@ -51,6 +52,7 @@ class PostItem extends Component {
                     {' ' + actionComment}
                 </Text>
             </View> : 
+            // 个人页：删除按钮
             <View style={[styles.flexDirectionRowNotFlex, styles.justifyEnd]}>
                 <Button
                     icon={

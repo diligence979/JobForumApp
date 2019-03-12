@@ -3,7 +3,11 @@ import { createReducer } from '..'
 
 const initialState = {
     //当前登录用户信息
-    ownerInfo: {},
+    ownerInfo: {
+        ownerId: NaN,
+        usernamg: '',
+        avatar: ''
+    },
 };
 
 const actionHandler = {

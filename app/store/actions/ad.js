@@ -69,10 +69,10 @@ const deleteAd = (hrId, adId, callback) => async (dispatch, getState) => {
         let index = ad.findIndex((ele) => {
             return (ele.id === adId)
         })
-        
+        ad.splice(index, 1)
         dispatch({
             type: AD.RECEIVED_USER_ADS,
-            res: ad.splice(index, 1)
+            res: ad
         })
         callback && callback(code)
     } else {

@@ -83,6 +83,7 @@ class DynamicPage extends Component {
         )
     }
 
+    // 热门讨论帖
     _renderHeader(hotPosts) {
         return (
             <Card title="热门讨论贴"

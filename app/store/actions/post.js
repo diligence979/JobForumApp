@@ -69,10 +69,10 @@ const deletePost = (userId, postId, callback) => async (dispatch, getState) => {
         let index = post.findIndex((ele) => {
             return (ele.id === postId)
         })
-        
+        post.splice(index, 1)
         dispatch({
             type: POST.RECEIVED_USER_POSTS,
-            res: post.splice(index, 1)
+            res: post
         })
         callback && callback(code)
     } else {

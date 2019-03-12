@@ -18,8 +18,8 @@ class PostDetailItem extends Component {
     }
 
     render() {
-        let { user, title, content, created_at, count, avatar } = this.props
-        let { username } = user
+        let { user, title, content, created_at, count } = this.props
+        let { username, avatar } = user
         let pic = (avatar) ? <UserImage uri={Config.BASE_64 + avatar}
                                     loginUser={username}
                                     resizeMethod="scale"
@@ -97,7 +97,6 @@ PostDetailItem.propTypes = {
     title: PropTypes.string,
     content: PropTypes.string,
     created_at: PropTypes.string,
-    avatar: PropTypes.string
 }
 
 export default PostDetailItem
