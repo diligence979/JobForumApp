@@ -6,10 +6,9 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { Button } from 'react-native-elements'
-import styles from '../../../style'
-import * as Constant from '../../../style/constant'
-import TimeText from '../TimeText'
-import UserImage from '../UserImage'
+import styles from '../../style'
+import * as Constant from '../../style/constant'
+import TimeText from '../widget/TimeText'
 import Icon from 'react-native-vector-icons/Feather'
 
 class AdItem extends Component {

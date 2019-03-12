@@ -4,8 +4,8 @@ import {
     StatusBar
 } from 'react-native'
 import PropTypes from 'prop-types'
-import AdDetail from './widget/ad/AdDetail'
-import styles from '../style'
+import AdDetail from './AdDetail'
+import styles from '../../style'
 
 class AdDetailPage extends Component {
     constructor(props) {

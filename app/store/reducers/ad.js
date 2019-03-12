@@ -1,4 +1,4 @@
-import { AD } from '../type'
+import { AD } from '../../config/type'
 import { createReducer } from '..'
 
 const initialState = {

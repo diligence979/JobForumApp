@@ -17,10 +17,10 @@ import * as Constant from '../style/constant'
 import loginActions from '../store/actions/login'
 import ownerActions from '../store/actions/owner'
 import postActions from '../store/actions/post'
-import PostItem from './widget/post/PostItem'
+import PostItem from './post/PostItem'
 import Toast from './common/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
-import { postUtil } from '../utils/ActionUtil'
+import { postUtil } from '../utils/actionUtil'
 
 
 /**
@@ -84,7 +84,7 @@ class DynamicPage extends Component {
 
     _renderHeader(hotPosts) {
         return (
-            <Card title="热门帖子"
+            <Card title="热门讨论贴"
                 containerStyle={{
                     borderWidth: 0,
                     marginTop: Constant.normalMarginEdge / 2,

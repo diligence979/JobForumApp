@@ -7,12 +7,12 @@ import {
     InteractionManager
 } from 'react-native'
 import UserDetailItem from './UserDetailItem'
-import PostItem from '../../widget/post/PostItem'
-import AdItem from '../../widget/ad/AdItem'
-import PullListView from '../PullLoadMoreListView'
-import styles from '../../../style'
-import { postUtil, adUtil } from '../../../utils/ActionUtil'
-import Toast from '../../common/ToastProxy'
+import PostItem from '../post/PostItem'
+import AdItem from '../ad/AdItem'
+import PullListView from '../widget/PullLoadMoreListView'
+import styles from '../../style'
+import { postUtil, adUtil } from '../../utils/actionUtil'
+import Toast from '../common/ToastProxy'
 
 
 

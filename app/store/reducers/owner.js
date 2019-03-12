@@ -1,4 +1,4 @@
-import { OWNER } from '../type';
+import { OWNER } from '../../config/type';
 import { createReducer } from '..'
 
 const initialState = {

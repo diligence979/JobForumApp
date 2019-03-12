@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native'
-import { OWNER } from '../type'
+import { OWNER } from '../../config/type'
 import store from '..'
 import * as Constant from '../../style/constant'
 import api from '../../api';

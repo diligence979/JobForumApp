@@ -5,10 +5,10 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import ImagePicker from 'react-native-image-picker'
-import styles from '../../../style'
+import styles from '../../style'
 import { Avatar, Badge } from 'react-native-elements'
-import * as Constant from '../../../style/constant'
-import ownerActions from '../../../store/actions/owner'
+import * as Constant from '../../style/constant'
+import ownerActions from '../../store/actions/owner'
 
 const options = {
     title: '上传头像',

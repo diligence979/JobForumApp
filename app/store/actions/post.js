@@ -1,4 +1,4 @@
-import { POST } from '../type'
+import { POST } from '../../config/type'
 import api from '../../api'
 
 const getPostReceived = (page = 0, callback) => async (dispatch, getState) => {

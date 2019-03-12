@@ -8,15 +8,15 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import commentAction from '../../../store/actions/comment'
-import PullListView from '../PullLoadMoreListView'
+import commentAction from '../../store/actions/comment'
+import PullListView from '../widget/PullLoadMoreListView'
 import PostDetailItem from './PostDetailItem'
 import CommentItem from '../comment/CommentItem'
-import * as Constant from '../../../style/constant'
-import styles, { screenWidth, screenHeight } from '../../../style'
+import * as Constant from '../../style/constant'
+import styles, { screenWidth, screenHeight } from '../../style'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
-import Toast from '../../common/ToastProxy'
+import Toast from '../common/ToastProxy'
 
 class PostDetail extends Component {
     constructor(props) {

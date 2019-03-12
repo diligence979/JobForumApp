@@ -5,9 +5,9 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Feather'
-import TimeText from '../TimeText'
-import * as Constant from '../../../style/constant'
-import styles from '../../../style'
+import TimeText from '../widget/TimeText'
+import * as Constant from '../../style/constant'
+import styles from '../../style'
 
 class AdDetailItem extends Component {
     constructor(props) {

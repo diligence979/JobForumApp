@@ -5,7 +5,7 @@ import { InteractionManager } from 'react-native';
 import ownerActions from '../store/actions/owner'
 import adActions from '../store/actions/ad'
 import postActions from '../store/actions/post'
-import BasePersonPage from "./widget/person/BasePersonPage";
+import BasePersonPage from "./person/BasePersonPage";
 
 /**
  * 我的

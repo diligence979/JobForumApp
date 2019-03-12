@@ -1,4 +1,4 @@
-import { POST } from '../type'
+import { POST } from '../../config/type'
 import { createReducer } from '..'
 
 const initialState = {

@@ -1,4 +1,4 @@
-import { COMMENT } from '../type'
+import { COMMENT } from '../../config/type'
 import { createReducer } from '../'
 
 const initialState = {

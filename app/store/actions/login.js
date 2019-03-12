@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import { Buffer } from 'buffer'
-import { LOGIN } from '../type'
+import { LOGIN } from '../../config/type'
 import ownerAction from './owner'
 import * as Constant from '../../style/constant'
 import { clear } from '../reducers'

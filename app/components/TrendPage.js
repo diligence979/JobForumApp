@@ -19,7 +19,7 @@ import adActions from '../store/actions/ad'
 import AdItem from './widget/ad/AdItem'
 import Toast from './common/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
-import { adUtil } from '../utils/ActionUtil'
+import { adUtil } from '../utils/actionUtil'
 
 
 /**
@@ -85,7 +85,7 @@ class TrendPage extends Component {
 
     _renderHeader(hotAds) {
         return (
-            <Card title="热门招聘"
+            <Card title="热门招聘贴"
                 containerStyle={{
                     borderWidth: 0,
                     marginTop: Constant.normalMarginEdge / 2,

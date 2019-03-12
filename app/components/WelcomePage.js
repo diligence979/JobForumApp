@@ -3,7 +3,6 @@ import {
     View, 
     Image, 
     StatusBar, 
-    Platform, 
     Animated, 
     Easing
 } from 'react-native' 

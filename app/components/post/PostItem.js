@@ -6,10 +6,10 @@ import {
 } from 'react-native'
 import { Button, Avatar } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import styles from '../../../style'
-import * as Constant from '../../../style/constant'
-import TimeText from '../TimeText'
-import UserImage from '../UserImage'
+import styles from '../../style'
+import * as Constant from '../../style/constant'
+import TimeText from '../widget/TimeText'
+import UserImage from '../widget/UserImage'
 import Icon from 'react-native-vector-icons/Feather'
 
 /**

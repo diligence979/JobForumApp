@@ -1,4 +1,4 @@
-import  { LOGIN } from '../type';
+import  { LOGIN } from '../../config/type';
 import { createReducer } from '../'
 
 const initialState = {

@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import styles from "../../style"
 import * as Constant from "../../style/constant"
-import * as Config from '../../config'
+import * as Config from '../../config/config'
 
 /**
  * 上下拉列表控件

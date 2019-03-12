@@ -6,10 +6,10 @@ import {
 import PropTypes from 'prop-types'
 import { Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather'
-import TimeText from '../TimeText'
-import UserImage from '../UserImage'
-import * as Constant from '../../../style/constant'
-import styles from '../../../style'
+import TimeText from '../widget/TimeText'
+import UserImage from '../widget/UserImage'
+import * as Constant from '../../style/constant'
+import styles from '../../style'
 
 class PostDetailItem extends Component {
     constructor(props) {
