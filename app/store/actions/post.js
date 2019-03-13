@@ -1,7 +1,7 @@
 import { POST } from '../../config/type'
 import api from '../../api'
 
-const getPostReceived = (page = 0, callback) => async (dispatch, getState) => {
+const getPostReceived = (page = 0, cb) => async (dispatch, getState) => {
     let res = await api.getPost(page*30)
     let data = res.data.data
     let rows = res.data.data.rows
@@ -18,9 +18,9 @@ const getPostReceived = (page = 0, callback) => async (dispatch, getState) => {
                 res: post.concat(rows)
             })
         }
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
@@ -38,7 +38,7 @@ const createPost = async (title, content, ownerId) => {
     }
 }
 
-const getPostByUser = (userId, page = 0, callback) => async (dispatch, getState) => {
+const getPostByUser = (userId, page = 0, cb) => async (dispatch, getState) => {
     let res = await api.getPostByUser(userId, page*30)
     let data = res.data.data
     let rows = data.rows
@@ -55,13 +55,13 @@ const getPostByUser = (userId, page = 0, callback) => async (dispatch, getState)
                 res: post.concat(rows)
             })
         }
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
-const deletePost = (userId, postId, callback) => async (dispatch, getState) => {
+const deletePost = (userId, postId, cb) => async (dispatch, getState) => {
     let res = await api.deletePost(userId, postId)
     let code = res.data.code
     if (res && res.data) {
@@ -74,13 +74,13 @@ const deletePost = (userId, postId, callback) => async (dispatch, getState) => {
             type: POST.RECEIVED_USER_POSTS,
             res: post
         })
-        callback && callback(code)
+        cb && cb(code)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
-const getPopularPost = (callback) => async (dispatch, getState) => {
+const getPopularPost = (cb) => async (dispatch, getState) => {
     let res = await api.getPopularPost()
     let data = res.data.data
     let rows = res.data.data.rows
@@ -89,9 +89,9 @@ const getPopularPost = (callback) => async (dispatch, getState) => {
             type: POST.RECEIVED_POPULAR_POSTS,
             res: rows
         })
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 

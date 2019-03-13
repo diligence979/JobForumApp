@@ -15,41 +15,41 @@ const initOwnerInfo = async (ownerId, username, avatar, role) => {
     })
 }
 
-const uploadUserAvatar = async (userId, avatar) => {
-    let res = await api.uploadUserAvatar(userId, avatar)
-    let ownerInfo = { avatar }
+const uploadUserAvatar = async (ownerId, username, avatar, role, cb) => {
+    let res = await api.uploadUserAvatar(ownerId, avatar)
+    let ownerInfo = { ownerId, username, avatar, role }
     if (res && res.data.code) {
         dispatch({
             type: OWNER.OWNER_INFO,
             res: ownerInfo
         })
-        return {
+        cb({
             data: res.data,
             result: true
-        }
+        })
     } else {
-        return {
+        cb({
             result: false
-        }
+        })
     }
 }
 
-const uploadHrAvatar = async (hrId, avatar) => {
-    let res = await api.uploadHrAvatar(hrId, avatar)
-    let ownerInfo = { avatar }
+const uploadHrAvatar = async (ownerId, username, avatar, role, cb) => {
+    let res = await api.uploadHrAvatar(ownerId, avatar)
+    let ownerInfo = { ownerId, username, avatar, role }
     if (res && res.data.code) {
         dispatch({
             type: OWNER.OWNER_INFO,
             res: ownerInfo
         })
-        return {
+        cb({
             data: res.data,
             result: true
-        }
+        })
     } else {
-        return {
+        cb({
             result: false
-        }
+        })
     }
 }
 

@@ -30,7 +30,7 @@ class UserDetailItem extends Component {
         this.openImagePicker = this.openImagePicker.bind(this)
     }
 
-    openImagePicker(ownerId, role) {
+    openImagePicker(ownerId, username, role) {
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response)
             if (response.didCancel) {
@@ -44,10 +44,18 @@ class UserDetailItem extends Component {
                     let avatar = response.data
                     if (role) {
                         // HR upload avatar
-                        ownerActions.uploadHrAvatar(ownerId, avatar)
+                        ownerActions.uploadHrAvatar(ownerId, username, avatar, role, (res) => {
+                            if (res.result) {
+                                this.props.refresh && this.props.refresh()
+                            }
+                        })
                     } else {
                         // USER upload avatar
-                        ownerActions.uploadUserAvatar(ownerId, avatar)
+                        ownerActions.uploadUserAvatar(ownerId, username, avatar, role, (res) => {
+                            if (res.result) {
+                                this.props.refresh && this.props.refresh()
+                            }
+                        })
                     }
                 }
             }
@@ -91,7 +99,7 @@ class UserDetailItem extends Component {
                                 rounded
                                 title="HR"
                                 onPress={() => {
-                                    this.openImagePicker(ownerId, role)
+                                    this.openImagePicker(ownerId, username, role)
                                 }}
                                 activeOpacity={0.7}
                             />
@@ -117,7 +125,8 @@ class UserDetailItem extends Component {
 }
 
 UserDetailItem.propTypes = {
-    ownerInfo: PropTypes.object
+    ownerInfo: PropTypes.object,
+    refresh: PropTypes.func
 }
 
 export default UserDetailItem

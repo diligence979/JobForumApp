@@ -9,7 +9,7 @@ import api from '../../api'
 /**
  * 登陆请求
  */
-const doLogin = (userName, password, role, callback) => async (dispatch, getState) => {
+const doLogin = (userName, password, role, cb) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64')
     let res = null
     AsyncStorage.setItem(Constant.USER_NAME_KEY, userName)
@@ -31,13 +31,13 @@ const doLogin = (userName, password, role, callback) => async (dispatch, getStat
         })
         ownerAction.initOwnerInfo(info.id, info.username, info.avatar, role)
     }
-    callback(res.data)
+    cb(res.data)
 }
 
 /**
  * 注册请求
  */
-const doRegister = (userName, password, role, callback) => async (dispatch, getState) => {
+const doRegister = (userName, password, role, cb) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64')
     let res = null
     if (role) {
@@ -58,7 +58,7 @@ const doRegister = (userName, password, role, callback) => async (dispatch, getS
         })
         ownerAction.initOwnerInfo(info.id, info.username, info.avatar, role)
     }
-    callback(res.data)
+    cb(res.data)
 }
 
 /**

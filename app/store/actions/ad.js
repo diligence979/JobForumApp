@@ -1,7 +1,7 @@
 import { AD } from '../../config/type'
 import api from '../../api'
 
-const getAdReceived = (page = 0, callback) => async (dispatch, getState) => {
+const getAdReceived = (page = 0, cb) => async (dispatch, getState) => {
     let res = await api.getAd(page*30)
     let data = res.data.data
     let rows = res.data.data.rows
@@ -18,9 +18,9 @@ const getAdReceived = (page = 0, callback) => async (dispatch, getState) => {
                 res: ad.concat(rows)
             })
         }
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
@@ -38,7 +38,7 @@ const createAd = async (ownerId, company, job, education,  team, location, salay
     }
 }
 
-const getAdByHr = (adId, page = 0, callback) => async (dispatch, getState) => {
+const getAdByHr = (adId, page = 0, cb) => async (dispatch, getState) => {
     let res = await api.getAdByHr(adId, page*30)
     let data = res.data.data
     let rows = data.rows
@@ -55,13 +55,13 @@ const getAdByHr = (adId, page = 0, callback) => async (dispatch, getState) => {
                 res: ad.concat(rows)
             })
         }
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
-const deleteAd = (hrId, adId, callback) => async (dispatch, getState) => {
+const deleteAd = (hrId, adId, cb) => async (dispatch, getState) => {
     let res = await api.deleteAd(hrId, adId)
     let code = res.data.code
     if (res && res.data) {
@@ -74,13 +74,13 @@ const deleteAd = (hrId, adId, callback) => async (dispatch, getState) => {
             type: AD.RECEIVED_USER_ADS,
             res: ad
         })
-        callback && callback(code)
+        cb && cb(code)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
-const getPopularAd = (callback) => async (dispatch, getState) => {
+const getPopularAd = (cb) => async (dispatch, getState) => {
     let res = await api.getPopularAd()
     let data = res.data.data
     let rows = res.data.data.rows
@@ -89,9 +89,9 @@ const getPopularAd = (callback) => async (dispatch, getState) => {
             type: AD.RECEIVED_POPULAR_ADS,
             res: rows
         })
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 

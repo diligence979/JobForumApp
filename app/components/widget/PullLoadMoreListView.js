@@ -8,8 +8,8 @@ import {
     TouchableOpacity, 
     Image
 } from 'react-native'
-import styles from "../../style"
-import * as Constant from "../../style/constant"
+import styles from '../../style'
+import * as Constant from '../../style/constant'
 import * as Config from '../../config/config'
 
 /**

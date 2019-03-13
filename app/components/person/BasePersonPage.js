@@ -64,7 +64,10 @@ class BasePersonPage extends Component {
     _renderHeader(ownerInfo) {
         return (
             <View>
-                <UserDetailItem ownerInfo={ownerInfo}/>
+                <UserDetailItem 
+                    ownerInfo={ownerInfo}
+                    refresh={this._refresh}
+                />
             </View>
         )
     }
@@ -133,19 +136,21 @@ class BasePersonPage extends Component {
         let userId = user.id
         let postId = id
         return (
-            <PostItem
-                actionTime={created_at}
-                actionUser={user.username}
-                actionTarget={title}
-                actionAvatar={user.avatar}
-                showDelete
-                onPressItem={() => {
-                    postUtil(rowData)
-                }}
-                deleteItem={() => {
-                    this._deletePost(userId, postId)
-                }}
-            />
+            <View>
+                <PostItem
+                    actionTime={created_at}
+                    actionUser={user.username}
+                    actionTarget={title}
+                    actionAvatar={user.avatar}
+                    showDelete
+                    onPressItem={() => {
+                        postUtil(rowData)
+                    }}
+                    deleteItem={() => {
+                        this._deletePost(userId, postId)
+                    }}
+                />
+            </View>
         )
     }
 
@@ -154,21 +159,23 @@ class BasePersonPage extends Component {
         let hrId = hr.id
         let adId = id
         return (
-            <AdItem
-                company={company}
-                created_at={created_at}
-                job={job}
-                location={location}
-                salary={salary}
-                education={education}
-                showDelete
-                onPressItem={() => {
-                    adUtil(rowData)
-                }}
-                deleteItem={() => {
-                    this._deleteAd(hrId, adId)
-                }}
-            />
+            <View>
+                <AdItem
+                    company={company}
+                    created_at={created_at}
+                    job={job}
+                    location={location}
+                    salary={salary}
+                    education={education}
+                    showDelete
+                    onPressItem={() => {
+                        adUtil(rowData)
+                    }}
+                    deleteItem={() => {
+                        this._deleteAd(hrId, adId)
+                    }}
+                />
+            </View>
         )
     }
 

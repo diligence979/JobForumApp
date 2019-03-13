@@ -2,7 +2,7 @@ import { COMMENT } from '../../config/type'
 import api from '../../api'
 import { clearComment } from '../reducers'
 
-const getCommentReceived = (page = 0, type, id, callback) => async (dispatch, getState) => {
+const getCommentReceived = (page = 0, type, id, cb) => async (dispatch, getState) => {
     const offset = page * 30
     let res = {}
     if (type === 'post') {
@@ -25,9 +25,9 @@ const getCommentReceived = (page = 0, type, id, callback) => async (dispatch, ge
                 res:   comment.concat(rows)
             })
         }
-        callback && callback(data)
+        cb && cb(data)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
@@ -69,7 +69,7 @@ const createAdComment = async (content, ownerId,  role, adId) => {
     }
 }
 
-const deleteCommentByHr = (hrId, commentId, callback) => async (dispatch, getState) => {
+const deleteCommentByHr = (hrId, commentId, cb) => async (dispatch, getState) => {
     let res = await api.deleteCommentByHr(hrId, commentId)
     let code = res.data.code
     if (res && res.data) {
@@ -82,13 +82,13 @@ const deleteCommentByHr = (hrId, commentId, callback) => async (dispatch, getSta
             type: COMMENT.RECEIVED_COMMENTS,
             res: comment.splice(index, 1)
         })
-        callback && callback(code)
+        cb && cb(code)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
-const deleteCommentByUser = (userId, commentId, callback) => async (dispatch, getState) => {
+const deleteCommentByUser = (userId, commentId, cb) => async (dispatch, getState) => {
     let res = await api.deleteCommentByUser(userId, commentId)
     let code = res.data.code
     if (res && res.data) {
@@ -101,9 +101,9 @@ const deleteCommentByUser = (userId, commentId, callback) => async (dispatch, ge
             type: COMMENT.RECEIVED_COMMENTS,
             res: comment.splice(index, 1)
         })
-        callback && callback(code)
+        cb && cb(code)
     } else {
-        callback && callback(null)
+        cb && cb(null)
     }
 }
 
