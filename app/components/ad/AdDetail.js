@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import commentAction from '../../store/actions/comment'
+import commentActions from '../../store/actions/comment'
 import PullListView from '../widget/PullLoadMoreListView'
 import AdDetailItem from './AdDetailItem'
 import CommentItem from '../comment/CommentItem'
@@ -123,7 +123,7 @@ class AdDetail extends Component {
         }
     }
 
-    _renderHeader(adInfo) {
+    _renderHeader(adInfo,  count) {
         let { 
             company,
             created_at,
@@ -134,7 +134,6 @@ class AdDetail extends Component {
             team,
             jd,
             email,
-            comment_size
          } = adInfo
         return (
             <AdDetailItem 
@@ -147,7 +146,7 @@ class AdDetail extends Component {
                 team={team}
                 jd={jd}
                 email={email}
-                comment_size={comment_size}
+                comment_size={count}
             />
         )
     }
@@ -179,7 +178,7 @@ class AdDetail extends Component {
 
     _createComment(refresh, ownerId, role, text, title = null, adId) {
         Actions.LoadingModal({backExit: false})
-        commentAction.createAdComment(text, ownerId, role, adId).then((res) => {
+        commentActions.createAdComment(text, ownerId, role, adId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
                 refresh()
@@ -190,6 +189,7 @@ class AdDetail extends Component {
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { commentState, adInfo, ownerInfo } = this.props
+        let count = commentState.received_comments_current_size
         let role = ownerInfo.role
         let ownerId = ownerInfo.ownerId
         let adId = adInfo.id
@@ -205,7 +205,7 @@ class AdDetail extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderHeader={this._renderHeader(adInfo)}
+                    renderHeader={this._renderHeader(adInfo, count)}
                     renderRow={(rowData, index, ownerId) =>
                         this._renderRow(rowData, index, ownerId)
                     }
@@ -260,5 +260,5 @@ AdDetail.propTypes = {
 export default connect(state => ({
     commentState: state.comment,
 }), dispatch => ({
-    commentAction: bindActionCreators(commentAction, dispatch)
+    commentAction: bindActionCreators(commentActions, dispatch)
 }))(AdDetail)

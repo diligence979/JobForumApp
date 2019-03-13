@@ -10,8 +10,8 @@ const actionHandler = {
     [COMMENT.RECEIVED_COMMENTS]: (state, action) => {
         return {
             ...state,
-            received_comments_data_list: action.res,
-            received_comments_current_size: action.res.length
+            received_comments_data_list: action.res.rows,
+            received_comments_current_size: action.res.count
         }
     },
     [COMMENT.CLEAR_COMMENTS_LIST]: (state, action) => {

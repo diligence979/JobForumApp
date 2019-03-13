@@ -19,7 +19,7 @@ class CommentItem extends Component {
     }
 
     render() {
-        let { ownerId, userId, username, content, created_at, avatar } = this.props
+        let { isDisabled, username, content, created_at, avatar } = this.props
         let pic = (avatar) ? <UserImage uri={Config.BASE_64 + avatar}
                                 loginUser={username}
                                 resizeMethod="scale"
@@ -66,11 +66,11 @@ class CommentItem extends Component {
                 <View style={[styles.flexDirectionRowNotFlex, styles.justifyEnd]}>
                     <Button
                         icon={
-                          (ownerId === userId) ? 
+                          (!isDisabled) ? 
                           <Icon name="trash-2" size={14}/> :
                           <Icon name="trash-2" size={14} color="#959595"/>
                         }
-                        disabled={ownerId !== userId}
+                        disabled={isDisabled}
                         disabledStyle={{
                             backgroundColor: "transparent",
                         }}
@@ -88,8 +88,7 @@ class CommentItem extends Component {
 }
 
 CommentItem.propTypes = {
-    ownerId: PropTypes.number,
-    userId: PropTypes.number,
+    isDisabled: PropTypes.bool,
     username: PropTypes.string,
     content: PropTypes.string,
     created_at: PropTypes.string,

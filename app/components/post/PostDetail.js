@@ -72,19 +72,30 @@ class PostDetail extends Component {
         let username = ''
         let userId = null
         let avatar = null
+        let { role } = this.props.ownerInfo
+        let isDisabled
         if (user) {
             username = user.username
             userId = user.id
             avatar = user.avatar
+            if (!role && (user.id === ownerId)) {
+                isDisabled = false
+            } else {
+                isDisabled = true
+            }     
         } else if (hr) {
             username = hr.username
             userId = hr.id
             avatar = hr.avatar
+            if (role && (hr.id === ownerId)) {
+                isDisabled = false
+            } else {
+                isDisabled = true
+            }
         }
         return (
             <CommentItem
-                ownerId={ownerId}
-                userId={userId}
+                isDisabled={isDisabled}
                 username={username}
                 content={content}
                 created_at={created_at}
@@ -123,12 +134,12 @@ class PostDetail extends Component {
         }
     }
 
-    _renderHeader(postInfo) {
-        let { user, title, content, created_at, comment_size } = postInfo
+    _renderHeader(postInfo, count) {
+        let { user, title, content, created_at } = postInfo
         return (
             <PostDetailItem 
                 user={user}
-                count={comment_size}
+                count={count}
                 title={title}
                 content={content} 
                 created_at={created_at}
@@ -163,7 +174,7 @@ class PostDetail extends Component {
 
     _createComment(refresh, ownerId, role, text, title = null, postId) {
         Actions.LoadingModal({backExit: false})
-        commentAction.createPostComment(text, ownerId, role, postId).then((res) => {
+        commentActions.createPostComment(text, ownerId, role, postId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
                 refresh()
@@ -174,6 +185,7 @@ class PostDetail extends Component {
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
         let { commentState, postInfo, ownerInfo } = this.props
+        let count = commentState.received_comments_current_size
         let role = ownerInfo.role
         let ownerId = ownerInfo.ownerId
         let postId = postInfo.id
@@ -190,7 +202,7 @@ class PostDetail extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderHeader={this._renderHeader(postInfo)}
+                    renderHeader={this._renderHeader(postInfo, count)}
                     renderRow={(rowData, index, ownerId) =>
                         this._renderRow(rowData, index, ownerId)
                     }
