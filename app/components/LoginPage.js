@@ -26,8 +26,12 @@ import * as Constant from "../style/constant"
 
 const animaTime = 600
 
+
 /**
- * 登陆Modal
+ * 登陆模块
+ *
+ * @class LoginPage
+ * @extends {Component}
  */
 class LoginPage extends Component {
     constructor(props) {

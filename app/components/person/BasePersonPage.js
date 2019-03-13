@@ -13,10 +13,11 @@ import styles from '../../style'
 import { postUtil, adUtil } from '../../utils/actionUtil'
 import Toast from '../widget/ToastProxy'
 
-
-
 /**
  * 用户显示基础控件
+ *
+ * @class BasePersonPage
+ * @extends {Component}
  */
 class BasePersonPage extends Component {
     constructor(props) {

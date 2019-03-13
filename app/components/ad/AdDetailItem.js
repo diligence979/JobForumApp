@@ -9,6 +9,12 @@ import TimeText from '../widget/TimeText'
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 
+/**
+ * 招聘帖详情页头部的详情部分
+ *
+ * @class AdDetailItem
+ * @extends {Component}
+ */
 class AdDetailItem extends Component {
     constructor(props) {
         super(props)

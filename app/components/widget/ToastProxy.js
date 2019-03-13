@@ -3,6 +3,12 @@ import Toast from 'react-native-root-toast'
 
 /**
  * 文本提示框
+ *
+ * @export
+ * @param {*} text
+ * @param {*} [duration=Toast.durations.SHORT]
+ * @param {*} [position=Toast.positions.CENTER]
+ * @returns
  */
 export default function toast(text, duration = Toast.durations.SHORT, position = Toast.positions.CENTER) {
     return Toast.show(text, {

@@ -13,6 +13,13 @@ const actionHandler = {
             received_comments_data_list: action.res,
             received_comments_current_size: action.res.length
         }
+    },
+    [COMMENT.CLEAR_COMMENTS_LIST]: (state, action) => {
+        return {
+            ...state,
+            received_comments_data_list: [],
+            received_comments_current_size: 0
+        }
     }
 }
 

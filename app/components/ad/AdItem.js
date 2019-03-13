@@ -11,6 +11,12 @@ import * as Constant from '../../style/constant'
 import TimeText from '../widget/TimeText'
 import Icon from 'react-native-vector-icons/Feather'
 
+/**
+ * 招聘贴列表块
+ *
+ * @class AdItem
+ * @extends {Component}
+ */
 class AdItem extends Component {
     constructor(props) {
         super(props)

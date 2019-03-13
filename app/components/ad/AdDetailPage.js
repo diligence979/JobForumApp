@@ -7,6 +7,12 @@ import PropTypes from 'prop-types'
 import AdDetail from './AdDetail'
 import styles from '../../style'
 
+/**
+ * 招聘贴详情页
+ *
+ * @class AdDetailPage
+ * @extends {Component}
+ */
 class AdDetailPage extends Component {
     constructor(props) {
         super(props)

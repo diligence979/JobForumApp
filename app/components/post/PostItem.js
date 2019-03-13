@@ -14,7 +14,10 @@ import UserImage from '../widget/UserImage'
 import Icon from 'react-native-vector-icons/Feather'
 
 /**
- * 讨论贴列表块
+ * 讨论帖列表块
+ *
+ * @class PostItem
+ * @extends {Component}
  */
 class PostItem extends Component {
     constructor(props) {

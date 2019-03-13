@@ -78,7 +78,7 @@ class CommentItem extends Component {
                             backgroundColor: "transparent",
                         }}
                         onPress={() => {
-                            this.props.deleteComment && this.props.deleteComment()
+                            this.props.deleteComment && this.props.deleteComment(this.props.refresh)
                         }}
                     />
                 </View>
@@ -94,7 +94,8 @@ CommentItem.propTypes = {
     content: PropTypes.string,
     created_at: PropTypes.string,
     deleteComment: PropTypes.func,
-    avatar: PropTypes.string
+    avatar: PropTypes.string,
+    refresh: PropTypes.func
 }
 
 export default CommentItem

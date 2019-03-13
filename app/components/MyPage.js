@@ -7,7 +7,10 @@ import postActions from '../store/actions/post'
 import BasePersonPage from "./person/BasePersonPage"
 
 /**
- * 我的
+ * 个人页
+ *
+ * @class MyPage
+ * @extends {BasePersonPage}
  */
 class MyPage extends BasePersonPage {
     constructor(props) {

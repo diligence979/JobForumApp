@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
     View,
-    Text,
     AppState, 
     StatusBar, 
     InteractionManager,
@@ -14,18 +13,20 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
 import * as Constant from '../style/constant'
-import * as Config from '../config/config'
 import loginActions from '../store/actions/login'
 import ownerActions from '../store/actions/owner'
 import postActions from '../store/actions/post'
 import PostItem from './post/PostItem'
 import Toast from './widget/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
+import HotList from './widget/HotList'
 import { postUtil } from '../utils/actionUtil'
 
-
 /**
- * 动态 -> 论坛广场，论坛动态
+ * 动态页 -> 讨论帖广场
+ *
+ * @class DynamicPage
+ * @extends {Component}
  */
 class DynamicPage extends Component {
     constructor(props) {
@@ -86,58 +87,10 @@ class DynamicPage extends Component {
     // 热门讨论帖
     _renderHeader(hotPosts) {
         return (
-            <Card title="热门讨论贴"
-                containerStyle={{
-                    borderWidth: 0,
-                    marginTop: Constant.normalMarginEdge / 2,
-                    marginLeft: Constant.normalMarginEdge,
-                    marginRight: Constant.normalMarginEdge,
-                    marginBottom: Constant.normalMarginEdge / 2,
-                    padding: Constant.normalMarginEdge,
-                }}
-                dividerStyle={{
-                    display: "none"
-                }}
-            >
-            {
-                hotPosts.map((u, i) => {
-                    return (
-                        <ListItem
-                            key={i}
-                            roundAvatar
-                            bottomDivider
-                            title={u.title}
-                            chevron
-                            chevronColor="white"
-                            titleStyle={{
-                                fontSize: 14,
-                                maxHeight: 16
-                            }}
-                            subtitleStyle={{
-                                fontSize:12,
-                                color: "#959595"
-                            }}
-                            subtitle={u.user.username}
-                            containerStyle={[{
-                                flexWrap: "nowrap",
-                                padding: 5
-                            }]}
-                            badge={{value: `${u.comment_size}`, badgeStyle:{
-                                backgroundColor: "#fe180d"
-                            }}}
-                            onPress={() => {
-                                postUtil(u)
-                            }}
-                            leftAvatar={{
-                                source: (u.user.avatar) ? 
-                                Config.BASE_64 + u.user.avatar :
-                                require('../img/mypic.jpg')
-                            }}
-                        />
-                    )
-                })
-            }
-            </Card>
+            <HotList 
+                hotList={hotPosts}
+                isPost
+            />
         )
     }
 
@@ -176,11 +129,12 @@ class DynamicPage extends Component {
         })
     }
 
-    _createPost(ownerId, role, text, title) {
+    _createPost(refresh, ownerId, role, text, title) {
         Actions.LoadingModal({backExit: false})
         postActions.createPost(title, text, ownerId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
+                refresh()
             }, 500)
         })
     }
@@ -232,7 +186,8 @@ class DynamicPage extends Component {
                                 placeHolderTitle: "请输入帖子标题",
                                 placeHolder: "请输入帖子内容",
                                 ownerId: ownerId,
-                                role: role
+                                role: role,
+                                refresh: this._refresh
                             })
                         } else {
                             Toast('Hr不能发帖子哦～') 

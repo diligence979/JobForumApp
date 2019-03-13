@@ -629,6 +629,7 @@ class CommonTextInputModal extends Component {
                                         Actions.pop()
                                         if (this.props.textConfirm) {
                                             this.props.textConfirm(
+                                                this.props.refresh,
                                                 this.props.ownerId,
                                                 this.props.role,
                                                 this.text,
@@ -669,7 +670,8 @@ CommonTextInputModal.propTypes = {
     ownerId: PropTypes.number,
     essayId: PropTypes.number,
     needEditAd: PropTypes.bool,
-    role: PropTypes.number
+    role: PropTypes.number,
+    refresh: PropTypes.func
 }
 CommonTextInputModal.defaultProps = {
     text: '',

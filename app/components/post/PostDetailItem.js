@@ -12,6 +12,12 @@ import * as Constant from '../../style/constant'
 import * as Config from '../../config/config'
 import styles from '../../style'
 
+/**
+ * 讨论帖详情页头部的详情部分
+ *
+ * @class PostDetailItem
+ * @extends {Component}
+ */
 class PostDetailItem extends Component {
     constructor(props) {
         super(props)

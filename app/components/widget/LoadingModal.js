@@ -10,9 +10,11 @@ import Modal from 'react-native-modalbox';
 import Spinner from 'react-native-spinkit';
 import { Actions } from "react-native-router-flux";
 
-
 /**
  * 加载中Modal
+ *
+ * @class LoadingModal
+ * @extends {Component}
  */
 class LoadingModal extends Component {
     constructor(props) {

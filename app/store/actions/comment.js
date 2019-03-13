@@ -107,10 +107,19 @@ const deleteCommentByUser = (userId, commentId, cb) => async (dispatch, getState
     }
 }
 
+const clearCommentList = () => async (dispatch, getState) => {
+    console.log('执行了！')
+    dispatch({
+        type: COMMENT.CLEAR_COMMENTS_LIST,
+        res: true
+    })
+}
+
 export default {
     getCommentReceived,
     createPostComment,
     createAdComment,
     deleteCommentByHr,
-    deleteCommentByUser
+    deleteCommentByUser,
+    clearCommentList
 }

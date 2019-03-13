@@ -13,18 +13,20 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import styles, { screenWidth, screenHeight } from '../style'
 import { Actions } from 'react-native-router-flux'
 import * as Constant from '../style/constant'
-import * as Config from '../config/config'
 import loginActions from '../store/actions/login'
 import ownerActions from '../store/actions/owner'
 import adActions from '../store/actions/ad'
 import AdItem from './ad/AdItem'
 import Toast from './widget/ToastProxy'
 import PullListView from './widget/PullLoadMoreListView'
+import HotList from './widget/HotList'
 import { adUtil } from '../utils/actionUtil'
 
-
 /**
- * 推荐 -> 招聘广场，招聘动态
+ * 推荐页 -> 招聘贴广场
+ *
+ * @class TrendPage
+ * @extends {Component}
  */
 class TrendPage extends Component {
     constructor(props) {
@@ -86,58 +88,10 @@ class TrendPage extends Component {
 
     _renderHeader(hotAds) {
         return (
-            <Card title="热门招聘贴"
-                containerStyle={{
-                    borderWidth: 0,
-                    marginTop: Constant.normalMarginEdge / 2,
-                    marginLeft: Constant.normalMarginEdge,
-                    marginRight: Constant.normalMarginEdge,
-                    marginBottom: Constant.normalMarginEdge / 2,
-                    padding: Constant.normalMarginEdge,
-                }}
-                dividerStyle={{
-                    display: "none"
-                }}
-            >
-            {
-                hotAds.map((u, i) => {
-                    return (
-                        <ListItem
-                            key={i}
-                            roundAvatar
-                            bottomDivider
-                            title={u.job}
-                            chevron
-                            chevronColor="white"
-                            titleStyle={{
-                                fontSize: 14,
-                                maxHeight: 16
-                            }}
-                            subtitleStyle={{
-                                fontSize:12,
-                                color: "#959595"
-                            }}
-                            subtitle={u.company}
-                            containerStyle={[{
-                                flexWrap: "nowrap",
-                                padding: 5
-                            }]}
-                            badge={{value: `${u.comment_size}`, badgeStyle:{
-                                backgroundColor: "#fe180d"
-                            }}}
-                            onPress={() => {
-                                adUtil(u)
-                            }}
-                            leftAvatar={{
-                                source: (u.hr.avatar) ? 
-                                Config.BASE_64 + u.hr.avatar :
-                                require('../img/mypic.jpg')
-                            }}
-                        />
-                    )
-                })
-            }
-            </Card>
+            <HotList 
+                hotList={hotAds}
+                isPost={false}
+            />
         )
     }
 
@@ -176,11 +130,12 @@ class TrendPage extends Component {
         })
     }
 
-    _createAd(ownerId, role, text, title, essayId, company, job, education, team, location, salay, email) {
+    _createAd(refresh, ownerId, role, text, title, essayId, company, job, education, team, location, salay, email) {
         Actions.LoadingModal({backExit: false})
         adActions.createAd(ownerId, company, job, education,  team, location, salay, email, text).then((res) => {
             setTimeout(() => {
                 Actions.pop()
+                refresh()
             }, 500)
         })
     }
@@ -232,7 +187,8 @@ class TrendPage extends Component {
                                 bottomBar: true,
                                 placeHolder: "岗位描述",
                                 ownerId: ownerId,
-                                role: role
+                                role: role,
+                                refresh: this._refresh
                             })
                         } else {
                             Toast('求职者不能发招聘信息哦～') 

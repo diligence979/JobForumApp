@@ -14,6 +14,9 @@ import * as Config from '../../config/config'
 
 /**
  * 上下拉列表控件
+ *
+ * @class PullLoadMoreListView
+ * @extends {Component}
  */
 class PullLoadMoreListView extends Component {
     constructor(props) {

@@ -16,7 +16,8 @@ export const POST = {
 
 
 export const COMMENT = {
-    RECEIVED_COMMENTS: 'received_comments'
+    RECEIVED_COMMENTS: 'received_comments',
+    CLEAR_COMMENTS_LIST: 'clear_comments_list'
 }
 
 export const AD = {

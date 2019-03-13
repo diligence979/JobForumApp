@@ -17,6 +17,9 @@ import * as Constant from "../style/constant"
 
 /**
  * 欢迎页
+ *
+ * @class WelcomePage
+ * @extends {Component}
  */
 class WelcomePage extends Component {
     constructor(props) {

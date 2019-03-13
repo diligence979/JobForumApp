@@ -7,6 +7,12 @@ import PropTypes from 'prop-types'
 import PostDetail from './PostDetail'
 import styles from '../../style'
 
+/**
+ * 讨论帖详情页
+ *
+ * @class PostDetailPage
+ * @extends {Component}
+ */
 class PostDetailPage extends Component {
     constructor(props) {
         super(props)

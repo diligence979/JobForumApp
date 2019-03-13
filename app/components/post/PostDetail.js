@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import commentAction from '../../store/actions/comment'
+import commentActions from '../../store/actions/comment'
 import PullListView from '../widget/PullLoadMoreListView'
 import PostDetailItem from './PostDetailItem'
 import CommentItem from '../comment/CommentItem'
@@ -18,6 +18,12 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
 import Toast from '../widget/ToastProxy'
 
+/**
+ * 讨论贴详情
+ *
+ * @class PostDetail
+ * @extends {Component}
+ */
 class PostDetail extends Component {
     constructor(props) {
         super(props)
@@ -31,6 +37,10 @@ class PostDetail extends Component {
         this.appState = 'active'
     }
 
+    componentWillMount() {
+        this.props.commentAction.clearCommentList()
+    }
+
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             this.startRefresh()
@@ -39,7 +49,7 @@ class PostDetail extends Component {
     }
 
     componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange) 
+        AppState.removeEventListener('change', this._handleAppStateChange)
     }
 
     startRefresh() {
@@ -79,14 +89,15 @@ class PostDetail extends Component {
                 content={content}
                 created_at={created_at}
                 avatar={avatar}
-                deleteComment={() => {
-                    this._deleteComment(ownerId, id)
+                deleteComment={(refresh) => {
+                    this._deleteComment(refresh, ownerId, id)
                 }}
+                refresh={this._refresh}
             />
         )
     }
 
-    _deleteComment(ownerId, id) {
+    _deleteComment(refresh, ownerId, id) {
         let role = this.props.ownerInfo.role
         let { commentAction } = this.props
         if (role) {
@@ -97,6 +108,7 @@ class PostDetail extends Component {
                 } else {
                     Toast('删除失败')
                 }
+                refresh && refresh()
             })
         } else {
             // 求职者
@@ -106,6 +118,7 @@ class PostDetail extends Component {
                 } else {
                     Toast('删除失败')
                 }
+                refresh && refresh()
             })
         }
     }
@@ -148,11 +161,12 @@ class PostDetail extends Component {
         this.page++
     }
 
-    _createComment(ownerId, role, text, title = null, postId) {
+    _createComment(refresh, ownerId, role, text, title = null, postId) {
         Actions.LoadingModal({backExit: false})
         commentAction.createPostComment(text, ownerId, role, postId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
+                refresh()
             }, 500)
         })
     }
@@ -205,7 +219,8 @@ class PostDetail extends Component {
                             placeHolder: '请输入评论内容',
                             ownerId: ownerId,
                             essayId: postId,
-                            role: role
+                            role: role,
+                            refresh: this._refresh
                         })
                     }}>
                     <View
@@ -230,5 +245,5 @@ PostDetail.propTypes = {
 export default connect(state => ({
     commentState: state.comment,
 }), dispatch => ({
-    commentAction: bindActionCreators(commentAction, dispatch)
+    commentAction: bindActionCreators(commentActions, dispatch)
 }))(PostDetail)

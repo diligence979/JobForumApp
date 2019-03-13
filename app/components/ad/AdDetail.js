@@ -16,7 +16,14 @@ import * as Constant from '../../style/constant'
 import styles, { screenWidth, screenHeight } from '../../style'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
+import Toast from '../widget/ToastProxy'
 
+/**
+ * 招聘贴详情
+ *
+ * @class AdDetail
+ * @extends {Component}
+ */
 class AdDetail extends Component {
     constructor(props) {
         super(props)
@@ -28,6 +35,10 @@ class AdDetail extends Component {
         this.startRefresh = this.startRefresh.bind(this)
         this.page = 0
         this.appState = 'active'
+    }
+
+    componentWillMount() {
+        this.props.commentAction.clearCommentList()
     }
 
     componentDidMount() {
@@ -60,12 +71,15 @@ class AdDetail extends Component {
         let { id, user, hr, content, created_at } = rowData
         let username = ''
         let userId = null
+        let avatar = null
         if (user) {
             username = user.username
             userId = user.id
+            avatar = user.avatar
         } else if (hr) {
             username = hr.username
             userId = hr.id
+            avatar = hr.avatar
         }
         return (
             <CommentItem
@@ -74,14 +88,16 @@ class AdDetail extends Component {
                 username={username}
                 content={content}
                 created_at={created_at}
-                deleteComment={() => {
-                    this._deleteComment(ownerId, id)
+                avatar={avatar}
+                deleteComment={(refresh) => {
+                    this._deleteComment(refresh, ownerId, id)
                 }}
+                refresh={this._refresh}
             />
         )
     }
 
-    _deleteComment(ownerId, id) {
+    _deleteComment(refresh, ownerId, id) {
         let role = this.props.ownerInfo.role
         let { commentAction } = this.props
         if (role) {
@@ -92,6 +108,7 @@ class AdDetail extends Component {
                 } else {
                     Toast('删除失败')
                 }
+                refresh && refresh()
             })
         } else {
             // 求职者
@@ -101,6 +118,7 @@ class AdDetail extends Component {
                 } else {
                     Toast('删除失败')
                 }
+                refresh && refresh()
             })
         }
     }
@@ -159,11 +177,12 @@ class AdDetail extends Component {
         this.page++
     }
 
-    _createComment(ownerId, role, text, title = null, adId) {
+    _createComment(refresh, ownerId, role, text, title = null, adId) {
         Actions.LoadingModal({backExit: false})
         commentAction.createAdComment(text, ownerId, role, adId).then((res) => {
             setTimeout(() => {
                 Actions.pop()
+                refresh()
             }, 500)
         })
     }
@@ -215,7 +234,8 @@ class AdDetail extends Component {
                             placeHolder: '请输入评论内容',
                             ownerId: ownerId,
                             essayId: adId,
-                            role: role
+                            role: role,
+                            refresh: this._refresh
                         })
                     }}>
                     <View

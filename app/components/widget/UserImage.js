@@ -8,6 +8,10 @@ import { Actions } from 'react-native-router-flux';
 
 /**
  * 用户头像
+ *
+ * @export
+ * @class UserImage
+ * @extends {Component}
  */
 export default class UserImage extends Component {
 
