@@ -87,7 +87,6 @@ const createAdComment = async (content, ownerId,  role, adId) => {
 const deleteCommentByHr = (hrId, commentId, cb) => async (dispatch, getState) => {
     let res = await api.deleteCommentByHr(hrId, commentId)
     let code = res.data.code
-    console.log(res)
     if (res && res.data) {
         let newState = {}
         let comment = getState()['comment'].received_comments_data_list
@@ -100,7 +99,6 @@ const deleteCommentByHr = (hrId, commentId, cb) => async (dispatch, getState) =>
             rows: comment,
             count: --size
         }
-        console.log(newState)
         dispatch({
             type: COMMENT.RECEIVED_COMMENTS,
             res: newState

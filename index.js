@@ -11,6 +11,7 @@ YellowBox.ignoreWarnings([
     'Task orphaned for request ',
     'Remote debugger',
     'Possible',
-    'Require cycle:'
+    'Require cycle:',
+    'Require cycles are allowed, '
 ])
 AppRegistry.registerComponent(appName, () => App);
