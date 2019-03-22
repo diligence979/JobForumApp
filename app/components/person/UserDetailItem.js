@@ -64,7 +64,7 @@ class UserDetailItem extends Component {
 
     render() {
         let { ownerId, role, username, avatar } = this.props.ownerInfo
-        avatar = (avatar) ? (Config.BASE_64 + avatar) : require('../../img/mypic.jpg')
+        avatar = (avatar) ? (Config.BASE_64 + avatar) : ''
         let roleText = role ? 'HR' : "求职者"
         return (
             <View>

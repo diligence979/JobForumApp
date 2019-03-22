@@ -19,6 +19,9 @@ const iconSize = 16
 
 /**
  * 通用输入框modal
+ *
+ * @class CommonTextInputModal
+ * @extends {Component}
  */
 class CommonTextInputModal extends Component {
     constructor(props) {

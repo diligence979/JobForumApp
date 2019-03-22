@@ -4,17 +4,9 @@ import getRouter from './app/router'
 import store from './app/store/'
 
 export default class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-        store: store
-    }
-  }
-
-
   render() {
     return (
-        <Provider store={this.state.store}>
+        <Provider store={store}>
             {getRouter()}
         </Provider>
     )

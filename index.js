@@ -12,6 +12,7 @@ YellowBox.ignoreWarnings([
     'Remote debugger',
     'Possible',
     'Require cycle:',
-    'Require cycles are allowed, '
+    'Require cycles are allowed, ',
+    'source.uri'
 ])
 AppRegistry.registerComponent(appName, () => App);

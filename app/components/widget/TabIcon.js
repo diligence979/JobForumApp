@@ -1,31 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
     Text,
-    Image,
     View,
-    StyleSheet,
-    TouchableOpacity,
-    Dimensions,
-} from 'react-native';
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Feather'
 
 import * as Constant from '../../style/constant'
 import styles from '../../style'
-import Icon from 'react-native-vector-icons/Feather'
 
 
 const config = {
     ["tabRecommended"]: 'activity',
     ["tabDynamic"]: 'aperture',
     ["tabMy"]: 'user',
-};
+}
 
 const propTypes = {
     focused: PropTypes.bool,
     title: PropTypes.string,
     tabName: PropTypes.string,
     tabIconName: PropTypes.string,
-};
+}
 
 /**
  * 底部Tab
@@ -36,18 +32,18 @@ class TabIcon extends Component {
     }
 
     render() {
-        let iconPath = config[this.props.tabIconName];
-        let color = this.props.focused ? Constant.tabSelectedColor : Constant.tabUnSelectColor;
+        let iconPath = config[this.props.tabIconName]
+        let color = this.props.focused ? Constant.tabSelectedColor : Constant.tabUnSelectColor
 
         return (
             <View style={styles.centered}>
                 <Icon name={iconPath} size={Constant.tabIconSize} color={color}/>
                 <Text style={[{color: color}, {fontSize: Constant.smallTextSize}]}>{this.props.title}</Text>
             </View>
-        );
+        )
     }
 }
 
-TabIcon.propTypes = propTypes;
+TabIcon.propTypes = propTypes
 
-export default TabIcon;
+export default TabIcon

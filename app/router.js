@@ -1,21 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react'
 import {
     Scene,
     Router,
-    Lightbox, 
-    Drawer
-} from 'react-native-router-flux';
+    Lightbox
+} from 'react-native-router-flux'
 
 import LoginPage from './components/LoginPage'
 import WelcomePage from './components/WelcomePage'
+
 import DynamicPage from './components/DynamicPage'
 import TrendPage from './components/TrendPage'
 import MyPage from './components/MyPage'
-import TabIcon from './components/widget/TabIcon'
-import LoadingModal from './components/widget/LoadingModal'
-import CustomBackButton from './components/widget/CustomBackButton'
+
 import PostDetailPage from './components/post/PostDetailPage'
 import AdDetailPage from './components/ad/AdDetailPage'
+import SettingPage from './components/SettingPage'
+
+import TabIcon from './components/widget/TabIcon'
+import LoadingModal from './components/widget/LoadingModal'
+import SettingButton from './components/widget/CustomSettingButton'
+import CustomBackButton from './components/widget/CustomBackButton'
 import CommonOptionModal from './components/widget/CommonOptionModal'
 import TextInputModal from './components/widget/CommonTextInputModal'
 
@@ -36,7 +40,7 @@ const getRouter = () => {
                 <Scene key="main">
                     <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                 </Scene>
-                <Scene key="LoginPage" component={LoginPage}/>
+                <Scene key="LoginPage" component={LoginPage} showLabel={false} hideNavBar/>
                 <Scene key="root" 
                     navigationBarStyle={styles.navigationBar}
                     titleStyle={{color: Constant.titleTextColor}}>
@@ -47,12 +51,13 @@ const getRouter = () => {
                            showLabel={false}
                            tabBarPosition={"bottom"}
                            title={'求职论坛'}
-                           tabBarStyle={{
+                           renderRightButton={
+                               () => <SettingButton/>
+                           }
+                           tabBarStyle={[styles.centered, {
                                height: Constant.tabBarHeight,
-                               alignItems: 'center',
-                               justifyContent: 'center',
                                backgroundColor: Constant.tabBackgroundColor
-                           }}>
+                           }]}>
                         <Scene
                             key="DynamicPage"
                             component={DynamicPage}
@@ -87,6 +92,13 @@ const getRouter = () => {
                         iconType={2}
                         renderLeftButton={() => <CustomBackButton />}
                     />
+                    <Scene 
+                        key="SettingPage" 
+                        component={SettingPage} 
+                        title={'设置'}
+                        iconType={2}
+                        renderLeftButton={() => <CustomBackButton />}
+                    />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="OptionModal" component={CommonOptionModal}/>
@@ -94,7 +106,6 @@ const getRouter = () => {
             </Lightbox>
         </Router>
     )
-};
+}
 
-
-export default getRouter;
+export default getRouter

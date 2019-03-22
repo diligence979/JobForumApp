@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
         shadowOffset: null,
         shadowOpacity: null,
         shadowRadius: null,
-
     },
     navigationBar: {
         backgroundColor: constant.primaryColor,

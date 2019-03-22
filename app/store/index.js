@@ -14,9 +14,9 @@ export function createReducer(initialState, handlers) {
 }
 
 const middleware = [ thunk ]
-if (process.env.NODE_ENV !== 'production') {
-    middleware.push(createLogger())
-}
+// if (process.env.NODE_ENV !== 'production') {
+//     middleware.push(createLogger())
+// }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  || compose
 

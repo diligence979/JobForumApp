@@ -1,17 +1,29 @@
+import { AsyncStorage } from 'react-native'
 import { OWNER } from '../../config/type'
 import store from '..'
-import api from '../../api';
+import * as Constant from '../../style/constant'
+import api from '../../api'
 
 const { dispatch, getState } = store
 
 /**
  * 初始化用户信息
  */
-const initOwnerInfo = async (ownerId, username, avatar, role) => {
+const initOwnerInfo = (ownerId, username, avatar, role) => async (dispatch, getState) => {
     let ownerInfo = { ownerId, username, avatar, role }
     dispatch({
         type: OWNER.OWNER_INFO,
         res: ownerInfo
+    })
+    return ownerInfo
+}
+
+const clearOwnerInfo = () => {
+    AsyncStorage.removeItem(Constant.OWNER_NAME_KEY)
+    AsyncStorage.removeItem(Constant.PW_KEY)
+    dispatch({
+        type: OWNER.OWNER_INFO,
+        res: null
     })
 }
 
@@ -55,6 +67,7 @@ const uploadHrAvatar = async (ownerId, username, avatar, role, cb) => {
 
 export default {
     initOwnerInfo,
+    clearOwnerInfo,
     uploadUserAvatar,
     uploadHrAvatar
 }

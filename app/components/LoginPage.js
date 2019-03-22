@@ -13,7 +13,7 @@ import {
     Easing
 } from 'react-native' 
 import LottieView from 'lottie-react-native'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { Actions } from 'react-native-router-flux' 
 import Icon from 'react-native-vector-icons/FontAwesome' 
 import IconC from 'react-native-vector-icons/Entypo' 

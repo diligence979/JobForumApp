@@ -142,7 +142,7 @@ class DynamicPage extends Component {
 
     render() {
         let btnStyle = [{backgroundColor: Constant.transparentColor}]
-        let { postState } = this.props 
+        let { postState } = this.props
         let dataSource = postState.received_posts_data_list
         let hotPosts = postState.received_popular_posts_data_list
         let ownerInfo = this.props.ownerState.ownerInfo

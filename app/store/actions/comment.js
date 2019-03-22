@@ -124,7 +124,6 @@ const deleteCommentByUser = (userId, commentId, cb) => async (dispatch, getState
             rows: comment,
             count: --size
         }
-        console.log(newState)
         dispatch({
             type: COMMENT.RECEIVED_COMMENTS,
             res: newState

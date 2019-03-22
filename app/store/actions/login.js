@@ -5,6 +5,8 @@ import ownerAction from './owner'
 import * as Constant from '../../style/constant'
 import { clear } from '../reducers'
 import api from '../../api'
+import store from '..'
+
 
 /**
  * 登陆请求
@@ -12,9 +14,9 @@ import api from '../../api'
 const doLogin = (userName, password, role, cb) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64')
     let res = null
-    AsyncStorage.setItem(Constant.USER_NAME_KEY, userName)
-    AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str)
-    AsyncStorage.setItem(Constant.USER_ROLE, role.toString())
+    AsyncStorage.setItem(Constant.OWNER_NAME_KEY, userName)
+    AsyncStorage.setItem(Constant.OWNER_BASIC_CODE, base64Str)
+    AsyncStorage.setItem(Constant.OWNER_ROLE, role.toString())
     if (role) {
         // HR 登陆
         res = await api.hrLogin(userName, password)
@@ -22,14 +24,14 @@ const doLogin = (userName, password, role, cb) => async (dispatch, getState) => 
         // 求职者 登陆
         res = await api.userLogin(userName, password)
     }
-    let info = res.data.data
     if (res && res.data.code) {
         AsyncStorage.setItem(Constant.PW_KEY, password)
         dispatch({
             type: LOGIN.IN,
             res
         })
-        ownerAction.initOwnerInfo(info.id, info.username, info.avatar, role)
+        let info = res.data.data
+        ownerAction.initOwnerInfo(info.id, info.username, info.avatar, role)(store.dispatch, store.getState)
     }
     cb(res.data)
 }
@@ -49,9 +51,9 @@ const doRegister = (userName, password, role, cb) => async (dispatch, getState) 
     }
     let info = res.data.data
     if (res && res.data.code) {
-        AsyncStorage.setItem(Constant.USER_NAME_KEY, userName)
-        AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str)
-        AsyncStorage.setItem(Constant.USER_ROLE, role.toString())
+        AsyncStorage.setItem(Constant.OWNER_NAME_KEY, userName)
+        AsyncStorage.setItem(Constant.OWNER_BASIC_CODE, base64Str)
+        AsyncStorage.setItem(Constant.OWNER_ROLE, role.toString())
         dispatch({
             type: LOGIN.IN,
             res
@@ -65,10 +67,9 @@ const doRegister = (userName, password, role, cb) => async (dispatch, getState) 
  * 退出登录
  */
 const loginOut = () => async (dispatch, getState) => {
-    Api.clearAuthorization()
-    AsyncStorage.removeItem(Constant.USER_BASIC_CODE)
-    userAction.clearUserInfo()
-    clear(getState)
+    AsyncStorage.removeItem(Constant.OWNER_BASIC_CODE)
+    ownerAction.clearOwnerInfo()
+    // clear(getState)
     dispatch({
         type: LOGIN.CLEAR,
     })
@@ -78,7 +79,7 @@ const loginOut = () => async (dispatch, getState) => {
  * 获取当前登录用户的参数
  */
 const getLoginParams = async () => {
-    let userName = await AsyncStorage.getItem(Constant.USER_NAME_KEY)
+    let userName = await AsyncStorage.getItem(Constant.OWNER_NAME_KEY)
     let password = await AsyncStorage.getItem(Constant.PW_KEY)
     return {
         userName: (userName) ? userName : "",

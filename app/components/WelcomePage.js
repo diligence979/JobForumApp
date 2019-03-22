@@ -6,14 +6,14 @@ import {
     Animated, 
     Easing
 } from 'react-native' 
-import { Actions } from 'react-native-router-flux' 
-import styles, { screenHeight, screenWidth } from "../style"
-import loginActions from '../store/actions/login'
-import ownerActions from '../store/actions/owner'
+import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LottieView from 'lottie-react-native' 
-import * as Constant from "../style/constant"
+import ownerActions from '../store/actions/owner'
+import * as Constant from '../style/constant'
+import styles, { screenHeight, screenWidth } from '../style'
+
 
 /**
  * 欢迎页
@@ -27,12 +27,12 @@ class WelcomePage extends Component {
         this.toNext = this.toNext.bind(this) 
         this.state = {
             progress: new Animated.Value(0),
-        } 
+        }
     }
 
     componentDidMount() {
         // 是否登陆，是否用户信息
-        ownerActions.initOwnerInfo().then((res) => {
+        this.props.ownerAction.initOwnerInfo().then((res) => {
             this.toNext(res) 
         }) 
         Animated.timing(this.state.progress, {
@@ -62,11 +62,11 @@ class WelcomePage extends Component {
         return (
             <View style={[styles.mainBox, {backgroundColor: Constant.white}]}>
                 <StatusBar hidden={true}/>
-                <View style={[styles.centered, {flex: 1}]}>
+                <View style={[styles.centered, styles.flex]}>
                     <Image source={require("../img/welcome.png")}
                            resizeMode={"contain"}
                            style={{width: screenWidth, height: screenHeight}}/>
-                    <View style={[styles.absoluteFull, styles.centered, {justifyContent: "flex-end"}]}>
+                    <View style={[styles.absoluteFull, styles.centered, styles.justifyEnd]}>
                         <View style={[styles.centered, {width: 150, height:150}]}>
                             <LottieView
                                 ref="lottieView"
@@ -86,7 +86,7 @@ class WelcomePage extends Component {
 }
 
 export default connect(state => ({
-    state
+    ownerState: state.owner
 }), dispatch => ({
-    actions: bindActionCreators(loginActions, dispatch),
+    ownerAction: bindActionCreators(ownerActions, dispatch),
 }))(WelcomePage)
